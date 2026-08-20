@@ -518,6 +518,15 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         (100, (SELECT id FROM muscle_groups WHERE code = 'HAMSTRINGS'), 0.6000, true),
         (100, (SELECT id FROM muscle_groups WHERE code = 'GLUTES'), 0.4000, false);    
     `);
+
+    // Триггер
+    pgm.sql(`
+        -- Создание триггера для exercises_muscle_groups
+        CREATE TRIGGER update_exercises_muscle_groups_updated_at
+        BEFORE UPDATE ON exercises_muscle_groups
+        FOR EACH ROW
+        EXECUTE FUNCTION update_updated_at_column();`
+    )
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {

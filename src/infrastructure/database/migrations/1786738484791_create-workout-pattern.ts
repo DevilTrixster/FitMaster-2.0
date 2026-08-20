@@ -10,6 +10,12 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('gen_random_uuid()'),
         },
 
+        parent_pattern_id: {
+            type: 'uuid',
+            references: 'workout_pattern(id)',
+            onDelete: 'RESTRICT',
+        },
+
         name: {
             type: 'varchar(100)',
             notNull: true,
@@ -25,20 +31,14 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             notNull: true,
         },
 
-        pattern_data: {
+        workout_plan: {
             type: 'jsonb',
             notNull: true,
             check: `
-                jsonb_typeof(pattern_data) = 'object'
+                jsonb_typeof(workout_plan) = 'object'
                 AND
-                jsonb_typeof(pattern_data->'exercises') = 'array'
+                jsonb_typeof(workout_plan->'exercises') = 'array'
             `,
-        },
-
-        parent_pattern_id: {
-            type: 'uuid',
-            references: 'workout_pattern(id)',
-            onDelete: 'RESTRICT',
         },
 
         created_at: {
@@ -57,6 +57,8 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 
     // Индекс для эволюционного дерева
     pgm.createIndex('workout_pattern', 'parent_pattern_id', { name: 'idx_workout_pattern_parent' });
+
+
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {

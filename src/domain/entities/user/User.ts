@@ -1,4 +1,4 @@
-import { Gender, ExperienceLevel, FitnessGoal } from '../enum.js'
+import { Gender, ExperienceLevel, FitnessGoal } from '../../../enum.js'
 
 export class User {
   public readonly id?: number;

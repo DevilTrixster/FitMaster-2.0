@@ -3,7 +3,7 @@ import { ColumnDefinitions, MigrationBuilder } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    pgm.createTable('user_workouts', {
+    pgm.createTable('user_workout', {
         id: {
             type: 'serial',
             primaryKey: true,
@@ -29,8 +29,19 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: 'PLANNED',
         },
 
+        workout_plan: {
+            type: 'jsonb',
+            notNull: true
+        },
+
+        original_scheduled_at: {
+            type: 'timestamp with time zone',
+            notNull: true
+        },
+
         scheduled_at: {
             type: 'timestamp with time zone',
+            notNull: true
         },
 
         started_at: {
@@ -55,11 +66,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     });
 
 
-    pgm.createIndex('user_workouts', ['user_id', 'scheduled_at'], { name: 'idx_user_workouts_user_scheduled' });
-    pgm.createIndex('user_workouts', 'pattern_id', { name: 'idx_user_workouts_pattern' });
+    pgm.createIndex('user_workout', ['user_id', 'scheduled_at'], { name: 'idx_user_workouts_user_scheduled' });
+    pgm.createIndex('user_workout', 'pattern_id', { name: 'idx_user_workouts_pattern' });
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
 
-    pgm.dropTable('user_workouts');
+    pgm.dropTable('user_workout');
 }

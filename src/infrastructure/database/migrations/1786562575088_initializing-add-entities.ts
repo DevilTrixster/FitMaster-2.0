@@ -29,9 +29,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.createType('user_workout_status', [
         'PLANNED',
         'IN_PROGRESS',
-        'PAUSE',
         'COMPLETED',
-        'SKIPPED',
         'CANCELLED',
     ]);
 
@@ -53,7 +51,6 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'weight', // вес
         'duration', // продолжительность
         'distance', // расстояние
-        'recovery', // время восстановления (таймера между подходмами)
     ]);
 
     // Единицы измерения метрик -- кг, метры, секунды и тд.
