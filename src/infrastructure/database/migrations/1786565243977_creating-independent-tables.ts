@@ -159,13 +159,10 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             type: 'text'
         },
 
-        // Возмозно в будущем -- видео материал по технике
-        /* 
-        video {
-            type: пока не знаю
+        video: {
+            type: 'text'
         },
 
-        */
 
         is_active: {
             type: 'boolean',

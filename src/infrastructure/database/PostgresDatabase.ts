@@ -1,4 +1,6 @@
 import { Pool } from 'pg';
+import { DatabaseTransaction } from './DatabaseTransaction.js';
+import { IDatabaseExecutor } from './types/IDatabaseExecutor.js'
 
 export class PostgresDatabase {
     private readonly pool: Pool;
@@ -19,6 +21,12 @@ export class PostgresDatabase {
 
     getPool(): Pool {
         return this.pool;
+    }
+
+    async transaction<T>(callback: (executor: IDatabaseExecutor) => Promise<T>): Promise<T> {
+        const client = await this.pool.connect();
+        const transaction = new DatabaseTransaction(client);
+        return transaction.run(callback);
     }
 
     async connect(): Promise<void> {
