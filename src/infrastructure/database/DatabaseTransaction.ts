@@ -21,10 +21,7 @@ export class DatabaseTransaction implements IDatabaseTransaction {
         } catch (error) {
             try {
                 await this.client.query('ROLLBACK');
-            } catch {
-                // Не затираем исходную ошибку ошибкой ROLLBACK.
-            }
-
+            } catch {}
             throw error;
         } finally {
             this.client.release();

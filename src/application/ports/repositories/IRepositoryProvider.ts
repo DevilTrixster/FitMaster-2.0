@@ -1,0 +1,17 @@
+import { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
+import { IUserWorkoutPatternRepository } from '../../../domain/repositories/IUserWorkoutPatternRepository.js';
+import { IUserWorkoutRepository } from '../../../domain/repositories/IUserWorkoutRepository.js';
+import { IUserWorkoutExerciseRepository } from '../../../domain/repositories/IUserWorkoutExerciseRepository.js';
+import { IExerciseRepository } from '../../../domain/repositories/IExerciseRepository.js';
+import { IUserWorkoutResultRepository } from '../../../domain/repositories/IUserWorkoutResultRepository.js'
+import { IAuthSessionRepository } from '../../../domain/repositories/IAuthSessionRepository.js'
+
+export interface IRepositoryProvider {
+    getUserRepository(): IUserRepository;
+    getUserWorkoutPatternRepository(): IUserWorkoutPatternRepository;
+    getUserWorkoutRepository(): IUserWorkoutRepository;
+    getUserWorkoutExerciseRepository(): IUserWorkoutExerciseRepository;
+    getExerciseRepository(): IExerciseRepository;
+    getUserWorkoutResultRepository(): IUserWorkoutResultRepository;
+    getAuthSessionRepository(): IAuthSessionRepository;
+}

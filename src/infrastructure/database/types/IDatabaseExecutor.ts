@@ -1,4 +1,4 @@
-import { DatabaseQueryResult } from './DatabaseQueryResult.js'
+import { DatabaseQueryResult } from './IDatabaseQueryResult.js'
 import { QueryResultRow } from 'pg'
 
 export interface IDatabaseExecutor {

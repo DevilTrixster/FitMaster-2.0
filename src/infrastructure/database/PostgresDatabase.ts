@@ -1,8 +1,11 @@
 import { Pool } from 'pg';
 import { DatabaseTransaction } from './DatabaseTransaction.js';
-import { IDatabaseExecutor } from './types/IDatabaseExecutor.js'
+import { PoolExecutor } from './PoolExecutor.js';
+import { IDatabase } from '../../application/ports/database/IDatabase.js';
+import { IRepositoryProvider } from '../../application/ports/repositories/IRepositoryProvider.js';
+import { RepositoryProvider } from '../repositories/RepositoryProvider.js';
 
-export class PostgresDatabase {
+export class PostgresDatabase implements IDatabase {
     private readonly pool: Pool;
 
     constructor() {
@@ -19,14 +22,13 @@ export class PostgresDatabase {
         });
     }
 
-    getPool(): Pool {
-        return this.pool;
-    }
-
-    async transaction<T>(callback: (executor: IDatabaseExecutor) => Promise<T>): Promise<T> {
+    async transaction<T>(callback: (repositories: IRepositoryProvider) => Promise<T>): Promise<T> {
         const client = await this.pool.connect();
         const transaction = new DatabaseTransaction(client);
-        return transaction.run(callback);
+        return transaction.run(async (executor) => {
+            const provider = new RepositoryProvider(executor);
+            return callback(provider);
+        });
     }
 
     async connect(): Promise<void> {
@@ -44,4 +46,11 @@ export class PostgresDatabase {
         await this.pool.end();
         console.log('PostgreSQL connection closed');
     }
+
+    repositories(): IRepositoryProvider {
+        const executor = new PoolExecutor(this.pool);
+
+        return new RepositoryProvider(executor);
+    }
+
 }

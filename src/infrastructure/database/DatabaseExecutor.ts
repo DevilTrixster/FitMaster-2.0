@@ -1,6 +1,6 @@
 import { PoolClient, QueryResultRow } from 'pg';
 import { IDatabaseExecutor } from './types/IDatabaseExecutor.js';
-import { DatabaseQueryResult } from './types/DatabaseQueryResult.js';
+import { DatabaseQueryResult } from './types/IDatabaseQueryResult.js';
 
 export class DatabaseExecutor implements IDatabaseExecutor {
     constructor(

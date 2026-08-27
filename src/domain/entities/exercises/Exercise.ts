@@ -1,4 +1,4 @@
-import { EquipmentType } from "../../../enum.js";
+import { EquipmentType } from "../../../shared/enum.js";
 
 export class Exercise {
     public readonly id?: number;

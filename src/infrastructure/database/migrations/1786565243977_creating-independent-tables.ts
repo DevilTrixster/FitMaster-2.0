@@ -18,7 +18,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             unique: true,
         },
 
-        password: {
+        password_hash: {
             type: 'text',
             notNull: true,
         },

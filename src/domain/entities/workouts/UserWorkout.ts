@@ -1,4 +1,4 @@
-import { UserWorkoutStatus } from '../../../enum.js'
+import { UserWorkoutStatus } from '../../../shared/enum.js'
 import { WorkoutPlan } from '../../types/WorkoutPlan.js';
 
 export class UserWorkout {
@@ -19,8 +19,8 @@ export class UserWorkout {
         patternId: string;
         status: UserWorkoutStatus;
         workoutPlan: WorkoutPlan;
-        originalScheduledAt?: Date;
-        scheduledAt?: Date;
+        originalScheduledAt: Date;
+        scheduledAt: Date;
         startedAt?: Date | null;
         completedAt?: Date | null;
         createdAt?: Date;
@@ -30,8 +30,8 @@ export class UserWorkout {
         this.patternId = data.patternId;
         this.status = data.status;
         this.workoutPlan = data.workoutPlan;
-        this.originalScheduledAt = data.originalScheduledAt ?? new Date();
-        this.scheduledAt = data.scheduledAt ?? new Date();
+        this.originalScheduledAt = data.originalScheduledAt;
+        this.scheduledAt = data.scheduledAt;
         this.startedAt = data.startedAt ?? null;
         this.completedAt = data.completedAt ?? null;
         this.createdAt = data.createdAt ?? new Date();

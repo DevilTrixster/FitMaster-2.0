@@ -1,4 +1,4 @@
-import { MetricType, MetricValueType } from '../../enum.js' 
+import { MetricType, MetricValueType } from '../../shared/enum.js' 
 
 // Представление значений
 export type WorkoutValue =

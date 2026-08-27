@@ -1,4 +1,4 @@
-import { MetricType } from '../../enum.js'
+import { MetricType } from '../../shared/enum.js'
 
 export type UserWorkoutExerciseTarget =
     | {

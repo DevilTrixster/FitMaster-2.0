@@ -1,4 +1,4 @@
-import { Muscle } from '../../../enum.js'
+import { Muscle } from '../../../shared/enum.js'
 
 export class MuscleGroup {
     public readonly id?: number;

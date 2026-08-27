@@ -1,4 +1,4 @@
-import { WorkoutPatternType, WorkoutPatternGeneration } from '../../../enum.js'
+import { WorkoutPatternType, WorkoutPatternGeneration } from '../../../shared/enum.js'
 import { WorkoutPlan } from '../../types/WorkoutPlan.js'
 
 export class UserWorkoutPattern {
