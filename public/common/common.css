@@ -1,0 +1,345 @@
+/* ========================================
+   DESIGN TOKENS
+   ======================================== */
+
+:root {
+    /* Colors */
+    --bg-gradient: linear-gradient(
+        135deg,
+        #1a1a2e 0%,
+        #16213e 100%
+    );
+
+    --bg-solid: #1a1a2e;
+
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-bg-hover: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.1);
+
+    --accent: #e94560;
+    --accent-hover: #d63650;
+    --accent-light: rgba(233, 69, 96, 0.1);
+
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.4);
+
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --input-focus-border: #e94560;
+
+    --success: #4ecca3;
+    --warning: #ffa500;
+    --error: #e94560;
+
+    /* Effects */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.37);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+    --blur: blur(10px);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+
+    font-family:
+        'Segoe UI',
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        color var(--transition-fast);
+}
+
+ul {
+    list-style: none;
+}
+
+
+/* ========================================
+   COMMON LAYOUT
+   ======================================== */
+
+.container {
+    width: min(1200px, calc(100% - 2rem));
+
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0.7rem 1.5rem;
+
+    border: 2px solid transparent;
+    border-radius: 8px;
+
+    background: transparent;
+    color: inherit;
+
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition:
+        all var(--transition-normal);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+
+    border-color: var(--accent);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent);
+
+    border-color: var(--accent);
+}
+
+.btn-outline:hover {
+    background: var(--accent);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 15px rgba(233, 69, 96, 0.3);
+}
+
+.btn-small {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.card {
+    background: var(--card-bg);
+
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+
+    padding: 1.5rem;
+
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+
+    transition:
+        all var(--transition-normal);
+}
+
+.card:hover {
+    background: var(--card-bg-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ========================================
+   FORMS
+   ======================================== */
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--text-secondary);
+
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 0.8rem 1rem;
+
+    background: var(--input-bg);
+
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+
+    color: var(--text-primary);
+
+    font: inherit;
+    font-size: 1rem;
+
+    outline: none;
+
+    transition:
+        all var(--transition-fast);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--input-focus-border);
+
+    background: rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 0 0 3px rgba(233, 69, 96, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1.25rem;
+}
+
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .container {
+        width: min(
+            100% - 2rem,
+            1200px
+        );
+
+        padding: 1rem 0;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn {
+        width: 100%;
+    }
+}

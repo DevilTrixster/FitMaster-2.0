@@ -1,4 +1,4 @@
-import { IDatabase } from '../../infrastructure/database/types/IDatabase.js';
+import { IDatabase } from '../ports/database/IDatabase.js';
 import { UserWorkout } from '../../domain/entities/workouts/UserWorkout.js';
 import { UserWorkoutExercise } from '../../domain/entities/workouts/UserWorkoutExercise.js';
 import { UserWorkoutStatus } from '../../shared/enum.js';

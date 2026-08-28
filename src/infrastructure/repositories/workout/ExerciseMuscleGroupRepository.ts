@@ -7,7 +7,7 @@ import { exerciseMuscleGroupFindByExerciseId, exerciseMuscleGroupFindByMuscleGro
 interface ExerciseMuscleGroupRow extends QueryResultRow {
     id: number;
     exercise_id: number;
-    muscle_groupId: number;
+    muscle_group_id: number;
     load_ratio: string;
     is_primary: boolean;
     created_at: Date;
@@ -23,7 +23,7 @@ export class ExerciseMuscleGroupRepository implements IExerciseMuscleGroupReposi
         return new ExerciseMuscleGroup({
             id: row.id,
             exerciseId: row.exercise_id,
-            muscleGroupId: row.muscle_groupId,
+            muscleGroupId: row.muscle_group_id,
             loadRatio: Number(row.load_ratio),
             isPrimary: row.is_primary,
             createdAt: row.created_at,

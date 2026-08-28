@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitMaster — Личный кабинет</title>
+
+    <link
+        rel="stylesheet"
+        href="/common/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/components/navbar/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/user/dashboard/dashboard.css"
+    >
+</head>
+
+<body>
+
+    <div id="navbar"></div>
+
+        <main class="container">
+
+        <div class="dashboard-grid">
+
+            <aside class="dashboard-sidebar">
+
+                <section class="dashboard-panel statistics-panel">
+
+                    <h2 class="dashboard-panel-title">
+                        📊 Статистика
+                    </h2>
+
+                    <div class="stat-card">
+                        <span
+                            class="stat-number"
+                            id="totalWorkouts"
+                        >
+                            0
+                        </span>
+
+                        <span class="stat-label">
+                            Всего тренировок
+                        </span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span
+                            class="stat-number"
+                            id="averageWellness"
+                        >
+                            —
+                        </span>
+
+                        <span class="stat-label">
+                            Среднее самочувствие
+                        </span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span
+                            class="stat-number"
+                            id="currentStreak"
+                        >
+                            0
+                        </span>
+
+                        <span class="stat-label">
+                            Дней подряд
+                        </span>
+                    </div>
+
+                </section>
+
+
+                <section class="dashboard-panel recovery-panel">
+
+                    <h2 class="dashboard-panel-title">
+                        🧬 Состояние восстановления
+                    </h2>
+
+                    <div class="recovery-metric">
+                        <span class="metric-label">
+                            Готовность
+                        </span>
+
+                        <div
+                            class="recovery-score"
+                            id="recoveryScore"
+                        >
+                            —
+                        </div>
+                    </div>
+
+
+                    <div class="recovery-metric">
+                        <div class="metric-header">
+                            <span class="metric-label">
+                                Утомление
+                            </span>
+
+                            <span
+                                class="metric-value"
+                                id="fatigueValue"
+                            >
+                                —
+                            </span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-bar-fill fatigue-fill"
+                                id="fatigueBar"
+                            ></div>
+                        </div>
+                    </div>
+
+
+                    <div class="recovery-metric">
+                        <div class="metric-header">
+                            <span class="metric-label">
+                                Риск травмы
+                            </span>
+
+                            <span
+                                class="metric-value"
+                                id="injuryValue"
+                            >
+                                —
+                            </span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-bar-fill injury-fill"
+                                id="injuryBar"
+                            ></div>
+                        </div>
+                    </div>
+
+
+                    <div class="recovery-metric">
+                        <div class="metric-header">
+                            <span class="metric-label">
+                                Тренд производительности
+                            </span>
+
+                            <span
+                                class="metric-value"
+                                id="performanceTrend"
+                            >
+                                —
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="muscle-recovery">
+
+                        <h3>
+                            💪 Восстановление мышц
+                        </h3>
+
+                        <div id="muscleRecoveryList">
+                            <!-- Данные появятся позже -->
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+
+            <section class="dashboard-main">
+
+                <header class="dashboard-main-header">
+
+                    <h1>
+                        Личный кабинет
+                    </h1>
+
+                    <p>
+                        Текущая информация о твоих тренировках
+                        и состоянии.
+                    </p>
+
+                </header>
+
+
+                <section class="upcoming-workouts">
+
+                    <h2>
+                        📅 Предстоящие тренировки
+                    </h2>
+
+                    <div id="upcomingWorkouts">
+
+                        <div class="empty-state">
+
+                            <div class="empty-state-icon">
+                                🏋️‍♂️
+                            </div>
+
+                            <p>
+                                Нет предстоящих тренировок
+                            </p>
+
+                            <span>
+                                Тренировки появятся здесь
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section
+                    class="dashboard-notification hidden"
+                    id="adaptationHint"
+                >
+                </section>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <script type="module">
+        import { Navbar } from '/components/navbar/Navbar.js';
+
+        const navbarRoot = document.getElementById('navbar');
+
+        if (!navbarRoot) {
+            throw new Error('Navbar root element not found.');
+        }
+
+        const navbar = new Navbar(navbarRoot);
+
+        navbar.render();
+    </script>
+
+    <script
+        type="module"
+        src="/user/dashboard/dashboard.js"
+    ></script>
+
+</body>
+</html>

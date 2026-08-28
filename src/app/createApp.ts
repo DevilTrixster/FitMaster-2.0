@@ -5,6 +5,7 @@ import { createUseCases } from './createUseCases.js';
 import { createControllers } from './createControllers.js';
 import { configureMiddleware } from './configureMiddleware.js';
 import { registerRoutes } from './registerRoutes.js';
+import { errorHandler } from '../http/middleware/errorHandler.js'
 
 export function CreateApp() {
 
@@ -13,6 +14,7 @@ export function CreateApp() {
 
     const useCases = createUseCases(
         database,
+        services.passwordHasher,
         services.tokenService,
     );
 
@@ -22,6 +24,7 @@ export function CreateApp() {
 
     configureMiddleware(app);
     registerRoutes(app, controllers);
+    app.use(errorHandler);
 
     return app;
 }

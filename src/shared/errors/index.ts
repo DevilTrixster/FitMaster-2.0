@@ -5,5 +5,6 @@ export * from './workouts/WorkoutPatternNotFoundError.js';
 export * from './users/UserNotFoundError.js';
 export * from './users/EmailAlreadyExistsError.js';
 export * from './users/NicknameAlreadyExistsError.js';
-export * from './users/InvalidCredentialsError.js'
-export * from './users/InvalidRefreshTokenError.js'
+export * from './users/InvalidCredentialsError.js';
+export * from './users/InvalidRefreshTokenError.js';
+export * from './users/InvalidAccessTokenError.js';

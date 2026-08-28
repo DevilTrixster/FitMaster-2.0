@@ -83,5 +83,3 @@ export const registerUserRequestSchema = z.object({
         });
     }
 });
-
-export type RegisterUserRequest = z.infer<typeof registerUserRequestSchema>;

@@ -1,7 +1,10 @@
 import { JwtTokenService } from '../infrastructure/security/TokenService.js';
-
+import { PasswordHasher } from '../infrastructure/security/PasswordHasher.js';
 
 export function createServices(){
+
+    const passwordHasher = new PasswordHasher();
+
     const tokenService = new JwtTokenService({
         accessSecret: process.env.ACCESS_TOKEN_SECRET!,
         accessExpiresIn: '15m',
@@ -10,5 +13,5 @@ export function createServices(){
         audience: 'fitmaster-client',
     });
 
-    return { tokenService };
+    return { passwordHasher, tokenService };
 }

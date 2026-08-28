@@ -2,6 +2,7 @@ import { Express } from 'express';
 import { AuthController } from '../http/controllers/AuthController.js';
 import { createAuthRoutes } from '../http/routes/authRoutes.js';
 
+
 interface Controllers {
     authController: AuthController;
 }
