@@ -240,19 +240,7 @@
 
     </main>
 
-    <script type="module">
-        import { Navbar } from '/components/navbar/Navbar.js';
-
-        const navbarRoot = document.getElementById('navbar');
-
-        if (!navbarRoot) {
-            throw new Error('Navbar root element not found.');
-        }
-
-        const navbar = new Navbar(navbarRoot);
-
-        navbar.render();
-    </script>
+    <script type="module" scr="dashboard.js"></script>
 
     <script
         type="module"

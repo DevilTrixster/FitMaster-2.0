@@ -40,9 +40,7 @@ interface UserRow extends QueryResultRow {
 
 export class UserRepository implements IUserRepository {
 
-    constructor(
-        private readonly executor: IDatabaseExecutor
-    ) {}
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
     private mapToEntity(row: UserRow): User {
         return new User({

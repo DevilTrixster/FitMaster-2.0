@@ -1,0 +1,153 @@
+.auth-page {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: center;
+
+    padding: 3rem 1rem;
+}
+
+.registration-card {
+    width: min(100%, 700px);
+}
+
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-section:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.form-section-title {
+    margin-bottom: 1rem;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+    margin-bottom: 1rem;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label,
+.form-group legend {
+    color: var(--text-secondary);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    padding: 0.75rem 1rem;
+
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+
+    background: var(--input-bg);
+    color: var(--text-primary);
+
+    font: inherit;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--input-focus-border);
+
+    background: var(--card-bg-hover);
+}
+
+.form-group select option {
+    background: var(--bg-solid);
+    color: var(--text-primary);
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 0.5rem;
+
+    margin-top: 0.75rem;
+}
+
+.day-option {
+    cursor: pointer;
+}
+
+.day-option input {
+    position: absolute;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.day-option span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.day-option input:checked + span {
+    background: var(--accent);
+    border-color: var(--accent);
+
+    color: #ffffff;
+}
+
+.auth-submit {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .days-grid {
+        grid-template-columns:
+            repeat(4, 1fr);
+    }
+
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitMaster — Вход</title>
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="/assets/logo/favicon.ico"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/common/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/components/navbar/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/auth/login/login.css"
+    >
+</head>
+
+<body>
+
+    <div id="navbar"></div>
+
+    <main class="auth-page">
+
+        <section class="auth-card">
+
+            <h1 class="auth-title">
+                Вход
+            </h1>
+
+            <p class="auth-description">
+                Войди в свой аккаунт FitMaster
+            </p>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Введите email"
+                        maxlength="254"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        Пароль
+                    </label>
+
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Введите пароль"
+                        minlength="8"
+                        maxlength="128"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div
+                    id="loginMessage"
+                    class="auth-message"
+                    hidden
+                ></div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                >
+                    Войти
+                </button>
+
+            </form>
+
+            <p class="auth-footer">
+                Нет аккаунта?
+
+                <a
+                    href="/auth/registration/index.html"
+                    class="auth-link"
+                >
+                    Зарегистрироваться
+                </a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script
+        type="module"
+        src="/auth/login/login.js"
+    ></script>
+
+</body>
+</html>

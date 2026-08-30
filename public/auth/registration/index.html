@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitMaster — Регистрация</title>
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="/assets/logo/favicon.ico"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/common/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/components/navbar/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/auth/registration/registration.css"
+    >
+</head>
+
+<body>
+
+    <div id="navbar"></div>
+
+    <main class="auth-page">
+
+        <section class="auth-card registration-card">
+
+            <h1 class="auth-title">
+                Регистрация
+            </h1>
+
+            <p class="auth-description">
+                Создай аккаунт и начни свой путь к форме
+            </p>
+
+            <form id="registrationForm">
+
+                <div class="form-section">
+
+                    <h2 class="form-section-title">
+                        Аккаунт
+                    </h2>
+
+                    <div class="form-group">
+                        <label for="nickname">
+                            Никнейм
+                        </label>
+
+                        <input
+                            id="nickname"
+                            name="nickname"
+                            type="text"
+                            placeholder="Введите никнейм"
+                            minlength="3"
+                            maxlength="50"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Введите email"
+                            maxlength="254"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Пароль
+                        </label>
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Введите пароль"
+                            minlength="8"
+                            maxlength="128"
+                            autocomplete="new-password"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordConfirmation">
+                            Подтверждение пароля
+                        </label>
+
+                        <input
+                            id="passwordConfirmation"
+                            name="passwordConfirmation"
+                            type="password"
+                            placeholder="Повторите пароль"
+                            minlength="8"
+                            maxlength="128"
+                            autocomplete="new-password"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="form-section">
+
+                    <h2 class="form-section-title">
+                        Личные данные
+                    </h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="firstName">
+                                Имя
+                            </label>
+
+                            <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                placeholder="Имя"
+                                maxlength="50"
+                                autocomplete="given-name"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">
+                                Фамилия
+                            </label>
+
+                            <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                placeholder="Фамилия"
+                                maxlength="50"
+                                autocomplete="family-name"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="birthDate">
+                                Дата рождения
+                            </label>
+
+                            <input
+                                id="birthDate"
+                                name="birthDate"
+                                type="date"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">
+                                Пол
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                                required
+                            >
+                                <option value="">
+                                    Выберите пол
+                                </option>
+
+                                <option value="male">
+                                    Мужской
+                                </option>
+
+                                <option value="female">
+                                    Женский
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-section">
+
+                    <h2 class="form-section-title">
+                        Параметры тела
+                    </h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="height">
+                                Рост, см
+                            </label>
+
+                            <input
+                                id="height"
+                                name="height"
+                                type="number"
+                                min="81"
+                                max="299"
+                                step="1"
+                                placeholder="Например, 180"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="weight">
+                                Вес, кг
+                            </label>
+
+                            <input
+                                id="weight"
+                                name="weight"
+                                type="number"
+                                min="30.1"
+                                max="299.9"
+                                step="0.1"
+                                placeholder="Например, 80"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-section">
+
+                    <h2 class="form-section-title">
+                        Тренировки
+                    </h2>
+
+                    <div class="form-group">
+
+                        <label for="experienceLevel">
+                            Уровень подготовки
+                        </label>
+
+                        <select
+                            id="experienceLevel"
+                            name="experienceLevel"
+                        >
+                            <option value="beginner">
+                                Новичок
+                            </option>
+
+                            <option value="novice">
+                                Начинающий
+                            </option>
+
+                            <option value="intermediate">
+                                Средний
+                            </option>
+
+                            <option value="advanced">
+                                Продвинутый
+                            </option>
+
+                            <option value="master">
+                                Опытный
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="fitnessGoal">
+                            Цель тренировок
+                        </label>
+
+                        <select
+                            id="fitnessGoal"
+                            name="fitnessGoal"
+                        >
+                            <option value="weight_loss">
+                                Похудение
+                            </option>
+
+                            <option value="muscle_gain">
+                                Наращивание мышц
+                            </option>
+
+                            <option value="strength">
+                                Развитие силы
+                            </option>
+
+                            <option value="maintenance" selected>
+                                Поддержание формы
+                            </option>
+
+                            <option value="endurance">
+                                Выносливость
+                            </option>
+
+                            <option value="aesthetics">
+                                Эстетика тела
+                            </option>
+
+                            <option value="recomposition">
+                                Рекомпозиция тела
+                            </option>
+
+                            <option value="mobility">
+                                Подвижность
+                            </option>
+
+                            <option value="rehabilitation">
+                                Реабилитация
+                            </option>
+
+                            <option value="sports">
+                                Для конкретного спорта
+                            </option>
+
+                            <option value="event">
+                                Подготовка к событию
+                            </option>
+
+                            <option value="stress_relief">
+                                Снятие стресса
+                            </option>
+
+                            <option value="energy">
+                                Больше энергии
+                            </option>
+
+                            <option value="competition">
+                                Соревнования
+                            </option>
+
+                            <option value="posture">
+                                Коррекция осанки
+                            </option>
+
+                            <option value="healthy_aging">
+                                Поддержание здоровья
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-section">
+
+                    <h2 class="form-section-title">
+                        Расписание
+                    </h2>
+
+                    <div class="form-group">
+
+                        <label for="preferredWorkoutTime">
+                            Предпочтительное время тренировки
+                        </label>
+
+                        <input
+                            id="preferredWorkoutTime"
+                            name="preferredWorkoutTime"
+                            type="time"
+                            value="17:00"
+                        >
+
+                    </div>
+
+
+                    <fieldset class="form-group">
+
+                        <legend>
+                            Предпочтительные дни
+                        </legend>
+
+                        <div class="days-grid">
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="1"
+                                    checked
+                                >
+                                <span>Пн</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="2"
+                                >
+                                <span>Вт</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="3"
+                                    checked
+                                >
+                                <span>Ср</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="4"
+                                >
+                                <span>Чт</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="5"
+                                    checked
+                                >
+                                <span>Пт</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="6"
+                                >
+                                <span>Сб</span>
+                            </label>
+
+                            <label class="day-option">
+                                <input
+                                    type="checkbox"
+                                    name="preferredDays"
+                                    value="7"
+                                >
+                                <span>Вс</span>
+                            </label>
+
+                        </div>
+
+                    </fieldset>
+
+                </div>
+
+
+                <div
+                    id="registrationMessage"
+                    class="auth-message"
+                    hidden
+                ></div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                >
+                    Создать аккаунт
+                </button>
+
+            </form>
+
+
+            <p class="auth-footer">
+
+                Уже есть аккаунт?
+
+                <a
+                    href="/auth/login/index.html"
+                    style="color: #e94560;"
+                    class="auth-link"
+                >
+                    Войти
+                </a>
+
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script
+        type="module"
+        src="/auth/registration/registration.js"
+    ></script>
+
+</body>
+</html>
