@@ -4,7 +4,9 @@
 .dashboard-grid {
     display: grid;
     grid-template-columns: 340px minmax(0, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
+
+    margin-top: 1.5rem;
 
     animation: fadeInUp 0.4s ease-out;
 }
@@ -19,150 +21,274 @@
     min-width: 0;
 }
 
-.dashboard-panel {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 28px;
-    padding: 1.5rem;
+.dashboard-panel,
+.dashboard-main-panel {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.02)
+        );
 
-    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-panel {
+    padding: 1.35rem;
+}
+
+.dashboard-panel-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 1.25rem;
+}
+
+.dashboard-panel-eyebrow {
+    display: block;
+
+    margin-bottom: 0.25rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
 }
 
 .dashboard-panel-title {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.dashboard-panel-icon,
+.section-heading-icon {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
 
-    margin-bottom: 1.5rem;
+    width: 38px;
+    height: 38px;
 
-    font-size: 1.3rem;
-    font-weight: 700;
+    border: 1px solid rgba(233, 69, 96, 0.2);
+    border-radius: 11px;
+
+    background: rgba(233, 69, 96, 0.08);
+
+    font-size: 1rem;
 }
 
 /*
     Статистика
 */
-.stat-card {
-    position: relative;
-
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    transition:
-        transform var(--transition-normal),
-        background var(--transition-normal),
-        border-color var(--transition-normal);
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
 }
 
-.stat-card:last-child {
-    margin-bottom: 0;
+.stat-card {
+    padding: 0.9rem 0.6rem;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+
+    text-align: center;
+
+    transition:
+        transform var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 
-    background: var(--card-bg-hover);
+    background: rgba(255, 255, 255, 0.055);
 
-    border-color:
-        rgba(233, 69, 96, 0.4);
-
-    box-shadow: var(--shadow-md);
+    border-color: rgba(233, 69, 96, 0.25);
 }
 
 .stat-number {
     display: block;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 
     color: var(--accent);
 
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 800;
+    line-height: 1;
 }
 
 .stat-label {
-    color: var(--text-secondary);
+    color: var(--text-muted);
 
-    font-size: 0.85rem;
+    font-size: 0.65rem;
     font-weight: 600;
 
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.6px;
 }
 
 /*
     Восстановление
 */
-.recovery-metric {
-    margin-bottom: 1rem;
-}
-
-.metric-header {
+.recovery-score-block {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 
-    margin-bottom: 0.35rem;
+    padding: 0.5rem 0 1.25rem;
 }
 
-.metric-label {
-    color: var(--text-muted);
+.recovery-score-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size: 0.75rem;
-    font-weight: 600;
-
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.metric-value {
-    color: var(--text-primary);
-
-    font-size: 0.9rem;
-    font-weight: 600;
+    margin: 0.85rem 0 0.5rem;
 }
 
 .recovery-score {
-    width: 70px;
-    height: 70px;
+    position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin: 0.5rem 0;
+    width: 110px;
+    height: 110px;
 
     border-radius: 50%;
 
     background:
         conic-gradient(
             var(--accent) 0deg,
-            rgba(255, 255, 255, 0.1) 0deg
+            var(--accent) 0deg,
+            rgba(255, 255, 255, 0.08) 0deg
         );
 
     color: var(--text-primary);
 
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     font-weight: 800;
 }
+
+.recovery-score::before {
+    content: '';
+
+    position: absolute;
+
+    width: 88px;
+    height: 88px;
+
+    border-radius: 50%;
+
+    background: var(--bg-primary);
+}
+
+.recovery-score {
+    isolation: isolate;
+}
+
+.recovery-score::after {
+    content: '';
+
+    position: absolute;
+
+    width: 88px;
+    height: 88px;
+
+    border-radius: 50%;
+
+    z-index: 0;
+}
+
+.recovery-score {
+    z-index: 0;
+}
+
+.recovery-score-description {
+    color: var(--text-muted);
+
+    font-size: 0.75rem;
+}
+
+.recovery-score {
+    text-align: center;
+}
+
+.recovery-score {
+    color: var(--text-primary);
+}
+
 /*
-    Прогресс
+    Метрики
 */
+.recovery-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding-top: 1.1rem;
+
+    border-top: 1px solid var(--card-border);
+}
+
+.recovery-metric {
+    margin: 0;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 0.45rem;
+}
+
+.metric-label {
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.metric-value {
+    color: var(--text-primary);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: 7px;
 
     overflow: hidden;
 
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.07);
 
-    border-radius: 10px;
+    border-radius: 999px;
 }
 
 .progress-bar-fill {
@@ -171,8 +297,7 @@
 
     border-radius: inherit;
 
-    transition:
-        width 0.5s ease;
+    transition: width 0.5s ease;
 }
 
 .fatigue-fill {
@@ -192,25 +317,270 @@
             #ff6b8b
         );
 }
-
 /*
-    Адаптация
+    Восстановление мышц
 */
+.muscle-recovery {
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+
+    border-top: 1px solid var(--card-border);
+}
+
+.muscle-recovery-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 0.8rem;
+}
+
+.muscle-recovery-heading h3 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.muscle-recovery-heading span {
+    font-size: 1rem;
+}
+
+.muscle-placeholder {
+    padding: 0.8rem;
+
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+
+    color: var(--text-muted);
+
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dashboard-main-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    padding: 0.25rem 0.25rem 0;
+}
+
+.dashboard-main-heading h1 {
+    margin: 0 0 0.55rem;
+
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+}
+
+.dashboard-main-heading p {
+    max-width: 580px;
+
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.dashboard-date {
+    flex-shrink: 0;
+
+    padding: 0.8rem 1rem;
+
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    text-align: right;
+}
+
+.dashboard-date-label {
+    display: block;
+
+    margin-bottom: 0.15rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.dashboard-date strong {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.dashboard-main-panel {
+    padding: 1.5rem;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 1.25rem;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+#upcomingWorkouts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 260px;
+
+    padding: 2rem;
+
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.02);
+
+    text-align: center;
+}
+
+.empty-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin-bottom: 1rem;
+
+    border-radius: 18px;
+
+    background: rgba(233, 69, 96, 0.08);
+
+    font-size: 1.8rem;
+}
+
+.empty-state-content h3 {
+    margin: 0 0 0.4rem;
+
+    font-size: 1.05rem;
+}
+
+.empty-state-content p {
+    max-width: 420px;
+
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
 @media (max-width: 968px) {
+
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .recovery-panel {
+        height: 100%;
     }
 }
 
 @media (max-width: 768px) {
-    .dashboard-grid {
-        gap: 1rem;
+
+    .dashboard-sidebar {
+        display: flex;
+    }
+
+    .dashboard-main-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-date {
+        width: 100%;
+
+        text-align: left;
     }
 }
 
 @media (max-width: 480px) {
-    .dashboard-panel {
-        padding: 1.1rem;
-        border-radius: 20px;
+
+    .dashboard-grid {
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .dashboard-panel,
+    .dashboard-main-panel {
+        padding: 1rem;
+
+        border-radius: 18px;
+    }
+
+    .statistics-grid {
+        gap: 0.45rem;
+    }
+
+    .stat-card {
+        padding: 0.75rem 0.4rem;
+    }
+
+    .stat-number {
+        font-size: 1.3rem;
+    }
+
+    .stat-label {
+        font-size: 0.58rem;
+    }
+
+    .dashboard-main-heading h1 {
+        font-size: 1.7rem;
+    }
+
+    .recovery-score {
+        width: 95px;
+        height: 95px;
+
+        font-size: 1.65rem;
+    }
+
+    .recovery-score::before {
+        width: 75px;
+        height: 75px;
     }
 }

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="История тренировок FitMaster"
+    >
+
+    <title>История тренировок — FitMaster</title>
+
+    <link
+        rel="icon"
+        href="/assets/logo/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/common/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/components/navbar/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/user/history/history.css"
+    >
+</head>
+
+<body>
+
+    <div id="navbar"></div>
+
+
+    <main class="history-page">
+
+        <div class="history-container">
+
+
+            <!-- Заголовок страницы -->
+
+            <header class="history-header">
+
+                <div class="history-header-content">
+
+                    <h1 class="history-title">
+                        История тренировок
+                    </h1>
+
+                    <p class="history-description">
+                        Просматривай завершённые тренировки
+                        и анализируй свои фактические результаты.
+                    </p>
+
+                </div>
+
+
+                
+
+            </header>
+
+
+            <!-- Фильтры -->
+
+            <section
+                class="history-filters"
+                aria-labelledby="filtersTitle"
+            >
+
+                <div class="history-section-header">
+
+                    <div>
+
+                        <span class="history-eyebrow">
+                            Поиск
+                        </span>
+
+                        <h2
+                            class="history-section-title"
+                            id="filtersTitle"
+                        >
+                            Фильтры истории
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="history-reset-button"
+                        id="resetFiltersBtn"
+                    >
+                        <span
+                            class="history-reset-icon"
+                            aria-hidden="true"
+                        >
+                            ↺
+                        </span>
+
+                        Сбросить
+                    </button>
+
+                </div>
+
+
+                <div class="filters-grid">
+
+
+                    <!-- Дата от -->
+
+                    <div class="filter-group">
+
+                        <label for="dateFrom">
+                            Дата от
+                        </label>
+
+                        <div class="filter-input-wrapper">
+
+                            <span
+                                class="filter-input-icon"
+                                aria-hidden="true"
+                            >
+                                📅
+                            </span>
+
+                            <input
+                                type="date"
+                                id="dateFrom"
+                                name="dateFrom"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Дата до -->
+
+                    <div class="filter-group">
+
+                        <label for="dateTo">
+                            Дата до
+                        </label>
+
+                        <div class="filter-input-wrapper">
+
+                            <span
+                                class="filter-input-icon"
+                                aria-hidden="true"
+                            >
+                                📅
+                            </span>
+
+                            <input
+                                type="date"
+                                id="dateTo"
+                                name="dateTo"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Тип тренировки -->
+
+                    <div class="filter-group">
+
+                        <label for="workoutType">
+                            Тип тренировки
+                        </label>
+
+                        <div class="filter-input-wrapper">
+
+                            <span
+                                class="filter-input-icon"
+                                aria-hidden="true"
+                            >
+                                ◈
+                            </span>
+
+                            <select
+                                id="workoutType"
+                                name="workoutType"
+                            >
+                                <option value="">
+                                    Все тренировки
+                                </option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Упражнение -->
+
+                    <div class="filter-group exercise-filter">
+
+                        <label for="exerciseSearch">
+                            Упражнение
+                        </label>
+
+                        <div class="filter-input-wrapper">
+
+                            <span
+                                class="filter-input-icon"
+                                aria-hidden="true"
+                            >
+                                🔍
+                            </span>
+
+                            <input
+                                type="text"
+                                id="exerciseSearch"
+                                name="exerciseSearch"
+                                placeholder="Начните вводить название..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="exercise-suggestions"
+                            id="exerciseSuggestions"
+                            role="listbox"
+                            aria-label="Подходящие упражнения"
+                        ></div>
+
+
+                        <input
+                            type="hidden"
+                            id="exerciseId"
+                            name="exerciseId"
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Результаты -->
+
+            <section
+                class="history-results"
+                aria-labelledby="resultsTitle"
+            >
+
+                <div class="history-section-header results-header">
+
+                    <div>
+
+                        <span class="history-eyebrow">
+                            Результаты
+                        </span>
+
+                        <h2
+                            class="history-section-title"
+                            id="resultsTitle"
+                        >
+                            Твои тренировки
+                        </h2>
+
+                    </div>
+
+
+                    <span
+                        class="active-filters-label"
+                        id="activeFiltersLabel"
+                    >
+                        Все тренировки
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="history-list"
+                    id="historyList"
+                >
+
+                    <!-- Временно показываем состояние загрузки.
+                         Реальные данные позже будут приходить через history.js. -->
+
+                    <div class="history-loading">
+
+                        <div
+                            class="history-loading-icon"
+                            aria-hidden="true"
+                        >
+                            ⟳
+                        </div>
+
+                        <p>
+                            Загрузка истории...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+    <script
+        type="module"
+        src="/user/history/history.js"
+    ></script>
+
+</body>
+</html>

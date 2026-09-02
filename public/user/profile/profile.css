@@ -1,0 +1,1685 @@
+/* =========================================================
+   PROFILE PAGE
+   ========================================================= */
+
+.profile-page {
+    min-height: calc(100vh - 80px);
+
+    padding: 1.5rem 1rem 2.5rem;
+}
+
+.profile-container {
+    width: min(1080px, 100%);
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.profile-page-header {
+    margin-bottom: 2rem;
+}
+
+.profile-page-header-content {
+    max-width: 720px;
+}
+
+.profile-eyebrow {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+    font-weight: 750;
+
+    text-transform: uppercase;
+    letter-spacing: 1.25px;
+}
+
+.profile-page-title {
+    margin: 0 0 0.4rem;
+
+    color: var(--text-primary);
+
+    font-size: clamp(1.75rem, 3vw, 2.2rem);
+    font-weight: 800;
+
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+}
+
+.profile-page-description {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.profile-message {
+    margin-bottom: 1.5rem;
+
+    padding: 0.85rem 1rem;
+
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+
+    background: var(--card-bg);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+.profile-message.hidden {
+    display: none;
+}
+
+.profile-message.success {
+    border-color: rgba(78, 204, 163, 0.3);
+
+    background: rgba(78, 204, 163, 0.08);
+
+    color: var(--success);
+}
+
+.profile-message.error {
+    border-color: rgba(233, 69, 96, 0.3);
+
+    background: var(--accent-light);
+
+    color: #ff8fa3;
+}
+
+
+/* =========================================================
+   COMMON PANEL
+   ========================================================= */
+
+.profile-panel {
+    position: relative;
+
+    margin-bottom: 1rem;
+
+    padding: 1.15rem 1.25rem;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+
+    box-shadow: var(--shadow-md);
+
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+
+    overflow: hidden;
+}
+
+.profile-panel::before {
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(233, 69, 96, 0.3),
+            transparent
+        );
+
+    opacity: 0;
+
+    transition: opacity var(--transition-normal);
+}
+
+.profile-panel:hover::before {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PROFILE OVERVIEW
+   ========================================================= */
+
+.profile-overview {
+    padding: 1rem 1.25rem;
+}
+
+.profile-overview-main {
+    display: flex;
+    align-items: center;
+
+    gap: 1.5rem;
+}
+
+.profile-avatar-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    flex-shrink: 0;
+}
+
+.profile-avatar-wrapper {
+    position: relative;
+
+    width: 88px;
+    height: 88px;
+}
+
+.profile-avatar {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border: 2px solid rgba(233, 69, 96, 0.55);
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.25),
+        0 0 0 5px rgba(233, 69, 96, 0.05);
+}
+
+.avatar-edit-button {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: 2px solid var(--bg-solid);
+    border-radius: 10px;
+
+    background: var(--accent);
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 15px rgba(233, 69, 96, 0.28);
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.avatar-edit-button:hover {
+    background: var(--accent-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(233, 69, 96, 0.35);
+}
+
+.profile-avatar-hint {
+    margin-top: 0.65rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.62rem;
+}
+
+.profile-overview-info {
+    min-width: 0;
+}
+
+.profile-overview-eyebrow {
+    display: block;
+
+    margin-bottom: 0.2rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.profile-overview-info h2 {
+    margin: 0 0 0.1rem;
+
+    color: var(--text-primary);
+
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.profile-overview-info p {
+    margin: 0;
+
+    color: var(--accent);
+
+    font-size: 0.85rem;
+    font-weight: 650;
+}
+
+.profile-overview-meta {
+    margin-top: 0.65rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.profile-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 1.35rem;
+}
+
+.profile-section-title {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 1rem;
+    font-weight: 750;
+
+    line-height: 1.25;
+}
+
+.profile-section-description {
+    max-width: 600px;
+
+    margin: 0.35rem 0 0;
+
+    color: var(--text-muted);
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.profile-section-icon,
+.danger-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(233, 69, 96, 0.2);
+    border-radius: 11px;
+
+    background: var(--accent-light);
+
+    font-size: 1rem;
+}
+
+.danger-section-icon {
+    border-color: rgba(233, 69, 96, 0.28);
+
+    background: rgba(233, 69, 96, 0.08);
+
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   PROFILE FORM
+   ========================================================= */
+
+.profile-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 1rem 1.2rem;
+}
+
+.profile-form-group {
+    min-width: 0;
+}
+
+.profile-form-group-full {
+    grid-column: 1 / -1;
+}
+
+.profile-form-group label {
+    display: block;
+
+    margin-bottom: 0.45rem;
+
+    color: var(--text-secondary);
+
+    font-size: 0.76rem;
+    font-weight: 650;
+}
+
+.profile-form-group input,
+.profile-form-group select {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 0.65rem 0.8rem;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid var(--input-border);
+    border-radius: 11px;
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 0.83rem;
+
+    outline: none;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.profile-form-group input:hover,
+.profile-form-group select:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.profile-form-group input:focus,
+.profile-form-group select:focus {
+    border-color: rgba(233, 69, 96, 0.55);
+
+    background: rgba(255, 255, 255, 0.045);
+
+    box-shadow:
+        0 0 0 3px rgba(233, 69, 96, 0.08);
+}
+
+.profile-form-group input:disabled,
+.profile-form-group input[readonly] {
+    background: rgba(255, 255, 255, 0.018);
+
+    border-color: rgba(255, 255, 255, 0.08);
+
+    color: var(--text-muted);
+
+    cursor: not-allowed;
+}
+
+.profile-form-group select {
+    cursor: pointer;
+}
+
+.profile-form-group select option {
+    background: #171725;
+    color: var(--text-primary);
+}
+
+.profile-form-group input[type='date'],
+.profile-form-group input[type='time'] {
+    color-scheme: dark;
+}
+
+.profile-form-group input[type='date']::-webkit-calendar-picker-indicator,
+.profile-form-group input[type='time']::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+
+    cursor: pointer;
+}
+
+.profile-form-hint {
+    display: block;
+
+    margin-top: 0.35rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.66rem;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   LOCKED EMAIL
+   ========================================================= */
+
+.profile-input-locked {
+    position: relative;
+}
+
+.profile-input-locked input {
+    padding-right: 2.4rem;
+}
+
+.locked-icon {
+    position: absolute;
+
+    top: 50%;
+    right: 0.8rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.75rem;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   INPUT UNITS
+   ========================================================= */
+
+.profile-input-with-unit {
+    position: relative;
+}
+
+.profile-input-with-unit input {
+    padding-right: 2.8rem;
+}
+
+.profile-input-with-unit span {
+    position: absolute;
+
+    top: 50%;
+    right: 0.85rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+    font-weight: 650;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   INPUT ICON
+   ========================================================= */
+
+.profile-input-with-icon {
+    position: relative;
+}
+
+.profile-input-with-icon input {
+    padding-left: 2.15rem;
+}
+
+.profile-input-icon {
+    position: absolute;
+
+    top: 50%;
+    left: 0.8rem;
+
+    z-index: 1;
+
+    color: var(--text-muted);
+
+    font-size: 0.9rem;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 1.35rem;
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--card-border);
+}
+
+.profile-form-actions .btn {
+    min-width: 210px;
+}
+
+
+/* =========================================================
+   TRAINING DAYS
+   ========================================================= */
+
+.training-days-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    gap: 0.65rem;
+}
+
+.training-day {
+    position: relative;
+
+    display: block;
+
+    min-width: 0;
+
+    cursor: pointer;
+}
+
+.training-day input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.training-day span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 66px;
+
+    padding: 0.65rem 0.4rem;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid var(--input-border);
+    border-radius: 13px;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.training-day strong {
+    color: var(--text-secondary);
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.training-day small {
+    margin-top: 0.2rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.58rem;
+}
+
+.training-day:hover span {
+    background: rgba(255, 255, 255, 0.05);
+
+    border-color: rgba(233, 69, 96, 0.3);
+
+    transform: translateY(-2px);
+}
+
+.training-day input:checked + span {
+    background: var(--accent-light);
+
+    border-color: rgba(233, 69, 96, 0.65);
+
+    box-shadow:
+        0 5px 18px rgba(233, 69, 96, 0.12);
+}
+
+.training-day input:checked + span strong {
+    color: var(--accent);
+}
+
+.training-day input:checked + span small {
+    color: rgba(233, 69, 96, 0.75);
+}
+
+.training-days-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-top: 1rem;
+    padding-top: 1rem;
+
+    border-top: 1px solid var(--card-border);
+}
+
+.training-days-counter {
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   CALENDAR TOOLBAR
+   ========================================================= */
+
+.calendar-toolbar {
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+
+    align-items: center;
+
+    gap: 0.8rem;
+
+    margin-bottom: 1rem;
+}
+
+.calendar-navigation-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--input-border);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--text-secondary);
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.calendar-navigation-button:hover {
+    background: var(--accent-light);
+
+    border-color: rgba(233, 69, 96, 0.35);
+
+    color: var(--accent);
+
+    transform: translateY(-1px);
+}
+
+.calendar-current-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-month {
+    color: var(--text-primary);
+
+    font-size: 1.1rem;
+    font-weight: 750;
+
+    text-transform: capitalize;
+}
+
+
+/* =========================================================
+   CALENDAR LEGEND
+   ========================================================= */
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 0.75rem 1rem;
+
+    margin-bottom: 1.2rem;
+}
+
+.calendar-legend-item {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.35rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.calendar-legend-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+}
+
+.calendar-legend-dot.upcoming {
+    background: var(--warning);
+}
+
+.calendar-legend-dot.completed {
+    background: var(--success);
+}
+
+.calendar-legend-dot.missed {
+    background: var(--error);
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar {
+    overflow: hidden;
+
+    width: min(620px, 100%);
+
+    margin: 0 auto;
+
+    padding: 0.55rem;
+
+    background: rgba(255, 255, 255, 0.02);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 17px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    gap: 0.45rem;
+
+    margin-bottom: 0.45rem;
+}
+
+.calendar-weekdays span {
+    padding: 0.45rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.64rem;
+    font-weight: 700;
+
+    text-align: center;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    gap: 0.3rem;
+}
+
+.calendar-day {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    min-height: 52px;
+
+    padding: 0.4rem;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.calendar-day:hover {
+    background: rgba(255, 255, 255, 0.055);
+
+    border-color: rgba(233, 69, 96, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.calendar-day.empty {
+    background: transparent;
+
+    border-color: transparent;
+
+    cursor: default;
+
+    pointer-events: none;
+}
+
+.calendar-day-number {
+    position: relative;
+    z-index: 1;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.calendar-day.today {
+    border-color: rgba(233, 69, 96, 0.55);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(233, 69, 96, 0.12);
+}
+
+.calendar-day.today .calendar-day-number {
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   CALENDAR STATUS
+   ========================================================= */
+
+.calendar-day.has-workout {
+    overflow: hidden;
+}
+
+.calendar-day.has-workout::after {
+    content: '';
+
+    position: absolute;
+
+    right: 0.45rem;
+    bottom: 0.45rem;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+.calendar-day.scheduled::after {
+    background: var(--warning);
+
+    box-shadow:
+        0 0 9px rgba(255, 165, 0, 0.4);
+}
+
+.calendar-day.completed::after {
+    background: var(--success);
+
+    box-shadow:
+        0 0 9px rgba(78, 204, 163, 0.4);
+}
+
+.calendar-day.missed::after {
+    background: var(--error);
+
+    box-shadow:
+        0 0 9px rgba(233, 69, 96, 0.4);
+}
+
+
+
+
+/* =========================================================
+   CALENDAR EVENT INFO
+   ========================================================= */
+
+.calendar-event-info {
+    margin-top: 1rem;
+
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+}
+
+.calendar-event-info.hidden {
+    display: none;
+}
+
+.calendar-event-info-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 0.7rem;
+}
+
+.calendar-event-info-header h3 {
+    margin: 0;
+
+    font-size: 0.95rem;
+    font-weight: 750;
+}
+
+.calendar-event-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--input-border);
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--text-muted);
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.calendar-event-close:hover {
+    background: var(--accent-light);
+
+    border-color: rgba(233, 69, 96, 0.3);
+
+    color: var(--accent);
+}
+
+.calendar-event-details {
+    color: var(--text-secondary);
+
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SESSION
+   ========================================================= */
+
+.profile-session-panel {
+    margin-bottom: 1.5rem;
+}
+
+.profile-session-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.02);
+
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    border-radius: 14px;
+}
+
+.profile-session-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.2rem;
+}
+
+.profile-session-info strong {
+    color: var(--text-primary);
+
+    font-size: 0.85rem;
+}
+
+.profile-session-info span {
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+}
+
+.profile-secondary-button {
+    min-width: 90px;
+
+    padding: 0.55rem 0.85rem;
+
+    border: 1px solid var(--input-border);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--text-secondary);
+
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.profile-secondary-button:hover {
+    background: rgba(255, 255, 255, 0.06);
+
+    border-color: rgba(255, 255, 255, 0.3);
+
+    color: var(--text-primary);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DANGER ZONE
+   ========================================================= */
+
+.danger-panel {
+    border-color: rgba(233, 69, 96, 0.2);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(233, 69, 96, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+}
+
+.danger-panel::before {
+    opacity: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(233, 69, 96, 0.4),
+            transparent
+        );
+}
+
+.danger-eyebrow {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--accent);
+
+    font-size: 0.7rem;
+    font-weight: 750;
+
+    text-transform: uppercase;
+    letter-spacing: 1.25px;
+}
+
+.danger-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1.5rem;
+
+    padding: 1rem;
+
+    background: rgba(233, 69, 96, 0.045);
+
+    border: 1px solid rgba(233, 69, 96, 0.12);
+    border-radius: 14px;
+}
+
+.danger-info {
+    min-width: 0;
+}
+
+.danger-info strong {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--text-primary);
+
+    font-size: 0.85rem;
+}
+
+.danger-info p {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+.danger-button {
+    min-width: 165px;
+
+    padding: 0.65rem 0.9rem;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(233, 69, 96, 0.45);
+    border-radius: 10px;
+
+    background: rgba(233, 69, 96, 0.08);
+
+    color: #ff8fa3;
+
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.danger-button:hover {
+    background: var(--accent);
+
+    border-color: var(--accent);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 18px rgba(233, 69, 96, 0.25);
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.profile-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 1rem;
+}
+
+.profile-modal.hidden {
+    display: none;
+}
+
+.profile-modal-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(4, 5, 14, 0.72);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.profile-modal-dialog {
+    position: relative;
+    z-index: 1;
+
+    width: min(430px, 100%);
+
+    padding: 1.5rem;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 32, 54, 0.98),
+            rgba(20, 22, 39, 0.98)
+        );
+
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+
+    box-shadow: var(--shadow-lg);
+
+    text-align: center;
+
+    animation: profileModalIn 0.2s ease-out;
+}
+
+.profile-modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 1rem;
+
+    border-radius: 14px;
+
+    background: var(--accent-light);
+
+    color: var(--accent);
+
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.profile-modal-icon.danger {
+    background: rgba(233, 69, 96, 0.1);
+
+    border: 1px solid rgba(233, 69, 96, 0.22);
+}
+
+.profile-modal-dialog h2 {
+    margin: 0 0 0.55rem;
+
+    color: var(--text-primary);
+
+    font-size: 1.15rem;
+    font-weight: 750;
+}
+
+.profile-modal-dialog p {
+    margin: 0 auto;
+
+    max-width: 340px;
+
+    color: var(--text-muted);
+
+    font-size: 0.78rem;
+    line-height: 1.55;
+}
+
+.profile-modal-actions {
+    display: flex;
+
+    gap: 0.7rem;
+
+    margin-top: 1.35rem;
+}
+
+.profile-modal-actions button {
+    flex: 1;
+
+    min-height: 42px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.profile-modal-secondary {
+    border: 1px solid var(--input-border);
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--text-secondary);
+}
+
+.profile-modal-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+
+    border-color: rgba(255, 255, 255, 0.25);
+
+    color: var(--text-primary);
+}
+
+.profile-modal-primary {
+    border: 1px solid var(--accent);
+
+    background: var(--accent);
+
+    color: #ffffff;
+}
+
+.profile-modal-primary:hover {
+    background: var(--accent-hover);
+
+    border-color: var(--accent-hover);
+
+    transform: translateY(-1px);
+}
+
+.profile-modal-danger-button {
+    border: 1px solid var(--accent);
+
+    background: var(--accent);
+
+    color: #ffffff;
+}
+
+.profile-modal-danger-button:hover {
+    background: var(--accent-hover);
+
+    border-color: var(--accent-hover);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 15px rgba(233, 69, 96, 0.25);
+}
+
+@keyframes profileModalIn {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-form-group-full {
+        grid-column: auto;
+    }
+
+    .training-days-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+    .danger-content {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .danger-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+
+    .profile-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .profile-panel {
+        padding: 1rem;
+
+        border-radius: 18px;
+    }
+
+    .profile-overview {
+        padding: 1rem;
+    }
+
+    .profile-overview-main {
+        align-items: flex-start;
+
+        gap: 1rem;
+    }
+
+    .profile-avatar-wrapper {
+        width: 88px;
+        height: 88px;
+    }
+
+    .avatar-edit-button {
+        width: 29px;
+        height: 29px;
+
+        font-size: 0.72rem;
+    }
+
+    .profile-overview-info h2 {
+        font-size: 1.15rem;
+    }
+
+    .profile-section-header {
+        margin-bottom: 1rem;
+    }
+
+    .profile-section-icon,
+    .danger-section-icon {
+        width: 35px;
+        height: 35px;
+
+        font-size: 0.85rem;
+    }
+
+    .profile-form-actions {
+        justify-content: stretch;
+    }
+
+    .profile-form-actions .btn {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+    .training-days-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 0.45rem;
+    }
+
+    .training-day span {
+        min-height: 58px;
+
+        padding: 0.45rem 0.2rem;
+    }
+
+    .training-day strong {
+        font-size: 0.75rem;
+    }
+
+    .training-days-footer {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .training-days-footer .btn {
+        width: 100%;
+    }
+
+    .calendar {
+        padding: 0.45rem;
+    }
+
+    .calendar-grid,
+    .calendar-weekdays {
+        gap: 0.25rem;
+    }
+
+    .calendar-day {
+        min-height: 46px;
+
+        padding: 0.35rem;
+    }
+
+    .calendar-day-number {
+        font-size: 0.63rem;
+    }
+
+    .calendar-day::after {
+        right: 0.3rem;
+        bottom: 0.3rem;
+
+        width: 5px;
+        height: 5px;
+    }
+
+    .calendar-weekdays span {
+        padding: 0.3rem;
+
+        font-size: 0.6rem;
+    }
+
+    .calendar-legend {
+        justify-content: flex-start;
+
+        gap: 0.5rem 0.8rem;
+    }
+
+    .profile-session-row {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .profile-secondary-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .profile-page-title {
+        font-size: 1.8rem;
+    }
+
+    .profile-overview-main {
+        flex-direction: column;
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .training-days-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .calendar-month {
+        font-size: 0.95rem;
+    }
+
+    .calendar-navigation-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .calendar-toolbar {
+        grid-template-columns: 36px 1fr 36px;
+    }
+
+    .profile-modal-actions {
+        flex-direction: column;
+    }
+
+}

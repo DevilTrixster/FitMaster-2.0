@@ -1,30 +1,32 @@
 const publicNavigationItems = [
     {
         label: 'Войти',
-        path: '/auth/login/index.html'
+        path: '/auth/login/index.html',
+        variant: 'outline'
     },
     {
         label: 'Регистрация',
-        path: '/auth/registration/index.html'
+        path: '/auth/registration/index.html',
+        variant: 'outline'
     }
 ];
 
 const authenticatedNavigationItems = [
     {
         label: 'Личный кабинет',
-        path: '/dashboard'
+        path: '/user/dashboard/dashboard.html'
     },
     {
         label: 'История',
-        path: '/history'
+        path: '/user/history/history.html'
     },
     {
         label: 'Прогресс',
-        path: '/progress'
+        path: '/user/progress/progress.html'
     },
     {
         label: 'Профиль',
-        path: '/profile'
+        path: '/user/profile/profile.html'
     }
 ];
 
@@ -71,7 +73,7 @@ export class Navbar {
 
     createNavigationLink(item, currentPath) {
         const link = document.createElement('a');
-        link.className = 'nav-link';
+        link.className = `nav-link nav-link-${item.variant ?? 'default'}`;
         link.href = item.path;
         link.textContent = item.label;
         if (item.path === currentPath) {

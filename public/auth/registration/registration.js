@@ -1,4 +1,4 @@
-import { Navbar } from '/components/navbar/navbar.js';
+import { Navbar } from '/components/navbar/Navbar.js';
 
 const navbarRoot =
     document.getElementById('navbar');

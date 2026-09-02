@@ -3,26 +3,117 @@
 
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 
-    padding: 3rem 1rem;
+    padding: 2rem 1rem 3rem;
+}
+
+.auth-title {
+    margin-bottom: 0.5rem;
+
+    text-align: center;
+
+    font-size: 2rem;
+}
+
+.auth-description {
+    margin-bottom: 2rem;
+
+    color: var(--text-secondary);
+
+    text-align: center;
+
+    font-size: 1rem;
+}
+
+.registration-form {
+    counter-reset: registration-section;
+}
+
+.auth-footer {
+    margin-top: 1.5rem;
+
+    color: var(--text-secondary);
+
+    text-align: center;
+
+    font-size: 0.9rem;
+}
+
+.auth-link {
+    color: var(--accent);
+
+
+    font-weight: 650;
+
+    text-decoration: none;
+
+    transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+    color: var(--accent-hover);
 }
 
 .registration-card {
-    width: min(100%, 700px);
+    width: min(100%, 760px);
+
+    padding: 2rem 2.25rem;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+
+    box-shadow: var(--shadow-lg);
 }
 
 .form-section {
-    margin-bottom: 2rem;
+    counter-increment: registration-section;
+
+    position: relative;
+
+    margin-bottom: 1.5rem;
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--card-border);
 }
 
 .form-section:last-of-type {
     margin-bottom: 1.5rem;
 }
 
+.form-section-title::before {
+    content: counter(registration-section, decimal-leading-zero);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid rgba(233, 69, 96, 0.35);
+    border-radius: 8px;
+
+    background: var(--accent-light);
+    color: var(--accent);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
 .form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
     margin-bottom: 1rem;
 
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
 }
 
@@ -52,6 +143,8 @@
 
     font-size: 0.9rem;
     font-weight: 600;
+
+    margin-bottom: 0.75rem;
 }
 
 .form-group input,
@@ -85,6 +178,19 @@
 .form-group select option {
     background: var(--bg-solid);
     color: var(--text-primary);
+}
+
+.form-group fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-section fieldset {
+    border: none;
+
+    padding: 0;
+    margin: 0;
 }
 
 .days-grid {

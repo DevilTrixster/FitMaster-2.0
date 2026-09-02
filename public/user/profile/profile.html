@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Профиль пользователя FitMaster"
+    >
+
+    <title>Профиль — FitMaster</title>
+
+    <link
+        rel="icon"
+        href="/assets/logo/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/common/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/components/navbar/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/user/profile/profile.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <div id="navbar"></div>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="profile-page">
+
+        <div class="profile-container">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <header class="profile-page-header">
+
+                <div class="profile-page-header-content">
+
+                    <span class="profile-eyebrow">
+                        Личный кабинет
+                    </span>
+
+                    <h1 class="profile-page-title">
+                        Профиль
+                    </h1>
+
+                    <p class="profile-page-description">
+                        Управляй своими данными, расписанием
+                        и настройками тренировок.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 MESSAGE
+                 ================================================= -->
+
+            <div
+                id="message"
+                class="profile-message hidden"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- =================================================
+                 PROFILE OVERVIEW
+                 ================================================= -->
+
+            <section class="profile-overview profile-panel">
+
+                <div class="profile-overview-main">
+
+
+                    <!-- Avatar -->
+
+                    <div class="profile-avatar-block">
+
+                        <div class="profile-avatar-wrapper">
+
+                            <img
+                                id="avatarPreview"
+                                class="profile-avatar"
+                                src="/assets/default-avatar/default-avatar.png"
+                                alt="Фото профиля"
+                            >
+
+                            <button
+                                type="button"
+                                class="avatar-edit-button"
+                                id="uploadAvatarBtn"
+                                aria-label="Изменить фото профиля"
+                            >
+                                ✎
+                            </button>
+
+                        </div>
+
+
+                        <input
+                            type="file"
+                            id="avatarInput"
+                            accept="image/jpeg,image/png,image/webp"
+                            hidden
+                        >
+
+
+                        <span class="profile-avatar-hint">
+                            JPG, PNG или WEBP
+                        </span>
+
+                    </div>
+
+
+                    <!-- User summary -->
+
+                    <div class="profile-overview-info">
+
+                        <span class="profile-overview-eyebrow">
+                            Аккаунт
+                        </span>
+
+                        <h2 id="profileDisplayName">
+                            Пользователь
+                        </h2>
+
+                        <p id="profileDisplayNickname">
+                            @nickname
+                        </p>
+
+                        <div class="profile-overview-meta">
+
+                            <span id="profileMemberSince">
+                                В FitMaster с —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PERSONAL DATA
+                 ================================================= -->
+
+            <section class="profile-panel">
+
+                <div class="profile-section-header">
+
+                    <div>
+
+                        <span class="profile-eyebrow">
+                            Основная информация
+                        </span>
+
+                        <h2 class="profile-section-title">
+                            Личные данные
+                        </h2>
+
+                    </div>
+
+                    <span class="profile-section-icon">
+                        👤
+                    </span>
+
+                </div>
+
+
+                <form id="profileForm">
+
+
+                    <div class="profile-form-grid">
+
+
+                        <!-- Nickname -->
+
+                        <div class="profile-form-group">
+
+                            <label for="nickname">
+                                Никнейм
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nickname"
+                                name="nickname"
+                                autocomplete="nickname"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="profile-form-group profile-form-group-locked">
+
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <div class="profile-input-locked">
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    autocomplete="email"
+                                    readonly
+                                    disabled
+                                >
+
+                                <span
+                                    class="locked-icon"
+                                    aria-hidden="true"
+                                >
+                                    🔒
+                                </span>
+
+                            </div>
+
+                            <small class="profile-form-hint">
+                                Email нельзя изменить
+                            </small>
+
+                        </div>
+
+
+                        <!-- First name -->
+
+                        <div class="profile-form-group">
+
+                            <label for="firstName">
+                                Имя
+                            </label>
+
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                autocomplete="given-name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Last name -->
+
+                        <div class="profile-form-group">
+
+                            <label for="lastName">
+                                Фамилия
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                autocomplete="family-name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Birth date -->
+
+                        <div class="profile-form-group">
+
+                            <label for="birthDate">
+                                Дата рождения
+                            </label>
+
+                            <input
+                                type="date"
+                                id="birthDate"
+                                name="birthDate"
+                            >
+
+                        </div>
+
+
+                        <!-- Gender -->
+
+                        <div class="profile-form-group">
+
+                            <label for="gender">
+                                Пол
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                            >
+                                <option value="">
+                                    Не указан
+                                </option>
+
+                                <option value="male">
+                                    Мужской
+                                </option>
+
+                                <option value="female">
+                                    Женский
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Height -->
+
+                        <div class="profile-form-group">
+
+                            <label for="height">
+                                Рост
+                            </label>
+
+                            <div class="profile-input-with-unit">
+
+                                <input
+                                    type="number"
+                                    id="height"
+                                    name="height"
+                                    min="100"
+                                    max="250"
+                                    step="1"
+                                    required
+                                >
+
+                                <span>см</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Weight -->
+
+                        <div class="profile-form-group">
+
+                            <label for="weight">
+                                Вес
+                            </label>
+
+                            <div class="profile-input-with-unit">
+
+                                <input
+                                    type="number"
+                                    id="weight"
+                                    name="weight"
+                                    min="30"
+                                    max="300"
+                                    step="0.1"
+                                    required
+                                >
+
+                                <span>кг</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Experience -->
+
+                        <div class="profile-form-group">
+
+                            <label for="experienceLevel">
+                                Уровень подготовки
+                            </label>
+
+                            <select
+                                id="experienceLevel"
+                                name="experienceLevel"
+                            >
+
+                                <option value="beginner">
+                                    Новичок
+                                </option>
+
+                                <option value="novice">
+                                    Начинающий
+                                </option>
+
+                                <option value="intermediate">
+                                    Опытный
+                                </option>
+
+                                <option value="advanced">
+                                    Продвинутый
+                                </option>
+
+                                <option value="master">
+                                    Мастер
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Fitness goal -->
+
+                        <div class="profile-form-group">
+
+                            <label for="fitnessGoal">
+                                Цель тренировок
+                            </label>
+
+                            <select
+                                id="fitnessGoal"
+                                name="fitnessGoal"
+                            >
+
+                                <option value="weight_loss">
+                                    Похудение
+                                </option>
+
+                                <option value="muscle_gain">
+                                    Набор мышечной массы
+                                </option>
+
+                                <option value="strength">
+                                    Увеличение силы
+                                </option>
+
+                                <option value="maintenance">
+                                    Поддержание формы
+                                </option>
+
+                                <option value="endurance">
+                                    Выносливость
+                                </option>
+
+                                <option value="aesthetics">
+                                    Улучшение внешнего вида
+                                </option>
+
+                                <option value="recomposition">
+                                    Рекомпозиция тела
+                                </option>
+
+                                <option value="mobility">
+                                    Мобильность / гибкость
+                                </option>
+
+                                <option value="rehabilitation">
+                                    Реабилитация
+                                </option>
+
+                                <option value="sports">
+                                    Спортивная подготовка
+                                </option>
+
+                                <option value="event">
+                                    Подготовка к событию
+                                </option>
+
+                                <option value="stress_relief">
+                                    Антистресс
+                                </option>
+
+                                <option value="energy">
+                                    Повышение энергии
+                                </option>
+
+                                <option value="competition">
+                                    Соревнования
+                                </option>
+
+                                <option value="posture">
+                                    Улучшение осанки
+                                </option>
+
+                                <option value="healthy_aging">
+                                    Здоровое старение
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Preferred time -->
+
+                        <div class="profile-form-group profile-form-group-full">
+
+                            <label for="preferredWorkoutTime">
+                                Предпочтительное время тренировки
+                            </label>
+
+                            <div class="profile-input-with-icon">
+
+                                <span
+                                    class="profile-input-icon"
+                                    aria-hidden="true"
+                                >
+                                    ◷
+                                </span>
+
+                                <input
+                                    type="time"
+                                    id="preferredWorkoutTime"
+                                    name="preferredWorkoutTime"
+                                >
+
+                            </div>
+
+                            <small class="profile-form-hint">
+                                Новые тренировки будут ориентироваться
+                                на это время.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-form-actions">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="saveProfileBtn"
+                        >
+                            Сохранить изменения
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- =================================================
+                 TRAINING SCHEDULE
+                 ================================================= -->
+
+            <section class="profile-panel">
+
+                <div class="profile-section-header">
+
+                    <div>
+
+                        <span class="profile-eyebrow">
+                            Расписание
+                        </span>
+
+                        <h2 class="profile-section-title">
+                            Дни тренировок
+                        </h2>
+
+                        <p class="profile-section-description">
+                            Выбери от одного до трёх дней,
+                            в которые тебе удобнее тренироваться.
+                        </p>
+
+                    </div>
+
+                    <span class="profile-section-icon">
+                        📅
+                    </span>
+
+                </div>
+
+
+                <div class="training-days">
+
+                    <div class="training-days-grid">
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="1"
+                            >
+
+                            <span>
+                                <strong>Пн</strong>
+                                <small>01</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="2"
+                            >
+
+                            <span>
+                                <strong>Вт</strong>
+                                <small>02</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="3"
+                            >
+
+                            <span>
+                                <strong>Ср</strong>
+                                <small>03</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="4"
+                            >
+
+                            <span>
+                                <strong>Чт</strong>
+                                <small>04</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="5"
+                            >
+
+                            <span>
+                                <strong>Пт</strong>
+                                <small>05</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="6"
+                            >
+
+                            <span>
+                                <strong>Сб</strong>
+                                <small>06</small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="training-day">
+
+                            <input
+                                type="checkbox"
+                                name="preferredDays"
+                                value="7"
+                            >
+
+                            <span>
+                                <strong>Вс</strong>
+                                <small>07</small>
+                            </span>
+
+                        </label>
+
+
+                    </div>
+
+
+                    <div class="training-days-footer">
+
+                        <span
+                            class="training-days-counter"
+                            id="selectedDaysCount"
+                        >
+                            Выбрано: 0 / 3
+                        </span>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="saveDaysBtn"
+                        >
+                            Сохранить расписание
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 CALENDAR
+                 ================================================= -->
+
+            <section class="profile-panel calendar-panel">
+
+                <div class="profile-section-header">
+
+                    <div>
+
+                        <span class="profile-eyebrow">
+                            План и результаты
+                        </span>
+
+                        <h2 class="profile-section-title">
+                            Календарь тренировок
+                        </h2>
+
+                        <p class="profile-section-description">
+                            Отслеживай предстоящие и прошедшие
+                            тренировки в одном месте.
+                        </p>
+
+                    </div>
+
+                    <span class="profile-section-icon">
+                        🗓
+                    </span>
+
+                </div>
+
+
+                <!-- Calendar controls -->
+
+                <div class="calendar-toolbar">
+
+                    <button
+                        type="button"
+                        class="calendar-navigation-button"
+                        id="prevMonthBtn"
+                        aria-label="Предыдущий месяц"
+                    >
+                        ←
+                    </button>
+
+
+                    <div class="calendar-current-date">
+
+                        <span
+                            class="calendar-month"
+                            id="currentMonthYear"
+                        >
+                            Сентябрь 2026
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="calendar-navigation-button"
+                        id="nextMonthBtn"
+                        aria-label="Следующий месяц"
+                    >
+                        →
+                    </button>
+
+                </div>
+
+
+                <!-- Legend -->
+
+                <div class="calendar-legend">
+
+
+                    <span class="calendar-legend-item">
+
+                        <span class="calendar-legend-dot upcoming"></span>
+
+                        Предстоящая/Перенесённая
+
+                    </span>
+
+
+                    <span class="calendar-legend-item">
+
+                        <span class="calendar-legend-dot completed"></span>
+
+                        Выполнена
+
+                    </span>
+
+
+                    <span class="calendar-legend-item">
+
+                        <span class="calendar-legend-dot missed"></span>
+
+                        Пропущена
+
+                    </span>
+
+                </div>
+
+
+                <!-- Calendar -->
+
+                <div
+                    class="calendar"
+                    id="calendar"
+                >
+
+                    <div class="calendar-weekdays">
+
+                        <span>Пн</span>
+                        <span>Вт</span>
+                        <span>Ср</span>
+                        <span>Чт</span>
+                        <span>Пт</span>
+                        <span>Сб</span>
+                        <span>Вс</span>
+
+                    </div>
+
+
+                    <div
+                        class="calendar-grid"
+                        id="calendarGrid"
+                    >
+
+                        <!-- Calendar days generated by profile.js -->
+
+                    </div>
+
+                </div>
+
+
+                <!-- Calendar information -->
+
+                <div
+                    class="calendar-event-info hidden"
+                    id="calendarEventInfo"
+                >
+
+                    <div class="calendar-event-info-header">
+
+                        <div>
+
+                            <span
+                                class="profile-eyebrow"
+                                id="calendarEventStatus"
+                            >
+                                Тренировка
+                            </span>
+
+                            <h3 id="calendarEventTitle">
+                                —
+                            </h3>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="calendar-event-close"
+                            id="closeCalendarEvent"
+                            aria-label="Закрыть"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="calendar-event-details"
+                        id="calendarEventDetails"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SESSION
+                 ================================================= -->
+
+            <section class="profile-panel profile-session-panel">
+
+                <div class="profile-session-row">
+
+                    <div class="profile-session-info">
+
+                        <strong>
+                            Выход из аккаунта
+                        </strong>
+
+                        <span>
+                            Завершить текущую сессию
+                            на этом устройстве.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="profile-secondary-button"
+                        id="logoutBtn"
+                    >
+                        Выйти
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 DANGER ZONE
+                 ================================================= -->
+
+            <section class="profile-panel danger-panel">
+
+                <div class="danger-content">
+
+                    <div class="danger-info">
+
+                        <strong>
+                            Удаление аккаунта
+                        </strong>
+
+                        <p>
+                            Все данные профиля, история тренировок
+                            и связанные данные будут удалены.
+                            Восстановить аккаунт после этого
+                            будет невозможно.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="danger-button"
+                        id="deleteAccountBtn"
+                    >
+                        Удалить аккаунт
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         LOGOUT MODAL
+         ===================================================== -->
+
+    <div
+        class="profile-modal hidden"
+        id="logoutModal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="profile-modal-backdrop"
+            data-modal-close
+        ></div>
+
+
+        <div
+            class="profile-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="logoutModalTitle"
+        >
+
+            <div class="profile-modal-icon">
+                ↪
+            </div>
+
+            <h2 id="logoutModalTitle">
+                Выйти из аккаунта?
+            </h2>
+
+            <p>
+                Текущая сессия будет завершена
+                на этом устройстве.
+            </p>
+
+
+            <div class="profile-modal-actions">
+
+                <button
+                    type="button"
+                    class="profile-modal-secondary"
+                    data-modal-close
+                >
+                    Отмена
+                </button>
+
+                <button
+                    type="button"
+                    class="profile-modal-primary"
+                    id="confirmLogoutBtn"
+                >
+                    Выйти
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DELETE MODAL
+         ===================================================== -->
+
+    <div
+        class="profile-modal hidden"
+        id="deleteModal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="profile-modal-backdrop"
+            data-modal-close
+        ></div>
+
+
+        <div
+            class="profile-modal-dialog profile-modal-danger"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="deleteModalTitle"
+        >
+
+            <div class="profile-modal-icon danger">
+                !
+            </div>
+
+            <h2 id="deleteModalTitle">
+                Удалить аккаунт?
+            </h2>
+
+            <p>
+                Это действие необратимо.
+                Все данные аккаунта будут удалены
+                без возможности восстановления.
+            </p>
+
+
+            <div class="profile-modal-actions">
+
+                <button
+                    type="button"
+                    class="profile-modal-secondary"
+                    data-modal-close
+                >
+                    Отмена
+                </button>
+
+                <button
+                    type="button"
+                    class="profile-modal-danger-button"
+                    id="confirmDeleteBtn"
+                >
+                    Да, удалить
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCRIPT
+         ===================================================== -->
+
+    <script
+        type="module"
+        src="/user/profile/profile.js"
+    ></script>
+
+
+</body>
+
+</html>
