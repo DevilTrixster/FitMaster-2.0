@@ -1,9 +1,7 @@
 import { Navbar } from '/components/navbar/navbar.js';
 
 
-/* =========================================================
-   NAVBAR
-   ========================================================= */
+/* Навигатор */
 
 const navbarRoot = document.getElementById('navbar');
 

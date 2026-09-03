@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Аналитика пользователя FitMaster">
+    <title>Аналитика</title>
+
+    <link rel="icon" href="/assets/logo/favicon.png">
+    <link rel="stylesheet" href="/common/common.css">
+    <link rel="stylesheet" href="/components/navbar/navbar.css">
+    <link rel="stylesheet" href="/user/analytics/analytics.css">
+</head>
+<body>
+    <!-- Навигатор -->
+    <div id="navbar"></div>
+
+    <main class="container analytics-container">
+
+        <header class="analytics-header">
+            <div class="analytics-heading">
+                <span class="analytics-eyebrow">Личный анализ</span>
+                <h1>Аналитика</h1>
+                <p>
+                    Смотри, как меняется твой результат, нагрузка и состояние организма
+                    в сравнении с тем, что прогнозирует адаптация.
+                </p>
+            </div>
+
+            <div class="analytics-period-control">
+                <span class="control-label">Общий период</span>
+                <div class="period-switcher" role="group" aria-label="Период аналитики">
+                    <button class="period-button" type="button">1 мес.</button>
+                    <button class="period-button" type="button">3 мес.</button>
+                    <button class="period-button active" type="button">6 мес.</button>
+                    <button class="period-button" type="button">1 год</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="profile-summary analytics-panel">
+            <div class="profile-summary-main">
+                <div class="profile-avatar">
+                    <img src="/assets/default-avatar/default-avatar.png" alt="Аватар пользователя">
+                </div>
+
+                <div class="profile-summary-info">
+                    <span class="analytics-panel-eyebrow">Профиль спортсмена</span>
+                    <h2>Алексей</h2>
+                    <p>Набор мышечной массы · 24 года</p>
+                </div>
+            </div>
+
+            <div class="profile-summary-metrics">
+                <div class="profile-metric">
+                    <span>Рост</span>
+                    <strong>182 см</strong>
+                </div>
+
+                <div class="profile-metric">
+                    <span>Вес</span>
+                    <strong>82 кг</strong>
+                </div>
+
+                <div class="profile-metric">
+                    <span>Опыт</span>
+                    <strong>2 года</strong>
+                </div>
+
+                <a class="profile-summary-link" href="/user/profile/profile.html">
+                    Полная информация
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="status-grid" aria-label="Текущее состояние">
+
+            <article class="status-card">
+                <div class="status-card-topline">
+                    <span class="status-card-label">Прогресс</span>
+                    <span class="status-card-icon">↗</span>
+                </div>
+                <strong class="status-value status-positive">Хороший</strong>
+                <span class="status-description">Результаты растут стабильнее прогноза.</span>
+            </article>
+
+            <article class="status-card">
+                <div class="status-card-topline">
+                    <span class="status-card-label">Нагрузка</span>
+                    <span class="status-card-icon">◈</span>
+                </div>
+                <strong class="status-value">Оптимальная</strong>
+                <span class="status-description">Текущий объём соответствует рабочему диапазону.</span>
+            </article>
+
+            <article class="status-card">
+                <div class="status-card-topline">
+                    <span class="status-card-label">Восстановление</span>
+                    <span class="status-card-icon">◌</span>
+                </div>
+                <strong class="status-value status-positive">Хорошее</strong>
+                <span class="status-description">Основные группы восстанавливаются без перегрузки.</span>
+            </article>
+
+            <article class="status-card">
+                <div class="status-card-topline">
+                    <span class="status-card-label">Риск</span>
+                    <span class="status-card-icon">!</span>
+                </div>
+                <strong class="status-value status-safe">Низкий</strong>
+                <span class="status-description">Признаков выраженной перегрузки сейчас нет.</span>
+            </article>
+
+        </section>
+
+        <section class="analytics-panel main-progress-panel">
+            <div class="panel-heading progress-heading">
+                <div>
+                    <span class="analytics-panel-eyebrow">Главный показатель</span>
+                    <h2>Прогресс упражнения</h2>
+                    <p>Фактический результат и прогноз адаптации на одной шкале.</p>
+                </div>
+
+                <div class="exercise-controls">
+                    <label class="sr-only" for="exerciseSelect">Упражнение</label>
+                    <select id="exerciseSelect" aria-label="Выбор упражнения">
+                        <option>Жим лёжа</option>
+                        <option>Приседания со штангой</option>
+                        <option>Подтягивания</option>
+                        <option>Жим гантелей</option>
+                    </select>
+
+                    <div class="chart-period-tabs" role="group" aria-label="Период графика">
+                        <button class="chart-period active" type="button">1 мес.</button>
+                        <button class="chart-period" type="button">6 мес.</button>
+                        <button class="chart-period" type="button">1 год</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-summary-row">
+                <div class="progress-summary-item">
+                    <span class="summary-label">Текущий результат</span>
+                    <strong>114 кг</strong>
+                    <span class="summary-change positive">+14,8%</span>
+                </div>
+
+                <div class="progress-summary-item">
+                    <span class="summary-label">Прогноз адаптации</span>
+                    <strong>111 кг</strong>
+                    <span class="summary-change positive">+12,4%</span>
+                </div>
+
+                <div class="progress-summary-item compact-summary">
+                    <span class="summary-label">Последнее выполнение</span>
+                    <strong>82,5 кг × 8</strong>
+                    <span class="summary-caption">24 августа</span>
+                </div>
+            </div>
+
+            <div class="line-chart-shell">
+                <div class="chart-y-axis" aria-hidden="true">
+                    <span>120</span>
+                    <span>110</span>
+                    <span>100</span>
+                    <span>90</span>
+                    <span>80</span>
+                    <span>70</span>
+                </div>
+
+                <div class="line-chart-area">
+                    <div class="chart-grid-line chart-grid-line-1"></div>
+                    <div class="chart-grid-line chart-grid-line-2"></div>
+                    <div class="chart-grid-line chart-grid-line-3"></div>
+                    <div class="chart-grid-line chart-grid-line-4"></div>
+                    <div class="chart-grid-line chart-grid-line-5"></div>
+                    <div class="chart-grid-line chart-grid-line-6"></div>
+
+                    <svg class="progress-chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none" aria-label="График прогресса жима лёжа">
+                        <defs>
+                            <linearGradient id="progressFill" x1="0" x2="0" y1="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(233, 69, 96, 0.28)"></stop>
+                                <stop offset="100%" stop-color="rgba(233, 69, 96, 0)"></stop>
+                            </linearGradient>
+                        </defs>
+
+                        <path
+                            class="chart-area-fill"
+                            d="M0,235 C65,225 90,215 140,202 C196,188 230,192 285,174 C350,153 374,158 430,145 C490,131 515,123 568,116 C626,108 660,92 708,80 C774,66 820,58 900,42 L900,300 L0,300 Z"
+                        ></path>
+
+                        <path
+                            class="chart-line adaptation-line"
+                            d="M0,238 C64,231 99,222 145,213 C205,202 237,195 290,184 C347,171 388,166 432,154 C490,141 523,133 572,124 C626,113 664,104 712,94 C773,81 826,70 900,56"
+                        ></path>
+
+                        <path
+                            class="chart-line actual-line"
+                            d="M0,242 C62,226 93,219 145,205 C205,190 246,197 288,173 C345,143 389,156 431,136 C488,109 518,124 570,105 C625,86 662,96 710,72 C763,51 827,62 900,33"
+                        ></path>
+
+                        <circle class="chart-point actual-point" cx="0" cy="242" r="5"></circle>
+                        <circle class="chart-point actual-point" cx="145" cy="205" r="5"></circle>
+                        <circle class="chart-point actual-point" cx="288" cy="173" r="5"></circle>
+                        <circle class="chart-point actual-point" cx="431" cy="136" r="5"></circle>
+                        <circle class="chart-point actual-point" cx="570" cy="105" r="5"></circle>
+                        <circle class="chart-point actual-point" cx="710" cy="72" r="5"></circle>
+                        <circle class="chart-point actual-point current" cx="900" cy="33" r="7"></circle>
+                    </svg>
+
+                    <div class="chart-tooltip-demo">
+                        <span>24 августа</span>
+                        <strong>Факт 114 кг</strong>
+                        <em>Адаптация 111 кг</em>
+                    </div>
+
+                    <div class="chart-x-axis" aria-hidden="true">
+                        <span>Март</span>
+                        <span>Апрель</span>
+                        <span>Май</span>
+                        <span>Июнь</span>
+                        <span>Июль</span>
+                        <span>Август</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-legend">
+                <span><i class="legend-dot actual"></i>Факт</span>
+                <span><i class="legend-dot adaptation"></i>Адаптация</span>
+                <span class="legend-note">Точка = одно выполнение упражнения</span>
+            </div>
+        </section>
+
+        <section class="two-column-layout">
+
+            <article class="analytics-panel load-panel">
+                <div class="panel-heading compact-heading">
+                    <div>
+                        <span class="analytics-panel-eyebrow">Динамика</span>
+                        <h2>Тренировочная нагрузка</h2>
+                    </div>
+
+                    <span class="panel-icon">◒</span>
+                </div>
+
+                <div class="mini-chart-meta">
+                    <div>
+                        <span>Средняя нагрузка</span>
+                        <strong>8 420 кг</strong>
+                    </div>
+                    <span class="trend-chip positive">+9,2%</span>
+                </div>
+
+                <div class="load-chart" aria-label="График тренировочной нагрузки по неделям">
+                    <div class="load-y-scale" aria-hidden="true">
+                        <span>12k</span>
+                        <span>9k</span>
+                        <span>6k</span>
+                        <span>3k</span>
+                        <span>0</span>
+                    </div>
+
+                    <div class="load-bars">
+                        <div class="load-grid-line"></div>
+                        <div class="load-grid-line"></div>
+                        <div class="load-grid-line"></div>
+                        <div class="load-grid-line"></div>
+                        <div class="load-grid-line"></div>
+
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 42%;"></div><span>1</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 53%;"></div><span>2</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 49%;"></div><span>3</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 64%;"></div><span>4</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 59%;"></div><span>5</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 73%;"></div><span>6</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 68%;"></div><span>7</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 82%;"></div><span>8</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 77%;"></div><span>9</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 86%;"></div><span>10</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 74%;"></div><span>11</span></div>
+                        <div class="load-bar-wrap"><div class="load-bar" style="height: 81%;"></div><span>12</span></div>
+                    </div>
+                </div>
+
+                <div class="chart-legend load-legend">
+                    <span><i class="legend-block"></i>Недельная нагрузка</span>
+                    <span class="legend-note">Объём и интенсивность учитываются вместе</span>
+                </div>
+            </article>
+
+            <article class="analytics-panel balance-panel">
+                <div class="panel-heading compact-heading">
+                    <div>
+                        <span class="analytics-panel-eyebrow">Распределение</span>
+                        <h2>Нагрузка по группам</h2>
+                    </div>
+
+                    <span class="panel-icon">◈</span>
+                </div>
+
+                <div class="radar-chart-shell">
+                    <svg class="radar-chart" viewBox="0 0 360 310" aria-label="Распределение нагрузки по шести мышечным группам">
+                        <polygon class="radar-grid" points="180,30 309,106 278,252 82,252 51,106"></polygon>
+                        <polygon class="radar-grid inner" points="180,78 265,128 244,224 116,224 95,128"></polygon>
+                        <polygon class="radar-grid smallest" points="180,125 220,149 210,195 150,195 140,149"></polygon>
+
+                        <line class="radar-axis" x1="180" y1="30" x2="180" y2="252"></line>
+                        <line class="radar-axis" x1="309" y1="106" x2="82" y2="252"></line>
+                        <line class="radar-axis" x1="51" y1="106" x2="278" y2="252"></line>
+
+                        <polygon class="radar-value" points="180,56 282,121 252,216 110,234 83,129"></polygon>
+
+                        <circle class="radar-point" cx="180" cy="56" r="5"></circle>
+                        <circle class="radar-point" cx="282" cy="121" r="5"></circle>
+                        <circle class="radar-point" cx="252" cy="216" r="5"></circle>
+                        <circle class="radar-point" cx="110" cy="234" r="5"></circle>
+                        <circle class="radar-point" cx="83" cy="129" r="5"></circle>
+                    </svg>
+
+                    <div class="radar-label radar-label-top">Плечи</div>
+                    <div class="radar-label radar-label-right">Грудь</div>
+                    <div class="radar-label radar-label-bottom-right">Руки</div>
+                    <div class="radar-label radar-label-bottom-left">Ноги</div>
+                    <div class="radar-label radar-label-left">Спина</div>
+                    <div class="radar-label radar-label-center-bottom">Кор</div>
+                </div>
+
+                <div class="group-summary-grid">
+                    <div><span>Грудь</span><strong>23%</strong></div>
+                    <div><span>Спина</span><strong>21%</strong></div>
+                    <div><span>Плечи</span><strong>14%</strong></div>
+                    <div><span>Ноги</span><strong>26%</strong></div>
+                    <div><span>Руки</span><strong>11%</strong></div>
+                    <div><span>Кор</span><strong>5%</strong></div>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="analytics-panel recovery-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="analytics-panel-eyebrow">Состояние организма</span>
+                    <h2>Восстановление</h2>
+                    <p>Текущее состояние шести основных мышечных групп.</p>
+                </div>
+
+                <div class="recovery-period-tabs" role="group" aria-label="Период восстановления">
+                    <button class="recovery-period active" type="button">Сейчас</button>
+                    <button class="recovery-period" type="button">7 дней</button>
+                    <button class="recovery-period" type="button">1 мес.</button>
+                </div>
+            </div>
+
+            <div class="recovery-overview">
+                <div class="recovery-radar-card">
+                    <div class="recovery-radar-shell">
+                        <svg class="recovery-radar" viewBox="0 0 420 360" aria-label="Диаграмма восстановления по шести мышечным группам">
+                            <polygon class="recovery-ring ring-large" points="210,30 357,115 303,285 117,285 63,115"></polygon>
+                            <polygon class="recovery-ring ring-mid" points="210,78 316,139 277,257 143,257 104,139"></polygon>
+                            <polygon class="recovery-ring ring-small" points="210,126 273,163 252,229 168,229 147,163"></polygon>
+
+                            <line class="recovery-axis" x1="210" y1="30" x2="210" y2="285"></line>
+                            <line class="recovery-axis" x1="357" y1="115" x2="117" y2="285"></line>
+                            <line class="recovery-axis" x1="63" y1="115" x2="303" y2="285"></line>
+
+                            <polygon class="recovery-value" points="210,42 333,129 277,260 157,248 95,140"></polygon>
+
+                            <circle class="recovery-point" cx="210" cy="42" r="6"></circle>
+                            <circle class="recovery-point" cx="333" cy="129" r="6"></circle>
+                            <circle class="recovery-point" cx="277" cy="260" r="6"></circle>
+                            <circle class="recovery-point" cx="157" cy="248" r="6"></circle>
+                            <circle class="recovery-point" cx="95" cy="140" r="6"></circle>
+                        </svg>
+
+                        <span class="recovery-label recovery-top">Плечи</span>
+                        <span class="recovery-label recovery-right">Грудь</span>
+                        <span class="recovery-label recovery-bottom-right">Руки</span>
+                        <span class="recovery-label recovery-bottom-left">Ноги</span>
+                        <span class="recovery-label recovery-left">Спина</span>
+                        <span class="recovery-label recovery-center-bottom">Кор</span>
+                    </div>
+                </div>
+
+                <div class="recovery-details">
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Грудь</span>
+                            <span class="group-note">Высокая готовность</span>
+                        </div>
+                        <strong>89%</strong>
+                        <div class="metric-progress"><span style="width: 89%;"></span></div>
+                    </div>
+
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Спина</span>
+                            <span class="group-note">Восстановление продолжается</span>
+                        </div>
+                        <strong>73%</strong>
+                        <div class="metric-progress"><span style="width: 73%;"></span></div>
+                    </div>
+
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Плечи</span>
+                            <span class="group-note">Нужен запас восстановления</span>
+                        </div>
+                        <strong>54%</strong>
+                        <div class="metric-progress warning"><span style="width: 54%;"></span></div>
+                    </div>
+
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Ноги</span>
+                            <span class="group-note">После недавней нагрузки</span>
+                        </div>
+                        <strong>43%</strong>
+                        <div class="metric-progress warning"><span style="width: 43%;"></span></div>
+                    </div>
+
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Руки</span>
+                            <span class="group-note">Высокая готовность</span>
+                        </div>
+                        <strong>81%</strong>
+                        <div class="metric-progress"><span style="width: 81%;"></span></div>
+                    </div>
+
+                    <div class="recovery-detail-row">
+                        <div>
+                            <span class="group-name">Кор</span>
+                            <span class="group-note">Почти полное восстановление</span>
+                        </div>
+                        <strong>96%</strong>
+                        <div class="metric-progress"><span style="width: 96%;"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recovery-insight">
+                <div class="insight-icon">i</div>
+                <div>
+                    <strong>Что происходит сейчас</strong>
+                    <p>
+                        Ноги и плечи восстанавливаются медленнее остальных групп.
+                        Основная причина — более высокая недавняя нагрузка, а не отсутствие прогресса.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="two-column-layout risk-adaptation-layout">
+
+            <article class="analytics-panel risk-panel">
+                <div class="panel-heading compact-heading">
+                    <div>
+                        <span class="analytics-panel-eyebrow">Контроль нагрузки</span>
+                        <h2>Риск перегрузки</h2>
+                    </div>
+
+                    <span class="panel-icon">!</span>
+                </div>
+
+                <div class="risk-list">
+                    <div class="risk-row">
+                        <div class="risk-row-main">
+                            <span>Грудь</span>
+                            <small>Низкий</small>
+                        </div>
+                        <div class="risk-meter"><span class="low" style="width: 24%;"></span></div>
+                    </div>
+
+                    <div class="risk-row">
+                        <div class="risk-row-main">
+                            <span>Спина</span>
+                            <small>Умеренный</small>
+                        </div>
+                        <div class="risk-meter"><span class="medium" style="width: 53%;"></span></div>
+                    </div>
+
+                    <div class="risk-row highlighted">
+                        <div class="risk-row-main">
+                            <span>Плечи</span>
+                            <small>Повышенный</small>
+                        </div>
+                        <div class="risk-meter"><span class="high" style="width: 76%;"></span></div>
+                    </div>
+
+                    <div class="risk-row">
+                        <div class="risk-row-main">
+                            <span>Ноги</span>
+                            <small>Умеренный</small>
+                        </div>
+                        <div class="risk-meter"><span class="medium" style="width: 49%;"></span></div>
+                    </div>
+
+                    <div class="risk-row">
+                        <div class="risk-row-main">
+                            <span>Руки</span>
+                            <small>Низкий</small>
+                        </div>
+                        <div class="risk-meter"><span class="low" style="width: 19%;"></span></div>
+                    </div>
+
+                    <div class="risk-row">
+                        <div class="risk-row-main">
+                            <span>Кор</span>
+                            <small>Низкий</small>
+                        </div>
+                        <div class="risk-meter"><span class="low" style="width: 12%;"></span></div>
+                    </div>
+                </div>
+
+                <div class="risk-insight">
+                    <span class="risk-insight-title">Основной фактор</span>
+                    <p>Плечи получают повышенную частоту нагрузки при неполном восстановлении.</p>
+                </div>
+            </article>
+
+            <article class="analytics-panel adaptation-panel">
+                <div class="panel-heading compact-heading">
+                    <div>
+                        <span class="analytics-panel-eyebrow">Обратная связь</span>
+                        <h2>Адаптация</h2>
+                    </div>
+
+                    <span class="panel-icon">AI</span>
+                </div>
+
+                <div class="adaptation-score-block">
+                    <div>
+                        <span class="summary-label">Точность прогнозов</span>
+                        <strong>87%</strong>
+                    </div>
+                    <span class="trend-chip positive">+6,1% за 6 мес.</span>
+                </div>
+
+                <div class="adaptation-chart">
+                    <div class="adaptation-chart-grid"></div>
+                    <svg viewBox="0 0 620 170" preserveAspectRatio="none" aria-label="Динамика точности адаптации">
+                        <path
+                            class="adaptation-chart-line"
+                            d="M0,132 C82,126 111,119 160,123 C214,127 244,99 302,105 C364,111 394,80 451,86 C501,91 548,59 620,39"
+                        ></path>
+                        <circle cx="620" cy="39" r="6" class="adaptation-chart-point"></circle>
+                    </svg>
+                    <div class="adaptation-axis-labels">
+                        <span>Март</span>
+                        <span>Апрель</span>
+                        <span>Май</span>
+                        <span>Июнь</span>
+                        <span>Июль</span>
+                        <span>Август</span>
+                    </div>
+                </div>
+
+                <div class="adaptation-profile">
+                    <div class="adaptation-profile-row">
+                        <span>Переносимость объёма</span>
+                        <strong>Высокая</strong>
+                    </div>
+                    <div class="adaptation-profile-row">
+                        <span>Устойчивость к усталости</span>
+                        <strong>Средняя</strong>
+                    </div>
+                    <div class="adaptation-profile-row">
+                        <span>Скорость восстановления</span>
+                        <strong>Выше средней</strong>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="analytics-panel records-panel">
+            <div class="panel-heading compact-heading">
+                <div>
+                    <span class="analytics-panel-eyebrow">Лучшие результаты</span>
+                    <h2>Личные рекорды</h2>
+                </div>
+
+                <a class="panel-action" href="/user/history/history.html">Все рекорды →</a>
+            </div>
+
+            <div class="records-grid">
+                <article class="record-card">
+                    <div class="record-position">01</div>
+                    <div class="record-content">
+                        <span class="record-exercise">Жим лёжа</span>
+                        <strong>92,5 кг × 8</strong>
+                        <span class="record-date">24 августа</span>
+                    </div>
+                    <span class="record-badge">PR</span>
+                </article>
+
+                <article class="record-card">
+                    <div class="record-position">02</div>
+                    <div class="record-content">
+                        <span class="record-exercise">Приседания со штангой</span>
+                        <strong>120 кг × 5</strong>
+                        <span class="record-date">21 августа</span>
+                    </div>
+                    <span class="record-badge">PR</span>
+                </article>
+
+                <article class="record-card">
+                    <div class="record-position">03</div>
+                    <div class="record-content">
+                        <span class="record-exercise">Подтягивания</span>
+                        <strong>+25 кг × 6</strong>
+                        <span class="record-date">19 августа</span>
+                    </div>
+                    <span class="record-badge">PR</span>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Скрипты -->
+    <script type="module" src="/user/analytics/analytics.js"></script>
+    
+</body>
+</html>

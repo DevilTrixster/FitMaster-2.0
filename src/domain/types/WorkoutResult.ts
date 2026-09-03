@@ -10,5 +10,5 @@ export interface WorkoutExerciseResult {
     exerciseName: string;
     orderIndex: number;
     sets: number;
-    actualValues: WorkoutValue[];
+    actualValues: (WorkoutValue | null)[];
 }

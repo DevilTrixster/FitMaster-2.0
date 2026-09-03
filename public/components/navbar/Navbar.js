@@ -13,7 +13,7 @@ const publicNavigationItems = [
 
 const authenticatedNavigationItems = [
     {
-        label: 'Личный кабинет',
+        label: 'Тренировки',
         path: '/user/dashboard/dashboard.html'
     },
     {
@@ -21,8 +21,8 @@ const authenticatedNavigationItems = [
         path: '/user/history/history.html'
     },
     {
-        label: 'Прогресс',
-        path: '/user/progress/progress.html'
+        label: 'Аналитика',
+        path: '/user/analytics/analytics.html'
     },
     {
         label: 'Профиль',

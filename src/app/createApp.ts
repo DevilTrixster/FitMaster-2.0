@@ -7,7 +7,7 @@ import { configureMiddleware } from './configureMiddleware.js';
 import { registerRoutes } from './registerRoutes.js';
 import { errorHandler } from '../http/middleware/errorHandler.js'
 
-export function CreateApp() {
+export function createApp() {
 
     const database = createDatabase();
     const services = createServices();
