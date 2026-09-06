@@ -1,5 +1,5 @@
 import { User } from '../../../../domain/entities/user/User.js'
-import { UserResponse } from '../dto/UserResponse.js'
+import { UserResponse } from '../DTO.js'
 
 export function toUserResponse(user: User): UserResponse {
     return {

@@ -1,15 +1,10 @@
 import { Request, Response } from 'express';
-import { IRegisterUserUseCase } from '../../application/users/auth/contracts/IRegisterUserUseCase.js';
-import { ILoginUserUseCase } from '../../application/users/auth/contracts/ILoginUserUseCase.js';
-import { ILogoutUserUseCase } from '../../application/users/auth/contracts/ILogoutUserUseCase.js';
-import { IRefreshTokenUseCase } from '../../application/users/auth/contracts/IRefreshTokenUseCase.js';
-import { IGetCurrentUserUseCase } from '../../application/users/auth/contracts/IGetCurrentUserUseCase.js';
-import { RegisterUserRequest } from '../../application/users/auth/dto/RegisterUserRequest.js';
-import { LoginUserRequest } from '../../application/users/auth/dto/LoginUserRequest.js';
-import { LogoutUserRequest } from '../../application/users/auth/dto/LogoutUserRequest.js';
-import { RefreshTokenRequest } from '../../application/users/auth/dto/RefreshTokenRequest.js';
-import { GetCurrentUserRequest } from '../../application/users/auth/dto/GetCurrentUserRequest.js';
-import { InvalidAccessTokenError } from '../../shared/errors/index.js';
+import { AuthenticatedRequest } from '../middleware/types/AuthenticatedRequest.js';
+import { IRegisterUserUseCase, IGetCurrentUserUseCase, IRefreshTokenUseCase,
+    ILogoutUserUseCase, ILoginUserUseCase } from '../../application/users/auth/Contracts.js';
+import { RegisterUserRequest, LoginUserRequest, LogoutUserRequest,
+    RefreshTokenRequest, GetCurrentUserRequest } from '../../application/users/auth/DTO.js';
+
 
 export class AuthController {
 
@@ -60,21 +55,12 @@ export class AuthController {
         res.status(200).json(result);
     }
 
-    async me(req: Request, res: Response): Promise<void> {
-        const accessToken = req.headers.authorization?.startsWith('Bearer ')
-            ? req.headers.authorization.slice(7)
-            : null;
-
-        if (!accessToken) {
-            throw new InvalidAccessTokenError();
-        }
-
+    async me(req: AuthenticatedRequest, res: Response): Promise<void> {
         const request: GetCurrentUserRequest = {
-            accessToken,
+            userId: req.auth.userId
         };
 
-        const user =
-            await this.getCurrentUserUseCase.execute(request);
+        const user = await this.getCurrentUserUseCase.execute(request);
 
         res.status(200).json(user);
     }

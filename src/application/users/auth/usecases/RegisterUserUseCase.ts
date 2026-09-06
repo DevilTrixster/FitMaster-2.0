@@ -4,9 +4,8 @@ import { User } from '../../../../domain/entities/user/User.js';
 import { AuthSession } from '../../../../domain/entities/user/AuthSession.js';
 import { IPasswordHasher } from '../services/IPasswordHasher.js';
 import { ITokenService } from '../services/ITokenService.js';
-import { RegisterUserRequest } from '../dto/RegisterUserRequest.js';
-import { AuthenticationResult } from '../dto/AuthenticationResult.js';
-import { IRegisterUserUseCase } from '../contracts/IRegisterUserUseCase.js';
+import { RegisterUserRequest, AuthenticationResult } from '../DTO.js';
+import { IRegisterUserUseCase } from '../Contracts.js';
 import { toUserResponse } from '../mappers/UserResponseMapper.js'
 
 export class RegisterUserUseCase implements IRegisterUserUseCase {

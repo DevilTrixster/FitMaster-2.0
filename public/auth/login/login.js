@@ -1,7 +1,7 @@
 import { Navbar } from '/components/navbar/Navbar.js';
+import { setTokens } from '/auth/auth.js';
 
-const navbarRoot =
-    document.getElementById('navbar');
+const navbarRoot = document.getElementById('navbar');
 
 if (navbarRoot) {
     const navbar =
@@ -12,11 +12,8 @@ if (navbarRoot) {
     navbar.render();
 }
 
-const loginForm =
-    document.getElementById('loginForm');
-
-const loginMessage =
-    document.getElementById('loginMessage');
+const loginForm = document.getElementById('loginForm');
+const loginMessage = document.getElementById('loginMessage');
 
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -54,16 +51,10 @@ loginForm.addEventListener('submit', async (event) => {
                 'Не удалось выполнить вход.'
             );
         }
-
-        localStorage.setItem(
-            'accessToken',
-            result.accessToken
-        );
-
-        localStorage.setItem(
-            'refreshToken',
-            result.refreshToken
-        );
+        setTokens({
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken
+        });
 
         window.location.href =
             '/user/dashboard/dashboard.html';

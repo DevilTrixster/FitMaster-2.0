@@ -23,7 +23,7 @@ export function createApp() {
     const app = express();
 
     configureMiddleware(app);
-    registerRoutes(app, controllers);
+    registerRoutes(app, controllers, services);
     app.use(errorHandler);
 
     return app;

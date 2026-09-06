@@ -1,4 +1,5 @@
 import { Navbar } from '/components/navbar/Navbar.js';
+import { setTokens } from '/auth/auth.js';
 
 const navbarRoot =
     document.getElementById('navbar');
@@ -146,17 +147,10 @@ registrationForm.addEventListener(
                     'Не удалось создать аккаунт.'
                 );
             }
-
-
-            localStorage.setItem(
-                'accessToken',
-                result.accessToken
-            );
-
-            localStorage.setItem(
-                'refreshToken',
-                result.refreshToken
-            );
+            setTokens({
+                accessToken: result.accessToken,
+                refreshToken: result.refreshToken
+            });
 
 
             window.location.href =

@@ -1,7 +1,7 @@
 import { IDatabase } from '../../../ports/database/IDatabase.js';
 import { ITokenService } from '../services/ITokenService.js';
-import { LogoutUserRequest } from '../dto/LogoutUserRequest.js';
-import { ILogoutUserUseCase } from '../contracts/ILogoutUserUseCase.js';
+import { LogoutUserRequest } from '../DTO.js';
+import { ILogoutUserUseCase } from '../Contracts.js';
 
 export class LogoutUserUseCase implements ILogoutUserUseCase {
 

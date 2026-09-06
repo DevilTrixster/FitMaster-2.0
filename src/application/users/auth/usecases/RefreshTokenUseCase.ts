@@ -2,9 +2,8 @@ import { IDatabase } from '../../../ports/database/IDatabase.js';
 import { InvalidRefreshTokenError } from '../../../../shared/errors/index.js';
 import { AuthSession } from '../../../../domain/entities/user/AuthSession.js';
 import { ITokenService } from '../services/ITokenService.js';
-import { RefreshTokenRequest } from '../dto/RefreshTokenRequest.js';
-import { RefreshTokenResult } from '../dto/RefreshTokenResult.js';
-import { IRefreshTokenUseCase } from '../contracts/IRefreshTokenUseCase.js';
+import { RefreshTokenRequest, RefreshTokenResult } from '../DTO.js';
+import { IRefreshTokenUseCase } from '../Contracts.js';
 
 export class RefreshTokenUseCase implements IRefreshTokenUseCase {
 

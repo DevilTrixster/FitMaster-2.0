@@ -3,9 +3,8 @@ import { InvalidCredentialsError } from '../../../../shared/errors/index.js';
 import { AuthSession } from '../../../../domain/entities/user/AuthSession.js';
 import { IPasswordHasher } from '../services/IPasswordHasher.js';
 import { ITokenService } from '../services/ITokenService.js';
-import { LoginUserRequest } from '../dto/LoginUserRequest.js';
-import { AuthenticationResult } from '../dto/AuthenticationResult.js';
-import { ILoginUserUseCase } from '../contracts/ILoginUserUseCase.js';
+import { LoginUserRequest, AuthenticationResult } from '../DTO.js';
+import { ILoginUserUseCase } from '../Contracts.js';
 import { toUserResponse } from '../mappers/UserResponseMapper.js';
 
 export class LoginUserUseCase implements ILoginUserUseCase {
