@@ -1,16 +1,21 @@
 import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 
-import { ApplicationError } from '../../shared/errors/ApplicationError.js';
 import { AppStatus } from '../../shared/AppStatus.js';
+import { ApplicationError } from '../../shared/errors/ApplicationError.js';
 
-export function errorHandler(error: unknown, _req: Request, res: Response, _next: NextFunction): void {
+export function errorHandler(
+    error: unknown,
+    _req: Request,
+    res: Response,
+    _next: NextFunction
+): void {
     if (error instanceof ApplicationError) {
         const status = getStatusForApplicationError(error);
 
         res.status(status.statusCode).json({
             code: error.code,
-            message: error.message,
+            message: error.message
         });
 
         return;
@@ -20,19 +25,17 @@ export function errorHandler(error: unknown, _req: Request, res: Response, _next
         res.status(AppStatus.UNPROCESSABLE_CONTENT.statusCode).json({
             code: 'VALIDATION_ERROR',
             message: 'Request validation failed',
-            errors: error.issues,
+            errors: error.issues
         });
 
         return;
     }
 
     console.error(error);
-    res
-        .status(AppStatus.INTERNAL_SERVER_ERROR.statusCode)
-        .json({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: AppStatus.INTERNAL_SERVER_ERROR.message,
-        });
+    res.status(AppStatus.INTERNAL_SERVER_ERROR.statusCode).json({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: AppStatus.INTERNAL_SERVER_ERROR.message
+    });
 }
 
 function getStatusForApplicationError(error: ApplicationError) {

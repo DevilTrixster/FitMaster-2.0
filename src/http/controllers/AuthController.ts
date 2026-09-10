@@ -1,19 +1,28 @@
 import { Request, Response } from 'express';
-import { AuthenticatedRequest } from '../middleware/types/AuthenticatedRequest.js';
-import { IRegisterUserUseCase, IGetCurrentUserUseCase, IRefreshTokenUseCase,
-    ILogoutUserUseCase, ILoginUserUseCase } from '../../application/users/auth/Contracts.js';
-import { RegisterUserRequest, LoginUserRequest, LogoutUserRequest,
-    RefreshTokenRequest, GetCurrentUserRequest } from '../../application/users/auth/DTO.js';
 
+import {
+    IRegisterUserUseCase,
+    IGetCurrentUserUseCase,
+    IRefreshTokenUseCase,
+    ILogoutUserUseCase,
+    ILoginUserUseCase
+} from '../../application/users/auth/Contracts.js';
+import {
+    RegisterUserRequest,
+    LoginUserRequest,
+    LogoutUserRequest,
+    RefreshTokenRequest,
+    GetCurrentUserRequest
+} from '../../application/users/auth/DTO.js';
+import { AuthenticatedRequest } from '../middleware/types/AuthenticatedRequest.js';
 
 export class AuthController {
-
     constructor(
         private readonly registerUserUseCase: IRegisterUserUseCase,
         private readonly loginUserUseCase: ILoginUserUseCase,
         private readonly logoutUserUseCase: ILogoutUserUseCase,
         private readonly refreshTokenUseCase: IRefreshTokenUseCase,
-        private readonly getCurrentUserUseCase: IGetCurrentUserUseCase,
+        private readonly getCurrentUserUseCase: IGetCurrentUserUseCase
     ) {}
 
     async register(req: Request, res: Response): Promise<void> {
@@ -27,7 +36,7 @@ export class AuthController {
     async login(req: Request, res: Response): Promise<void> {
         const request: LoginUserRequest = {
             email: req.body.email,
-            password: req.body.password,
+            password: req.body.password
         };
 
         const result = await this.loginUserUseCase.execute(request);
@@ -37,7 +46,7 @@ export class AuthController {
 
     async logout(req: Request, res: Response): Promise<void> {
         const request: LogoutUserRequest = {
-            refreshToken: req.body.refreshToken,
+            refreshToken: req.body.refreshToken
         };
 
         await this.logoutUserUseCase.execute(request);
@@ -47,7 +56,7 @@ export class AuthController {
 
     async refresh(req: Request, res: Response): Promise<void> {
         const request: RefreshTokenRequest = {
-            refreshToken: req.body.refreshToken,
+            refreshToken: req.body.refreshToken
         };
 
         const result = await this.refreshTokenUseCase.execute(request);

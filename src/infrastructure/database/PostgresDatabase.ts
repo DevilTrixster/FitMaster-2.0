@@ -1,9 +1,11 @@
 import { Pool } from 'pg';
-import { DatabaseTransaction } from './DatabaseTransaction.js';
-import { PoolExecutor } from './PoolExecutor.js';
+
 import { IDatabase } from '../../application/ports/database/IDatabase.js';
 import { IRepositoryProvider } from '../../application/ports/repositories/IRepositoryProvider.js';
 import { RepositoryProvider } from '../repositories/RepositoryProvider.js';
+
+import { DatabaseTransaction } from './DatabaseTransaction.js';
+import { PoolExecutor } from './PoolExecutor.js';
 
 export class PostgresDatabase implements IDatabase {
     private readonly pool: Pool;
@@ -18,11 +20,13 @@ export class PostgresDatabase implements IDatabase {
 
             max: 20, // максимальное число подключений
             idleTimeoutMillis: 30000, // время ожидания (мс)
-            connectionTimeoutMillis: 2000, // время подключения (мс)
+            connectionTimeoutMillis: 2000 // время подключения (мс)
         });
     }
 
-    async transaction<T>(callback: (repositories: IRepositoryProvider) => Promise<T>): Promise<T> {
+    async transaction<T>(
+        callback: (repositories: IRepositoryProvider) => Promise<T>
+    ): Promise<T> {
         const client = await this.pool.connect();
         const transaction = new DatabaseTransaction(client);
         return transaction.run(async (executor) => {
@@ -52,5 +56,4 @@ export class PostgresDatabase implements IDatabase {
 
         return new RepositoryProvider(executor);
     }
-
 }

@@ -1,9 +1,17 @@
 import { QueryResultRow } from 'pg';
+
 import { User } from '../../../domain/entities/user/User.js';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
-import { UserUpdateFields } from '../../../domain/types/UserUpdateFields.js'
+import { UserUpdateFields } from '../../../domain/types/UserUpdateFields.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
-import { userFindById, userFindByEmail, userCreate, userDelete, userFindByNickname } from './query/UserQuery.js';
+
+import {
+    userFindById,
+    userFindByEmail,
+    userCreate,
+    userDelete,
+    userFindByNickname
+} from './query/UserQuery.js';
 
 const userUpdateColumns = {
     nickname: 'nickname',
@@ -15,7 +23,7 @@ const userUpdateColumns = {
     preferredWorkoutTime: 'preferred_workout_time',
     preferredDays: 'preferred_days',
     experienceLevel: 'experience_level',
-    fitnessGoal: 'fitness_goal',
+    fitnessGoal: 'fitness_goal'
 } as const;
 
 interface UserRow extends QueryResultRow {
@@ -39,7 +47,6 @@ interface UserRow extends QueryResultRow {
 }
 
 export class UserRepository implements IUserRepository {
-
     constructor(private readonly executor: IDatabaseExecutor) {}
 
     private mapToEntity(row: UserRow): User {
@@ -60,7 +67,7 @@ export class UserRepository implements IUserRepository {
             experienceLevel: row.experience_level,
             fitnessGoal: row.fitness_goal,
             createdAt: row.created_at,
-            updatedAt: row.updated_at,
+            updatedAt: row.updated_at
         });
     }
 
@@ -75,7 +82,9 @@ export class UserRepository implements IUserRepository {
     }
 
     async findByNickname(nickname: string): Promise<User | null> {
-        const result = await this.executor.query<UserRow>(userFindByNickname, [nickname]);
+        const result = await this.executor.query<UserRow>(userFindByNickname, [
+            nickname
+        ]);
 
         if (result.rows.length === 0) {
             return null;
@@ -85,7 +94,9 @@ export class UserRepository implements IUserRepository {
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        const result = await this.executor.query<UserRow>(userFindByEmail, [email]);
+        const result = await this.executor.query<UserRow>(userFindByEmail, [
+            email
+        ]);
 
         if (result.rows.length === 0) {
             return null;
@@ -95,31 +106,30 @@ export class UserRepository implements IUserRepository {
     }
 
     async createUser(user: User): Promise<User> {
-        const result = await this.executor.query<UserRow>(
-            userCreate,
-            [
-                user.nickname,
-                user.passwordHash,
-                user.email,
-                user.firstName,
-                user.lastName,
-                user.birthDate,
-                user.gender,
-                user.height,
-                user.weight,
-                user.avatarUrl,
-                user.preferredWorkoutTime,
-                user.preferredDays,
-                user.experienceLevel,
-                user.fitnessGoal,
-            ]
-        );
+        const result = await this.executor.query<UserRow>(userCreate, [
+            user.nickname,
+            user.passwordHash,
+            user.email,
+            user.firstName,
+            user.lastName,
+            user.birthDate,
+            user.gender,
+            user.height,
+            user.weight,
+            user.avatarUrl,
+            user.preferredWorkoutTime,
+            user.preferredDays,
+            user.experienceLevel,
+            user.fitnessGoal
+        ]);
 
         return this.mapToEntity(result.rows[0]);
     }
 
-    async updateUserFields(userId: number, fields: UserUpdateFields): Promise<User | null> {
-
+    async updateUserFields(
+        userId: number,
+        fields: UserUpdateFields
+    ): Promise<User | null> {
         const entries = Object.entries(fields);
 
         if (entries.length === 0) {
@@ -134,9 +144,8 @@ export class UserRepository implements IUserRepository {
                 continue;
             }
 
-            const column = userUpdateColumns[
-                field as keyof typeof userUpdateColumns
-            ];
+            const column =
+                userUpdateColumns[field as keyof typeof userUpdateColumns];
 
             if (!column) {
                 continue;
@@ -144,11 +153,9 @@ export class UserRepository implements IUserRepository {
 
             values.push(value);
 
-            setClauses.push(
-                `${column} = $${values.length}`
-            );
+            setClauses.push(`${column} = $${values.length}`);
         }
-        
+
         const query = `
             UPDATE users
             SET ${setClauses.join(', ')}
@@ -173,10 +180,7 @@ export class UserRepository implements IUserRepository {
                 updated_at
         `;
 
-        const result = await this.executor.query<UserRow>(
-            query,
-            values
-        );
+        const result = await this.executor.query<UserRow>(query, values);
 
         if (result.rows.length === 0) {
             return null;
@@ -186,9 +190,6 @@ export class UserRepository implements IUserRepository {
     }
 
     async delete(id: number): Promise<void> {
-        await this.executor.query(
-            userDelete,
-            [id]
-        );
+        await this.executor.query(userDelete, [id]);
     }
 }

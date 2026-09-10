@@ -1,8 +1,14 @@
 import { QueryResultRow } from 'pg';
+
 import { UserWorkout } from '../../../domain/entities/workouts/UserWorkout.js';
 import { IUserWorkoutRepository } from '../../../domain/repositories/IUserWorkoutRepository.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
-import { userWorkoutFindById, userWorkoutCreate, userWorkoutFindByIdAndUserId } from './query/UserWorkoutQuery.js';
+
+import {
+    userWorkoutFindById,
+    userWorkoutCreate,
+    userWorkoutFindByIdAndUserId
+} from './query/UserWorkoutQuery.js';
 
 interface UserWorkoutRow extends QueryResultRow {
     id: number;
@@ -18,12 +24,9 @@ interface UserWorkoutRow extends QueryResultRow {
 }
 
 export class UserWorkoutRepository implements IUserWorkoutRepository {
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
-    constructor(
-        private readonly executor: IDatabaseExecutor
-    ) {}
-
-    private mapToEntity(row:UserWorkoutRow):UserWorkout {
+    private mapToEntity(row: UserWorkoutRow): UserWorkout {
         return new UserWorkout({
             id: row.id,
             userId: row.user_id,
@@ -39,7 +42,10 @@ export class UserWorkoutRepository implements IUserWorkoutRepository {
     }
 
     async findById(id: number): Promise<UserWorkout | null> {
-        const result = await this.executor.query<UserWorkoutRow>(userWorkoutFindById, [id]);
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindById,
+            [id]
+        );
 
         if (result.rows.length === 0) {
             return null;
@@ -59,14 +65,21 @@ export class UserWorkoutRepository implements IUserWorkoutRepository {
                 userWorkout.originalScheduledAt,
                 userWorkout.scheduledAt,
                 userWorkout.startedAt,
-                userWorkout.completedAt,
-            ]);
+                userWorkout.completedAt
+            ]
+        );
 
         return this.mapToEntity(result.rows[0]);
     }
 
-    async findByIdAndUserId(id: number, userId: number): Promise<UserWorkout | null> {
-        const result = await this.executor.query<UserWorkoutRow>(userWorkoutFindByIdAndUserId, [id, userId]);
+    async findByIdAndUserId(
+        id: number,
+        userId: number
+    ): Promise<UserWorkout | null> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindByIdAndUserId,
+            [id, userId]
+        );
 
         if (result.rows.length === 0) {
             return null;

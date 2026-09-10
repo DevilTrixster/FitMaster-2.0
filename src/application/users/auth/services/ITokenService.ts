@@ -3,5 +3,5 @@ export interface ITokenService {
     hashRefreshToken(token: string): string;
     getRefreshTokenExpiresAt(): Date;
     generateAccessToken(userId: number): string;
-    verifyAccessToken(token: string): { userId: number; };
+    verifyAccessToken(token: string): { userId: number };
 }

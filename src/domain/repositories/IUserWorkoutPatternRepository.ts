@@ -1,5 +1,5 @@
-import { UserWorkoutPattern } from "../entities/workouts/UserWorkoutPattern.js";
+import { UserWorkoutPattern } from '../entities/workouts/UserWorkoutPattern.js';
 
 export interface IUserWorkoutPatternRepository {
-    findById(id:string): Promise<UserWorkoutPattern | null>;
+    findById(id: string): Promise<UserWorkoutPattern | null>;
 }

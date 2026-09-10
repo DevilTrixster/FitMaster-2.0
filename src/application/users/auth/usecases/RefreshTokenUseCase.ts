@@ -1,36 +1,29 @@
-import { IDatabase } from '../../../ports/database/IDatabase.js';
-import { InvalidRefreshTokenError } from '../../../../shared/errors/index.js';
 import { AuthSession } from '../../../../domain/entities/user/AuthSession.js';
-import { ITokenService } from '../services/ITokenService.js';
-import { RefreshTokenRequest, RefreshTokenResult } from '../DTO.js';
+import { InvalidRefreshTokenError } from '../../../../shared/errors/index.js';
+import { IDatabase } from '../../../ports/database/IDatabase.js';
 import { IRefreshTokenUseCase } from '../Contracts.js';
+import { RefreshTokenRequest, RefreshTokenResult } from '../DTO.js';
+import { ITokenService } from '../services/ITokenService.js';
 
 export class RefreshTokenUseCase implements IRefreshTokenUseCase {
-
     constructor(
         private readonly database: IDatabase,
-        private readonly tokenService: ITokenService,
+        private readonly tokenService: ITokenService
     ) {}
 
-    async execute(
-        request: RefreshTokenRequest
-    ): Promise<RefreshTokenResult> {
-
+    async execute(request: RefreshTokenRequest): Promise<RefreshTokenResult> {
         return this.database.transaction(async (repositories) => {
-
             const authSessionRepository =
                 repositories.getAuthSessionRepository();
 
-            const refreshTokenHash =
-                this.tokenService.hashRefreshToken(
-                    request.refreshToken
-                );
+            const refreshTokenHash = this.tokenService.hashRefreshToken(
+                request.refreshToken
+            );
 
             const session =
-                await authSessionRepository
-                    .findByTokenHashForUpdate(
-                        refreshTokenHash
-                    );
+                await authSessionRepository.findByTokenHashForUpdate(
+                    refreshTokenHash
+                );
 
             if (!session) {
                 throw new InvalidRefreshTokenError();
@@ -44,37 +37,29 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
                 throw new InvalidRefreshTokenError();
             }
 
-            const newRefreshToken =
-                this.tokenService.generateRefreshToken();
+            const newRefreshToken = this.tokenService.generateRefreshToken();
 
             const newRefreshTokenHash =
-                this.tokenService.hashRefreshToken(
-                    newRefreshToken
-                );
+                this.tokenService.hashRefreshToken(newRefreshToken);
 
-            await authSessionRepository.revokeById(
-                session.id!
-            );
+            await authSessionRepository.revokeById(session.id!);
 
             const newSession = new AuthSession({
                 userId: session.userId,
                 refreshTokenHash: newRefreshTokenHash,
-                expiresAt:
-                    this.tokenService
-                        .getRefreshTokenExpiresAt(),
-                revokedAt: null,
+                expiresAt: this.tokenService.getRefreshTokenExpiresAt(),
+                revokedAt: null
             });
 
             await authSessionRepository.create(newSession);
 
-            const accessToken =
-                this.tokenService.generateAccessToken(
-                    session.userId
-                );
+            const accessToken = this.tokenService.generateAccessToken(
+                session.userId
+            );
 
             return {
                 accessToken,
-                refreshToken: newRefreshToken,
+                refreshToken: newRefreshToken
             };
         });
     }

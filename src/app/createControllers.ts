@@ -1,7 +1,11 @@
-import { AuthController } from '../http/controllers/AuthController.js';
-import { ILogoutUserUseCase, IRegisterUserUseCase, ILoginUserUseCase, 
-    IRefreshTokenUseCase, IGetCurrentUserUseCase 
+import {
+    ILogoutUserUseCase,
+    IRegisterUserUseCase,
+    ILoginUserUseCase,
+    IRefreshTokenUseCase,
+    IGetCurrentUserUseCase
 } from '../application/users/auth/Contracts.js';
+import { AuthController } from '../http/controllers/AuthController.js';
 
 interface UseCases {
     registerUser: IRegisterUserUseCase;
@@ -12,14 +16,13 @@ interface UseCases {
 }
 
 export function createControllers(useCases: UseCases) {
-
     return {
-    authController: new AuthController(
-        useCases.registerUser,
-        useCases.loginUser,
-        useCases.logoutUser,
-        useCases.refreshToken,
-        useCases.getCurrentUser,
-    ),
-};
+        authController: new AuthController(
+            useCases.registerUser,
+            useCases.loginUser,
+            useCases.logoutUser,
+            useCases.refreshToken,
+            useCases.getCurrentUser
+        )
+    };
 }

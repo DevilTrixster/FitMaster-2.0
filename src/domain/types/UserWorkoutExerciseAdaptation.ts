@@ -1,4 +1,4 @@
-import { UserWorkoutExerciseTarget } from './UserWorkoutExerciseTarget.js'
+import { UserWorkoutExerciseTarget } from './UserWorkoutExerciseTarget.js';
 
 export interface UserWorkoutExerciseAdaptation {
     sets: number;

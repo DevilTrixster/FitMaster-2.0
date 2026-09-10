@@ -1,8 +1,9 @@
-import crypto from 'node:crypto';
 import jwt from 'jsonwebtoken';
 import { StringValue } from 'ms';
+import crypto from 'node:crypto';
+
+import { AccessTokenPayload } from '../../application/users/auth/DTO.js';
 import { ITokenService } from '../../application/users/auth/services/ITokenService.js';
-import { AccessTokenPayload } from '../../application/users/auth/dto/AccessTokenPayload.js';
 import { InvalidAccessTokenError } from '../../shared/errors/index.js';
 
 export interface JwtTokenConfig {
@@ -14,7 +15,6 @@ export interface JwtTokenConfig {
 }
 
 export class JwtTokenService implements ITokenService {
-
     constructor(private readonly config: JwtTokenConfig) {}
 
     generateRefreshToken(): string {
@@ -22,16 +22,13 @@ export class JwtTokenService implements ITokenService {
     }
 
     hashRefreshToken(token: string): string {
-        return crypto
-            .createHash('sha256')
-            .update(token)
-            .digest('hex');
+        return crypto.createHash('sha256').update(token).digest('hex');
     }
 
     generateAccessToken(userId: number): string {
         return jwt.sign(
             {
-                type: 'access',
+                type: 'access'
             },
             this.config.accessSecret,
             {
@@ -39,22 +36,18 @@ export class JwtTokenService implements ITokenService {
                 subject: String(userId),
                 expiresIn: this.config.accessExpiresIn,
                 issuer: this.config.issuer,
-                audience: this.config.audience,
+                audience: this.config.audience
             }
         );
     }
 
     verifyAccessToken(token: string): AccessTokenPayload {
         try {
-            const payload = jwt.verify(
-                token,
-                this.config.accessSecret,
-                {
-                    algorithms: ['HS256'],
-                    issuer: this.config.issuer,
-                    audience: this.config.audience,
-                }
-            );
+            const payload = jwt.verify(token, this.config.accessSecret, {
+                algorithms: ['HS256'],
+                issuer: this.config.issuer,
+                audience: this.config.audience
+            });
 
             if (typeof payload === 'string') {
                 throw new InvalidAccessTokenError();
@@ -71,7 +64,7 @@ export class JwtTokenService implements ITokenService {
             }
 
             return {
-                userId,
+                userId
             };
         } catch (error) {
             if (error instanceof InvalidAccessTokenError) {
@@ -83,8 +76,6 @@ export class JwtTokenService implements ITokenService {
     }
 
     getRefreshTokenExpiresAt(): Date {
-        return new Date(
-            Date.now() + this.config.refreshExpiresIn
-        );
+        return new Date(Date.now() + this.config.refreshExpiresIn);
     }
 }

@@ -1,4 +1,4 @@
-import { WorkoutValue } from './WorkoutValue.js'
+import { WorkoutValue } from './WorkoutValue.js';
 
 export interface WorkoutResult {
     restSeconds: number;

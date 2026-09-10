@@ -1,36 +1,36 @@
 // Гендер пользователя
-export enum Gender { 
-    Male = 'male', 
-    Female = 'female' 
+export enum Gender {
+    Male = 'male',
+    Female = 'female'
 }
 
 // Уровень попыта пользователя
 export enum ExperienceLevel {
-    Beginner = 'beginner',   // 0–3 мес
-    Novice = 'novice',       // 3–12 мес
+    Beginner = 'beginner', // 0–3 мес
+    Novice = 'novice', // 3–12 мес
     Intermediate = 'intermediate', // 1–3 года
-    Advanced = 'advanced',   // 3–5 лет
-    Master = 'master'        // 5–8 лет
+    Advanced = 'advanced', // 3–5 лет
+    Master = 'master' // 5–8 лет
 }
 
 // Цели пользователя
 export enum FitnessGoal {
-    WeightLoss = 'weight_loss',         // Похудение
-    MuscleGain = 'muscle_gain',         // Наращивание мышц
-    Strength = 'strength',              // Сила
-    Maintenance = 'maintenance',        // Поддержка
-    Endurance = 'endurance',            // Выносливость
-    Aesthetics = 'aesthetics',          // Эстетичность тела
-    Recomposition = 'recomposition',    // Перекомпановка - одновременная работа над составом тела(снижение жира и увеличение мышц)
-    Mobility = 'mobility',              // Мобильность/Подвижность
-    Rehabilitation = 'rehabilitation',  // Реабилитация - после травм
-    Sports = 'sports',                  // Для конкретного спорта
-    Event = 'event',                    // Для события
-    StressRelief = 'stress_relief',     // Снятия стресса
-    Energy = 'energy',                  // Энергия
-    Competition = 'competition',        // Соревнования
-    Posture = 'posture',                // Со своим телом
-    HealthyAging = 'healthy_aging'      // Поддержание здоровья
+    WeightLoss = 'weight_loss', // Похудение
+    MuscleGain = 'muscle_gain', // Наращивание мышц
+    Strength = 'strength', // Сила
+    Maintenance = 'maintenance', // Поддержка
+    Endurance = 'endurance', // Выносливость
+    Aesthetics = 'aesthetics', // Эстетичность тела
+    Recomposition = 'recomposition', // Перекомпановка - одновременная работа над составом тела(снижение жира и увеличение мышц)
+    Mobility = 'mobility', // Мобильность/Подвижность
+    Rehabilitation = 'rehabilitation', // Реабилитация - после травм
+    Sports = 'sports', // Для конкретного спорта
+    Event = 'event', // Для события
+    StressRelief = 'stress_relief', // Снятия стресса
+    Energy = 'energy', // Энергия
+    Competition = 'competition', // Соревнования
+    Posture = 'posture', // Со своим телом
+    HealthyAging = 'healthy_aging' // Поддержание здоровья
 }
 
 // Типы упражнений
@@ -40,7 +40,7 @@ export enum EquipmentType {
     Bodyweight = 'bodyweight', // с собственным весом
     Cardio = 'cardio', // кардио
     Machine = 'machine', // тренажёр
-    Plyometric = 'plyometric', // упражнения с динамическим циклом
+    Plyometric = 'plyometric' // упражнения с динамическим циклом
 }
 
 // Типы мышц и "подмышц"
@@ -53,7 +53,7 @@ export enum Muscle {
     Arms = 'ARMS', // руки
     Core = 'CORE', // кор
 
-    // ПОБОЧНЫЕ 
+    // ПОБОЧНЫЕ
     Quadriceps = 'QUADRICEPS', // квадрицепсы
     Glutes = 'GLUTES', // ягодичные
     Hamstrings = 'HAMSTRINGS', // бицепс бедра
@@ -81,21 +81,21 @@ export enum Muscle {
 
     RectusAbdominis = 'RECTUS_ABDOMINIS', // прямые мышцы живота
     Obliques = 'OBLIQUES', // косые мышцы живота
-    TransverseAbdominis = 'TRANSVERSE_ABDOMINIS', // поперечные мышцы живота
+    TransverseAbdominis = 'TRANSVERSE_ABDOMINIS' // поперечные мышцы живота
 }
 
 // Типы шаблонов для WorkoutPattern
 export enum WorkoutPatternType {
     FallBack = 'FALLBACK', // "полследняя надежда"/аварийный шаблон - 1
     Default = 'DEFAULT', // дефолтный шаблон который вписан в таблицу изначально - 3
-    Adaptive = 'ADAPTIVE', // шаблоны которые создала адаптация - все остальные
+    Adaptive = 'ADAPTIVE' // шаблоны которые создала адаптация - все остальные
 }
 
 // Типизация того кем был создан шаблон для WorkoutPattern
 export enum WorkoutPatternGeneration {
     System = 'SYSTEM', // системно - создан до адаптации
     Adaptation = 'ADAPTATION', // создано адаптацией
-    Outside = 'OUTSIDE', // иные способы создания
+    Outside = 'OUTSIDE' // иные способы создания
 }
 
 // Типы нагрузок
@@ -116,7 +116,7 @@ export enum MetricValueType {
     Sec = 'sec', // секунды
     Count = 'count', // повторения
     MinSec = 'min_sec' // минуты:секунды
-} 
+}
 
 // Варинты для системы лайков/дизлайков
 export enum Reaction {
@@ -129,5 +129,5 @@ export enum UserWorkoutStatus {
     Planned = 'PLANNED', // планируется
     InProgress = 'IN_PROGRESS', // в прогрессе
     Completed = 'COMPLETED', // завершенно
-    Cancelled = 'CANCELLED', // пропущенно
+    Cancelled = 'CANCELLED' // пропущенно
 }

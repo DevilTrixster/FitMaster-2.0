@@ -1,8 +1,16 @@
 import { QueryResultRow } from 'pg';
+
 import { AuthSession } from '../../../domain/entities/user/AuthSession.js';
 import { IAuthSessionRepository } from '../../../domain/repositories/IAuthSessionRepository.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
-import { createAuthSession, findByTokenHashAuthSession, revokeByIdAuthSession, revokeAllByUserIdAuthSession, findByTokenHashForUpdateAuthSession } from './query/AuthSessionQuery.js';
+
+import {
+    createAuthSession,
+    findByTokenHashAuthSession,
+    revokeByIdAuthSession,
+    revokeAllByUserIdAuthSession,
+    findByTokenHashForUpdateAuthSession
+} from './query/AuthSessionQuery.js';
 
 interface AuthSessionRow extends QueryResultRow {
     id: number;
@@ -11,12 +19,10 @@ interface AuthSessionRow extends QueryResultRow {
     expires_at: Date;
     revoked_at: Date | null;
     created_at: Date;
-
 }
 
 export class AuthSessionRepository implements IAuthSessionRepository {
-
-    constructor (private readonly executor: IDatabaseExecutor) {}
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
     private mapToEntity(row: AuthSessionRow): AuthSession {
         return new AuthSession({
@@ -30,23 +36,28 @@ export class AuthSessionRepository implements IAuthSessionRepository {
     }
 
     async create(session: AuthSession): Promise<AuthSession> {
-        const result = await this.executor.query<AuthSessionRow>(createAuthSession, 
-        [
-            session.userId,
-            session.refreshTokenHash,
-            session.expiresAt,
-            session.revokedAt
-        ]);
+        const result = await this.executor.query<AuthSessionRow>(
+            createAuthSession,
+            [
+                session.userId,
+                session.refreshTokenHash,
+                session.expiresAt,
+                session.revokedAt
+            ]
+        );
         return this.mapToEntity(result.rows[0]);
     }
 
     async findByTokenHash(tokenHash: string): Promise<AuthSession | null> {
-        const result = await this.executor.query<AuthSessionRow>(findByTokenHashAuthSession, [tokenHash]);
+        const result = await this.executor.query<AuthSessionRow>(
+            findByTokenHashAuthSession,
+            [tokenHash]
+        );
 
         if (result.rows.length === 0) {
             return null;
         }
-        
+
         return this.mapToEntity(result.rows[0]);
     }
 
@@ -58,8 +69,13 @@ export class AuthSessionRepository implements IAuthSessionRepository {
         await this.executor.query(revokeAllByUserIdAuthSession, [userId]);
     }
 
-    async findByTokenHashForUpdate(tokenHash: string): Promise<AuthSession | null> {
-        const result = await this.executor.query<AuthSessionRow>(findByTokenHashForUpdateAuthSession, [tokenHash]);
+    async findByTokenHashForUpdate(
+        tokenHash: string
+    ): Promise<AuthSession | null> {
+        const result = await this.executor.query<AuthSessionRow>(
+            findByTokenHashForUpdateAuthSession,
+            [tokenHash]
+        );
 
         if (result.rows.length === 0) {
             return null;

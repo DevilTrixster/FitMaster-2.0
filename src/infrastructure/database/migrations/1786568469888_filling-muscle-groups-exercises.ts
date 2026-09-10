@@ -299,7 +299,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-    // Удаление заполнения в обратном порядке 
+    // Удаление заполнения в обратном порядке
 
     // Удаление наполнения exercises
     pgm.sql(`
@@ -405,8 +405,8 @@ export async function down(pgm: MigrationBuilder): Promise<void> {
         99,
         100
         );
-    `);   
-    
+    `);
+
     // Удаление наполнения muscle_groups
     pgm.sql(`
         -- ============================================================

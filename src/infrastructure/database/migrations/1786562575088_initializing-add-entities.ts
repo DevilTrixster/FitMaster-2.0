@@ -7,30 +7,22 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.sql(`
         CREATE EXTENSION IF NOT EXISTS pgcrypto; 
         CREATE EXTENSION IF NOT EXISTS citext
-    `)
-
+    `);
 
     // ENUM
 
     // Гендер -- мужчина и женщина
-    pgm.createType('gender_type', [
-        'male',
-        'female',
-    ]);
+    pgm.createType('gender_type', ['male', 'female']);
 
     // Реакция -- лайк, дизлайк, нет реакции
-    pgm.createType('reaction', [
-        'like',
-        'dislike',
-        'neutral',
-    ]);
+    pgm.createType('reaction', ['like', 'dislike', 'neutral']);
 
     // Статус тренировки -- в прогрессе, завершена и тд.
     pgm.createType('user_workout_status', [
         'PLANNED',
         'IN_PROGRESS',
         'COMPLETED',
-        'CANCELLED',
+        'CANCELLED'
     ]);
 
     // Типы адаптации -- увеличение веса, уменьшение и тд.
@@ -42,7 +34,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'increase_time',
         'decrease_time',
         'no_change', // без изменений
-        'substitution', // замена
+        'substitution' // замена
     ]);
 
     // Варианты метрик -- повторения, вес, расстояние и тд.
@@ -50,7 +42,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'reps', // повторения
         'weight', // вес
         'duration', // продолжительность
-        'distance', // расстояние
+        'distance' // расстояние
     ]);
 
     // Единицы измерения метрик -- кг, метры, секунды и тд.
@@ -62,7 +54,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'min',
         'sec',
         'count',
-        'min_sec',
+        'min_sec'
     ]);
 
     // Варианты упражнений -- со своим весом, кардио, тренажер и тд
@@ -72,7 +64,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'bodyweight', // с собственным весом
         'cardio', // кардио
         'machine', // тренажёр
-        'plyometric', // упражнения с динамическим циклом
+        'plyometric' // упражнения с динамическим циклом
     ]);
 
     // Уровень пользователя
@@ -81,12 +73,12 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'novice', // Новичок
         'intermediate', // Знающий
         'advanced', // Опытный
-        'master', // Мастер
+        'master' // Мастер
     ]);
 
     // Цели пользователя
     pgm.createType('goal', [
-        'weight_loss', 
+        'weight_loss',
         'muscle_gain',
         'strength',
         'maintenance',
@@ -101,7 +93,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'energy',
         'competition',
         'posture',
-        'healthy_aging',
+        'healthy_aging'
     ]);
 
     // Варианты мышц для muscle_groups и exercises_muscle_groups
@@ -114,7 +106,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         'ARMS', // руки
         'CORE', // кор
 
-        // ПОБОЧНЫЕ 
+        // ПОБОЧНЫЕ
         'QUADRICEPS', // квадрицепсы
         'GLUTES', // ягодичные
         'HAMSTRINGS', // бицепс бедра
@@ -142,26 +134,24 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 
         'RECTUS_ABDOMINIS', // прямые мышцы живота
         'OBLIQUES', // косые мышцы живота
-        'TRANSVERSE_ABDOMINIS', // поперечные мышцы живота
+        'TRANSVERSE_ABDOMINIS' // поперечные мышцы живота
     ]);
 
     // Тип тренировочного шаблона для workout_pattern
     pgm.createType('workout_pattern_type', [
         'FALLBACK', // "полследняя надежда"/аварийный шаблон - 1
         'DEFAULT', // дефолтный шаблон который вписан в таблицу изначально - 3
-        'ADAPTIVE', // шаблоны которые создала адаптация - все остальные
+        'ADAPTIVE' // шаблоны которые создала адаптация - все остальные
     ]);
 
     // Источник создания шаблона для workout_pattern
     pgm.createType('workout_pattern_generation_source', [
         'SYSTEM', // системно - создан до адаптации
         'ADAPTATION', // создано адаптацией
-        'OUTSIDE', // иные способы создания
+        'OUTSIDE' // иные способы создания
     ]);
 
-
-
-    // Функции 
+    // Функции
 
     // Проверка дней
     pgm.sql(`
@@ -199,10 +189,11 @@ export async function down(pgm: MigrationBuilder): Promise<void> {
         DROP FUNCTION IF EXISTS update_updated_at_column();
     `);
 
-
-
     // Удаление ENUM
-    pgm.dropType('workout_pattern_generation_source', { ifExists: true, cascade: true });
+    pgm.dropType('workout_pattern_generation_source', {
+        ifExists: true,
+        cascade: true
+    });
     pgm.dropType('workout_pattern_type', { ifExists: true, cascade: true });
     pgm.dropType('muscle', { ifExists: true, cascade: true });
     pgm.dropType('goal', { ifExists: true, cascade: true });

@@ -1,9 +1,9 @@
-import { Muscle } from '../../../shared/enum.js'
+import { Muscle } from '../../../shared/enum.js';
 
 export class MuscleGroup {
     public readonly id?: number;
     public readonly code: Muscle;
-    public readonly name: string; 
+    public readonly name: string;
     public readonly parentId: number | null;
     public readonly createdAt: Date;
 
@@ -13,7 +13,6 @@ export class MuscleGroup {
         name: string;
         parentId: number | null;
         createdAt?: Date;
-
     }) {
         this.id = data.id;
         this.code = data.code;

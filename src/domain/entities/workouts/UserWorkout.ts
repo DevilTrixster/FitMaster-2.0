@@ -1,4 +1,4 @@
-import { UserWorkoutStatus } from '../../../shared/enum.js'
+import { UserWorkoutStatus } from '../../../shared/enum.js';
 import { WorkoutPlan } from '../../types/WorkoutPlan.js';
 
 export class UserWorkout {
@@ -13,7 +13,7 @@ export class UserWorkout {
     public readonly completedAt: Date | null;
     public readonly createdAt: Date;
 
-    constructor (data: {
+    constructor(data: {
         id?: number;
         userId: number;
         patternId: string;

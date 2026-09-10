@@ -2,7 +2,7 @@ export class AuthSession {
     public readonly id?: number;
     public readonly userId: number;
     public readonly refreshTokenHash: string;
-    public readonly expiresAt: Date; 
+    public readonly expiresAt: Date;
     public readonly revokedAt: Date | null;
     public readonly createdAt: Date;
 
@@ -13,7 +13,6 @@ export class AuthSession {
         expiresAt: Date;
         revokedAt: Date | null;
         createdAt?: Date;
-
     }) {
         this.id = data.id;
         this.userId = data.userId;

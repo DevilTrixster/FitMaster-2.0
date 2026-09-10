@@ -1,7 +1,9 @@
 import { QueryResultRow } from 'pg';
+
 import { UserWorkoutPattern } from '../../../domain/entities/workouts/UserWorkoutPattern.js';
 import { IUserWorkoutPatternRepository } from '../../../domain/repositories/IUserWorkoutPatternRepository.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+
 import { workoutPatternFindById } from './query/UserWorkoutPatternQuery.js';
 
 interface UserWorkoutPatternRow extends QueryResultRow {
@@ -15,12 +17,9 @@ interface UserWorkoutPatternRow extends QueryResultRow {
 }
 
 export class UserWorkoutPatternRepository implements IUserWorkoutPatternRepository {
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
-    constructor(
-        private readonly executor: IDatabaseExecutor
-    ) {}
-
-    private mapToEntity(row:UserWorkoutPatternRow):UserWorkoutPattern {
+    private mapToEntity(row: UserWorkoutPatternRow): UserWorkoutPattern {
         return new UserWorkoutPattern({
             id: row.id,
             parentPatternId: row.parent_pattern_id,
@@ -33,7 +32,10 @@ export class UserWorkoutPatternRepository implements IUserWorkoutPatternReposito
     }
 
     async findById(id: string): Promise<UserWorkoutPattern | null> {
-        const result = await this.executor.query<UserWorkoutPatternRow>(workoutPatternFindById, [id]);
+        const result = await this.executor.query<UserWorkoutPatternRow>(
+            workoutPatternFindById,
+            [id]
+        );
 
         if (result.rows.length === 0) {
             return null;

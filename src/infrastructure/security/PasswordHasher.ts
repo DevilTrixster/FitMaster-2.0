@@ -1,5 +1,6 @@
-import { IPasswordHasher } from '../../application/users/auth/services/IPasswordHasher.js'
 import argon2 from 'argon2';
+
+import { IPasswordHasher } from '../../application/users/auth/services/IPasswordHasher.js';
 
 export class PasswordHasher implements IPasswordHasher {
     async hash(password: string): Promise<string> {

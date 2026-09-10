@@ -1,7 +1,13 @@
-import { UserResponse, GetCurrentUserRequest, AuthenticationResult, LoginUserRequest,
-    LogoutUserRequest, RefreshTokenRequest, RefreshTokenResult, RegisterUserRequest
+import {
+    UserResponse,
+    GetCurrentUserRequest,
+    AuthenticationResult,
+    LoginUserRequest,
+    LogoutUserRequest,
+    RefreshTokenRequest,
+    RefreshTokenResult,
+    RegisterUserRequest
 } from './DTO.js';
-
 
 export interface IGetCurrentUserUseCase {
     execute(request: GetCurrentUserRequest): Promise<UserResponse>;

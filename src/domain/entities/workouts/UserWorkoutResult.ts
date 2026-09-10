@@ -1,5 +1,5 @@
-import { WorkoutPlan } from '../../types/WorkoutPlan.js'
-import { WorkoutResult } from '../../types/WorkoutResult.js'
+import { WorkoutPlan } from '../../types/WorkoutPlan.js';
+import { WorkoutResult } from '../../types/WorkoutResult.js';
 
 export class UserWorkoutResult {
     public readonly id?: number;

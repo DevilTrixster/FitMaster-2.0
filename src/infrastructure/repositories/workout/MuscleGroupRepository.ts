@@ -1,7 +1,9 @@
 import { QueryResultRow } from 'pg';
+
 import { MuscleGroup } from '../../../domain/entities/exercises/MuscleGroup.js';
 import { IMuscleGroupRepository } from '../../../domain/repositories/IMuscleGroupRepository.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+
 import { muscleGroupFindById } from './query/MuscleGroupQuery.js';
 
 interface MuscleGroupRow extends QueryResultRow {
@@ -13,10 +15,7 @@ interface MuscleGroupRow extends QueryResultRow {
 }
 
 export class MuscleGroupRepository implements IMuscleGroupRepository {
-
-    constructor(
-        private readonly executor: IDatabaseExecutor
-    ) {}
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
     private mapToEntity(row: MuscleGroupRow): MuscleGroup {
         return new MuscleGroup({
@@ -24,13 +23,15 @@ export class MuscleGroupRepository implements IMuscleGroupRepository {
             code: row.code,
             name: row.name,
             parentId: row.parent_id,
-            createdAt: row.created_at,
+            createdAt: row.created_at
         });
     }
 
     async findById(id: number): Promise<MuscleGroup | null> {
-
-        const result = await this.executor.query<MuscleGroupRow>(muscleGroupFindById, [id]);
+        const result = await this.executor.query<MuscleGroupRow>(
+            muscleGroupFindById,
+            [id]
+        );
 
         if (result.rows.length === 0) {
             return null;

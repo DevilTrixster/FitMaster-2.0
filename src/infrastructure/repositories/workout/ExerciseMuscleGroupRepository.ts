@@ -1,8 +1,13 @@
 import { QueryResultRow } from 'pg';
+
 import { ExerciseMuscleGroup } from '../../../domain/entities/exercises/ExerciseMuscleGroup.js';
 import { IExerciseMuscleGroupRepository } from '../../../domain/repositories/IExerciseMuscleGroupRepository.js';
 import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
-import { exerciseMuscleGroupFindByExerciseId, exerciseMuscleGroupFindByMuscleGroupId } from './query/ExerciseMuscleGroupQuery.js';
+
+import {
+    exerciseMuscleGroupFindByExerciseId,
+    exerciseMuscleGroupFindByMuscleGroupId
+} from './query/ExerciseMuscleGroupQuery.js';
 
 interface ExerciseMuscleGroupRow extends QueryResultRow {
     id: number;
@@ -15,9 +20,7 @@ interface ExerciseMuscleGroupRow extends QueryResultRow {
 }
 
 export class ExerciseMuscleGroupRepository implements IExerciseMuscleGroupRepository {
-    constructor(
-        private readonly executor: IDatabaseExecutor
-    ){}
+    constructor(private readonly executor: IDatabaseExecutor) {}
 
     private mapToEntity(row: ExerciseMuscleGroupRow): ExerciseMuscleGroup {
         return new ExerciseMuscleGroup({
@@ -32,13 +35,20 @@ export class ExerciseMuscleGroupRepository implements IExerciseMuscleGroupReposi
     }
 
     async findByExerciseId(exerciseId: number): Promise<ExerciseMuscleGroup[]> {
-        const result = await this.executor.query<ExerciseMuscleGroupRow>(exerciseMuscleGroupFindByExerciseId, [exerciseId]);
-        return result.rows.map(row => this.mapToEntity(row))
+        const result = await this.executor.query<ExerciseMuscleGroupRow>(
+            exerciseMuscleGroupFindByExerciseId,
+            [exerciseId]
+        );
+        return result.rows.map((row) => this.mapToEntity(row));
     }
 
-    async findByMuscleGroupId(muscleGroupId: number): Promise<ExerciseMuscleGroup[]> {
-
-        const result = await this.executor.query<ExerciseMuscleGroupRow>(exerciseMuscleGroupFindByMuscleGroupId, [muscleGroupId]);
-        return result.rows.map(row => this.mapToEntity(row));
+    async findByMuscleGroupId(
+        muscleGroupId: number
+    ): Promise<ExerciseMuscleGroup[]> {
+        const result = await this.executor.query<ExerciseMuscleGroupRow>(
+            exerciseMuscleGroupFindByMuscleGroupId,
+            [muscleGroupId]
+        );
+        return result.rows.map((row) => this.mapToEntity(row));
     }
 }

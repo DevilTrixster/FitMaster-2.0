@@ -1,5 +1,5 @@
-import { User } from '../../../../domain/entities/user/User.js'
-import { UserResponse } from '../DTO.js'
+import { User } from '../../../../domain/entities/user/User.js';
+import { UserResponse } from '../DTO.js';
 
 export function toUserResponse(user: User): UserResponse {
     return {
@@ -18,6 +18,6 @@ export function toUserResponse(user: User): UserResponse {
         experienceLevel: user.experienceLevel,
         fitnessGoal: user.fitnessGoal,
         createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        updatedAt: user.updatedAt
     };
 }

@@ -1,5 +1,8 @@
-import { WorkoutPatternType, WorkoutPatternGeneration } from '../../../shared/enum.js'
-import { WorkoutPlan } from '../../types/WorkoutPlan.js'
+import {
+    WorkoutPatternType,
+    WorkoutPatternGeneration
+} from '../../../shared/enum.js';
+import { WorkoutPlan } from '../../types/WorkoutPlan.js';
 
 export class UserWorkoutPattern {
     public readonly id?: string;
@@ -9,7 +12,7 @@ export class UserWorkoutPattern {
     public readonly generationSource: WorkoutPatternGeneration;
     public readonly patternData: WorkoutPlan;
     public readonly createdAt: Date;
-    constructor(data:{
+    constructor(data: {
         id?: string;
         parentPatternId: string | null;
         name: string;

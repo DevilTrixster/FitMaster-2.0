@@ -1,14 +1,15 @@
 import { PoolClient } from 'pg';
-import { IDatabaseTransaction } from './types/IDatabaseTransaction.js';
-import { IDatabaseExecutor } from './types/IDatabaseExecutor.js';
+
 import { DatabaseExecutor } from './DatabaseExecutor.js';
+import { IDatabaseExecutor } from './types/IDatabaseExecutor.js';
+import { IDatabaseTransaction } from './types/IDatabaseTransaction.js';
 
 export class DatabaseTransaction implements IDatabaseTransaction {
-    constructor(
-        private readonly client: PoolClient
-    ) {}
+    constructor(private readonly client: PoolClient) {}
 
-    async run<T>(callback: (executor: IDatabaseExecutor) => Promise<T>): Promise<T> {
+    async run<T>(
+        callback: (executor: IDatabaseExecutor) => Promise<T>
+    ): Promise<T> {
         try {
             await this.client.query('BEGIN');
 

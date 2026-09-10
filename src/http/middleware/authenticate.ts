@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { ITokenService } from '../../application/users/auth/services/ITokenService.js';
 import { InvalidAccessTokenError } from '../../shared/errors/index.js';
+
 import { AuthenticatedRequest } from './types/AuthenticatedRequest.js';
 
 export function authenticate(tokenService: ITokenService) {
-    return (
-        req: Request,
-        _res: Response,
-        next: NextFunction,
-    ): void => {
+    return (req: Request, _res: Response, next: NextFunction): void => {
         const authorization = req.headers.authorization;
 
         if (!authorization?.startsWith('Bearer ')) {
@@ -25,7 +23,9 @@ export function authenticate(tokenService: ITokenService) {
 
         const authenticatedRequest = req as AuthenticatedRequest;
 
-        authenticatedRequest.auth = { userId: payload.userId };
+        authenticatedRequest.auth = {
+            userId: payload.userId
+        };
 
         next();
     };

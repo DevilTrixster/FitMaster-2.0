@@ -1,4 +1,5 @@
-import { AuthSession } from '../entities/user/AuthSession.js'
+import { AuthSession } from '../entities/user/AuthSession.js';
+
 export interface IAuthSessionRepository {
     create(session: AuthSession): Promise<AuthSession>;
     findByTokenHash(tokenHash: string): Promise<AuthSession | null>;

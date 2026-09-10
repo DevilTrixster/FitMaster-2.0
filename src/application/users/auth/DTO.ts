@@ -1,5 +1,8 @@
-import { Gender, ExperienceLevel, FitnessGoal } from './../../../shared/enum.js';
-
+import {
+    Gender,
+    ExperienceLevel,
+    FitnessGoal
+} from './../../../shared/enum.js';
 
 export interface UserResponse {
     id: number;

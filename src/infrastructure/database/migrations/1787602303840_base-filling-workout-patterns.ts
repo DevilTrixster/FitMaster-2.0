@@ -2,7 +2,7 @@ import type { ColumnDefinitions, MigrationBuilder } from 'node-pg-migrate';
 
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
-export async function up(pgm: MigrationBuilder): Promise<void> {    
+export async function up(pgm: MigrationBuilder): Promise<void> {
     // Шаблон последнняя надежда
     pgm.sql(`
         INSERT INTO workout_pattern (id, name, type, generation_source, workout_plan)
@@ -131,7 +131,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             }'::jsonb
         )
         ON CONFLICT (id) DO NOTHING;    
-    `)
+    `);
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {

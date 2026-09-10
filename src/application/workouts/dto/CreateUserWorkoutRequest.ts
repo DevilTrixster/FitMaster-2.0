@@ -1,4 +1,3 @@
-
 export interface CreateUserWorkoutRequest {
     userId: number;
     patternId: string;

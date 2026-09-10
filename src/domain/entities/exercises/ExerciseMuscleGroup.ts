@@ -21,7 +21,7 @@ export class ExerciseMuscleGroup {
         this.muscleGroupId = data.muscleGroupId;
         this.loadRatio = data.loadRatio;
         this.isPrimary = data.isPrimary;
-        this.createdAt = data.createdAt ?? new Date()
-        this.updatedAt = data.updatedAt ?? new Date()
+        this.createdAt = data.createdAt ?? new Date();
+        this.updatedAt = data.updatedAt ?? new Date();
     }
 }

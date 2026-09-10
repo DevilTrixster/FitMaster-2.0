@@ -4,53 +4,58 @@ export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
     // Связь таблицы упражнений (exercises) и соотношение группой мышц (muscle_groups)
-    pgm.createTable('exercises_muscle_groups', {
-        id: {
-            type: 'serial',
-            primaryKey: true,
-        },
+    pgm.createTable(
+        'exercises_muscle_groups',
+        {
+            id: {
+                type: 'serial',
+                primaryKey: true
+            },
 
-        exercise_id: {
-            type: 'integer',
-            notNull: true,
-            references: 'exercises',
-            onDelete: 'CASCADE',
-        },
+            exercise_id: {
+                type: 'integer',
+                notNull: true,
+                references: 'exercises',
+                onDelete: 'CASCADE'
+            },
 
-        muscle_group_id: {
-            type: 'integer',
-            notNull: true,
-            references: 'muscle_groups',
-            onDelete: 'RESTRICT',
-        },
+            muscle_group_id: {
+                type: 'integer',
+                notNull: true,
+                references: 'muscle_groups',
+                onDelete: 'RESTRICT'
+            },
 
-        load_ratio: {
-            type: 'numeric(5,4)',
-            notNull: true,
-            check: 'load_ratio > 0 AND load_ratio <= 1'
-        },
+            load_ratio: {
+                type: 'numeric(5,4)',
+                notNull: true,
+                check: 'load_ratio > 0 AND load_ratio <= 1'
+            },
 
-        is_primary: {
-            type: 'boolean',
-            notNull: true,
-            default: false,
-        },
+            is_primary: {
+                type: 'boolean',
+                notNull: true,
+                default: false
+            },
 
-        created_at: {
-            type: 'timestamp',
-            notNull: true,
-            default: pgm.func('CURRENT_TIMESTAMP'),
-        },
+            created_at: {
+                type: 'timestamp',
+                notNull: true,
+                default: pgm.func('CURRENT_TIMESTAMP')
+            },
 
-        updated_at: {
-            type: 'timestamp',
-            notNull: true,
-            default: pgm.func('CURRENT_TIMESTAMP'),
+            updated_at: {
+                type: 'timestamp',
+                notNull: true,
+                default: pgm.func('CURRENT_TIMESTAMP')
+            }
         },
-    }, {
-        constraints: {
-           unique :[['exercise_id', 'muscle_group_id']]}
-    });
+        {
+            constraints: {
+                unique: [['exercise_id', 'muscle_group_id']]
+            }
+        }
+    );
 
     // Заполнение таблицы exercises_muscle_groups для каждого упражнения
     pgm.sql(`
@@ -525,8 +530,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         CREATE TRIGGER update_exercises_muscle_groups_updated_at
         BEFORE UPDATE ON exercises_muscle_groups
         FOR EACH ROW
-        EXECUTE FUNCTION update_updated_at_column();`
-    )
+        EXECUTE FUNCTION update_updated_at_column();`);
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {

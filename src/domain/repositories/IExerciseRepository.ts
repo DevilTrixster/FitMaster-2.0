@@ -1,4 +1,4 @@
-import { Exercise } from '../entities/exercises/Exercise.js'
+import { Exercise } from '../entities/exercises/Exercise.js';
 
 export interface IExerciseRepository {
     findById(id: number): Promise<Exercise | null>;
