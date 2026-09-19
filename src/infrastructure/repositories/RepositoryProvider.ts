@@ -1,4 +1,4 @@
-import { IRepositoryProvider } from '../../application/ports/repositories/IRepositoryProvider.js';
+import { IRepositoryProvider } from '../../application/contracts_db/DatabaseContracts.js';
 import { IAuthSessionRepository } from '../../domain/repositories/IAuthSessionRepository.js';
 import { IExerciseRepository } from '../../domain/repositories/IExerciseRepository.js';
 import { IUserRepository } from '../../domain/repositories/IUserRepository.js';
@@ -6,7 +6,7 @@ import { IUserWorkoutExerciseRepository } from '../../domain/repositories/IUserW
 import { IUserWorkoutPatternRepository } from '../../domain/repositories/IUserWorkoutPatternRepository.js';
 import { IUserWorkoutRepository } from '../../domain/repositories/IUserWorkoutRepository.js';
 import { IUserWorkoutResultRepository } from '../../domain/repositories/IUserWorkoutResultRepository.js';
-import { IDatabaseExecutor } from '../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../database/IDatabaseExecutor.js';
 
 import { AuthSessionRepository } from './user/AuthSessionRepository.js';
 import { UserRepository } from './user/UserRepository.js';

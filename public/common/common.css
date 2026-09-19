@@ -4,11 +4,7 @@
 
 :root {
     /* Colors */
-    --bg-gradient: linear-gradient(
-        135deg,
-        #1a1a2e 0%,
-        #16213e 100%
-    );
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 
     --bg-solid: #1a1a2e;
 
@@ -45,7 +41,6 @@
     --transition-slow: 0.5s ease;
 }
 
-
 /* ========================================
    RESET & BASE
    ======================================== */
@@ -69,12 +64,7 @@ body {
     background: var(--bg-gradient);
     color: var(--text-primary);
 
-    font-family:
-        'Segoe UI',
-        Tahoma,
-        Geneva,
-        Verdana,
-        sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     line-height: 1.6;
     overflow-x: hidden;
@@ -84,14 +74,12 @@ a {
     color: inherit;
     text-decoration: none;
 
-    transition:
-        color var(--transition-fast);
+    transition: color var(--transition-fast);
 }
 
 ul {
     list-style: none;
 }
-
 
 /* ========================================
    COMMON LAYOUT
@@ -103,7 +91,6 @@ ul {
     margin: 0 auto;
     padding: 2rem 0;
 }
-
 
 /* ========================================
    BUTTONS
@@ -131,8 +118,7 @@ ul {
     cursor: pointer;
     white-space: nowrap;
 
-    transition:
-        all var(--transition-normal);
+    transition: all var(--transition-normal);
 }
 
 .btn-primary {
@@ -148,8 +134,7 @@ ul {
 
     transform: translateY(-2px);
 
-    box-shadow:
-        0 4px 15px rgba(233, 69, 96, 0.4);
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
 }
 
 .btn-outline {
@@ -165,8 +150,7 @@ ul {
 
     transform: translateY(-2px);
 
-    box-shadow:
-        0 4px 15px rgba(233, 69, 96, 0.3);
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
 }
 
 .btn-small {
@@ -183,7 +167,6 @@ ul {
     box-shadow: none !important;
 }
 
-
 /* ========================================
    CARDS
    ======================================== */
@@ -199,8 +182,7 @@ ul {
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
 
-    transition:
-        all var(--transition-normal);
+    transition: all var(--transition-normal);
 }
 
 .card:hover {
@@ -210,7 +192,6 @@ ul {
 
     box-shadow: var(--shadow-md);
 }
-
 
 /* ========================================
    FORMS
@@ -250,8 +231,7 @@ textarea {
 
     outline: none;
 
-    transition:
-        all var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 input:focus,
@@ -261,8 +241,7 @@ textarea:focus {
 
     background: rgba(255, 255, 255, 0.15);
 
-    box-shadow:
-        0 0 0 3px rgba(233, 69, 96, 0.15);
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
 }
 
 input::placeholder,
@@ -277,7 +256,6 @@ textarea::placeholder {
 
     gap: 1.25rem;
 }
-
 
 /* ========================================
    ANIMATIONS
@@ -317,17 +295,13 @@ textarea::placeholder {
     }
 }
 
-
 /* ========================================
    RESPONSIVE
    ======================================== */
 
 @media (max-width: 768px) {
     .container {
-        width: min(
-            100% - 2rem,
-            1200px
-        );
+        width: min(100% - 2rem, 1200px);
 
         padding: 1rem 0;
     }

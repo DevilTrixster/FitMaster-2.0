@@ -1,8 +1,8 @@
 import { Express } from 'express';
 
-import { ITokenService } from '../application/users/auth/services/ITokenService.js';
-import { AuthController } from '../http/controllers/AuthController.js';
-import { createAuthRoutes } from '../http/routes/authRoutes.js';
+import { ITokenService } from '../application/auth/services/ITokenService.js';
+import { AuthController } from '../presentation/controllers/AuthController.js';
+import { createAuthRoutes } from '../presentation/routes/authRoutes.js';
 
 interface Controllers {
     authController: AuthController;

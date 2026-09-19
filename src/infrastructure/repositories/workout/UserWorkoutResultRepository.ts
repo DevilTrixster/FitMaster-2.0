@@ -3,7 +3,7 @@ import { QueryResultRow } from 'pg';
 import { UserWorkoutResult } from '../../../domain/entities/workouts/UserWorkoutResult.js';
 import { IUserWorkoutResultRepository } from '../../../domain/repositories/IUserWorkoutResultRepository.js';
 import { WorkoutResult } from '../../../domain/types/WorkoutResult.js';
-import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     userWorkoutResultCreate,

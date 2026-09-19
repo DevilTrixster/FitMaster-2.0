@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MetricType, MetricValueType } from '../../../shared/enum.js';
+import { MetricType, MetricValueType } from '../../../shared/enum';
 
 const workoutValueSchema = z.discriminatedUnion('type', [
     z.object({

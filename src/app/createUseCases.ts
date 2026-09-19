@@ -1,12 +1,12 @@
-import { IDatabase } from '../application/ports/database/IDatabase.js';
-import { IPasswordHasher } from '../application/users/auth/services/IPasswordHasher.js';
-import { ITokenService } from '../application/users/auth/services/ITokenService.js';
-import { GetCurrentUserUseCase } from '../application/users/auth/usecases/GetCurrentUserUseCase.js';
-import { LoginUserUseCase } from '../application/users/auth/usecases/LoginUserUseCase.js';
-import { LogoutUserUseCase } from '../application/users/auth/usecases/LogoutUserUseCase.js';
-import { RefreshTokenUseCase } from '../application/users/auth/usecases/RefreshTokenUseCase.js';
-import { RegisterUserUseCase } from '../application/users/auth/usecases/RegisterUserUseCase.js';
-import { GetUserProfileUseCase } from '../application/users/profile/usecases/GetUserProfileUseCase.js';
+import { IPasswordHasher } from '../application/auth/services/IPasswordHasher.js';
+import { ITokenService } from '../application/auth/services/ITokenService.js';
+import { GetCurrentUserUseCase } from '../application/auth/usecases/GetCurrentUserUseCase.js';
+import { LoginUserUseCase } from '../application/auth/usecases/LoginUserUseCase.js';
+import { LogoutUserUseCase } from '../application/auth/usecases/LogoutUserUseCase.js';
+import { RefreshTokenUseCase } from '../application/auth/usecases/RefreshTokenUseCase.js';
+import { RegisterUserUseCase } from '../application/auth/usecases/RegisterUserUseCase.js';
+import { IDatabase } from '../application/contracts_db/DatabaseContracts.js';
+import { GetUserProfileUseCase } from '../application/profile/usecases/GetUserProfileUseCase.js';
 import { CreateUserWorkoutUseCase } from '../application/workouts/CreateUserWorkoutUseCase.js';
 
 export function createUseCases(

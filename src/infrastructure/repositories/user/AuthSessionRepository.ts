@@ -2,7 +2,7 @@ import { QueryResultRow } from 'pg';
 
 import { AuthSession } from '../../../domain/entities/user/AuthSession.js';
 import { IAuthSessionRepository } from '../../../domain/repositories/IAuthSessionRepository.js';
-import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     createAuthSession,

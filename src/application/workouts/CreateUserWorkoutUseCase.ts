@@ -8,7 +8,7 @@ import {
     UserNotFoundError,
     WorkoutPatternNotFoundError
 } from '../../shared/errors/index.js';
-import { IDatabase } from '../ports/database/IDatabase.js';
+import { IDatabase } from '../contracts_db/DatabaseContracts.js';
 
 import { ICreateUserWorkoutUseCase } from './ICreateUserWorkoutUseCase.js';
 import { CreateUserWorkoutRequest } from './dto/CreateUserWorkoutRequest.js';
@@ -17,51 +17,43 @@ import { workoutPlanSchema } from './validation/WorkoutPlanSchema.js';
 export class CreateUserWorkoutUseCase implements ICreateUserWorkoutUseCase {
     constructor(private readonly database: IDatabase) {}
 
-    async execute(request: CreateUserWorkoutRequest): Promise<UserWorkout> {
+    async execute(userId: number, request: CreateUserWorkoutRequest): Promise<UserWorkout> {
         return this.database.transaction(async (repositories) => {
             const userRepository = repositories.getUserRepository();
-            const patternRepository =
-                repositories.getUserWorkoutPatternRepository();
+            const patternRepository = repositories.getUserWorkoutPatternRepository();
             const exerciseRepository = repositories.getExerciseRepository();
-            const userWorkoutRepository =
-                repositories.getUserWorkoutRepository();
-            const userWorkoutExerciseRepository =
-                repositories.getUserWorkoutExerciseRepository();
+            const userWorkoutRepository = repositories.getUserWorkoutRepository();
+            const userWorkoutExerciseRepository = repositories.getUserWorkoutExerciseRepository();
 
-            const user = await userRepository.findById(request.userId);
-
+            // 1. Ищем пользователя по userId из токена (req.auth.userId), а не из body
+            const user = await userRepository.findById(userId);
             if (!user) {
-                throw new UserNotFoundError(request.userId);
+                throw new UserNotFoundError(userId);
             }
 
             const pattern = await patternRepository.findById(request.patternId);
-
             if (!pattern) {
                 throw new WorkoutPatternNotFoundError(request.patternId);
             }
 
             const parsedPlan = workoutPlanSchema.safeParse(pattern.patternData);
-
             if (!parsedPlan.success) {
                 throw new InvalidWorkoutPlanError(parsedPlan.error);
             }
 
             for (const exercise of parsedPlan.data.exercises) {
-                const exerciseEntity = await exerciseRepository.findById(
-                    exercise.exerciseId
-                );
-
+                const exerciseEntity = await exerciseRepository.findById(exercise.exerciseId);
                 if (!exerciseEntity) {
                     throw new ExerciseNotFoundError(exercise.exerciseId);
                 }
-
                 if (!exerciseEntity.isActive) {
                     throw new InactiveExerciseError(exercise.exerciseId);
                 }
             }
 
             const workout = new UserWorkout({
-                userId: user.id!,
+                // 2. Используем userId из аргументов (из auth), а не из request или user.id
+                userId: userId,
                 patternId: pattern.id!,
                 status: UserWorkoutStatus.Planned,
                 workoutPlan: parsedPlan.data,

@@ -4,8 +4,8 @@ import {
     ILoginUserUseCase,
     IRefreshTokenUseCase,
     IGetCurrentUserUseCase
-} from '../application/users/auth/Contracts.js';
-import { AuthController } from '../http/controllers/AuthController.js';
+} from '../application/auth/Contracts.js';
+import { AuthController } from '../presentation/controllers/AuthController.js';
 
 interface UseCases {
     registerUser: IRegisterUserUseCase;

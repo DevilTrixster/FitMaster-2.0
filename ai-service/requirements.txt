@@ -1,0 +1,24 @@
+# FitMaster AI — базовый набор зависимостей
+# Основной веб/API слой
+fastapi
+uvicorn[standard]
+
+# Конфигурация и валидация данных
+pydantic
+python-dotenv
+
+# PostgreSQL и работа с БД
+psycopg[binary]
+SQLAlchemy
+alembic
+
+# Анализ и подготовка тренировочных данных
+numpy
+pandas
+
+# Базовое машинное обучение
+scikit-learn
+joblib
+
+# HTTP-клиент для взаимодействия с FitMaster API
+httpx

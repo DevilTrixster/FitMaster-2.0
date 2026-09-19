@@ -2,7 +2,7 @@ import { QueryResultRow } from 'pg';
 
 import { MuscleGroup } from '../../../domain/entities/exercises/MuscleGroup.js';
 import { IMuscleGroupRepository } from '../../../domain/repositories/IMuscleGroupRepository.js';
-import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import { muscleGroupFindById } from './query/MuscleGroupQuery.js';
 

@@ -3,7 +3,7 @@ import { QueryResultRow } from 'pg';
 import { User } from '../../../domain/entities/user/User.js';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
 import { UserUpdateFields } from '../../../domain/types/UserUpdateFields.js';
-import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     userFindById,

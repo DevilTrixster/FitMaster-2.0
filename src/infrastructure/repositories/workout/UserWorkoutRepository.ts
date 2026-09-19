@@ -2,7 +2,7 @@ import { QueryResultRow } from 'pg';
 
 import { UserWorkout } from '../../../domain/entities/workouts/UserWorkout.js';
 import { IUserWorkoutRepository } from '../../../domain/repositories/IUserWorkoutRepository.js';
-import { IDatabaseExecutor } from '../../database/types/IDatabaseExecutor.js';
+import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     userWorkoutFindById,

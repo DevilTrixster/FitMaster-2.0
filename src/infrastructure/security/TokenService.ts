@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import { StringValue } from 'ms';
 import crypto from 'node:crypto';
 
-import { AccessTokenPayload } from '../../application/users/auth/DTO.js';
-import { ITokenService } from '../../application/users/auth/services/ITokenService.js';
+import { AccessTokenPayload } from '../../application/auth/DTO.js';
+import { ITokenService } from '../../application/auth/services/ITokenService.js';
 import { InvalidAccessTokenError } from '../../shared/errors/index.js';
 
 export interface JwtTokenConfig {

@@ -1,15 +1,67 @@
-# Зависимости
-node_modules/
+# =========================
+# Node.js / TypeScript
+# =========================
 
-# Скомпилированный код
+node_modules/
 dist/
 
-# Переменные окружения (пароли!)
+# Environment variables
 .env
+.env.*
+!.env.example
 
-# Системные файлы
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Coverage
+coverage/
+
+# TypeScript / tooling caches
+*.tsbuildinfo
+
+
+# =========================
+# Python
+# =========================
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python build / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+# =========================
+# IDE / OS
+# =========================
+
+.vscode/
+.idea/
+
 .DS_Store
 Thumbs.db
-
-# Логи
-*.log

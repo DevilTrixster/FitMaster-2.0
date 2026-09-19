@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { errorHandler } from '../http/middleware/errorHandler.js';
+import { errorHandler } from '../presentation/middleware/errorHandler.js';
 
 import { configureMiddleware } from './configureMiddleware.js';
 import { createControllers } from './createControllers.js';

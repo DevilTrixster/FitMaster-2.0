@@ -1,11 +1,12 @@
-import { Pool } from 'pg';
+import { Pool, PoolClient } from 'pg';
 
-import { IDatabase } from '../../application/ports/database/IDatabase.js';
-import { IRepositoryProvider } from '../../application/ports/repositories/IRepositoryProvider.js';
+import {
+    IDatabase,
+    IRepositoryProvider
+} from '../../application/contracts_db/DatabaseContracts.js';
 import { RepositoryProvider } from '../repositories/RepositoryProvider.js';
 
-import { DatabaseTransaction } from './DatabaseTransaction.js';
-import { PoolExecutor } from './PoolExecutor.js';
+import { IDatabaseExecutor } from './IDatabaseExecutor.js';
 
 export class PostgresDatabase implements IDatabase {
     private readonly pool: Pool;
@@ -21,17 +22,6 @@ export class PostgresDatabase implements IDatabase {
             max: 20, // максимальное число подключений
             idleTimeoutMillis: 30000, // время ожидания (мс)
             connectionTimeoutMillis: 2000 // время подключения (мс)
-        });
-    }
-
-    async transaction<T>(
-        callback: (repositories: IRepositoryProvider) => Promise<T>
-    ): Promise<T> {
-        const client = await this.pool.connect();
-        const transaction = new DatabaseTransaction(client);
-        return transaction.run(async (executor) => {
-            const provider = new RepositoryProvider(executor);
-            return callback(provider);
         });
     }
 
@@ -51,8 +41,31 @@ export class PostgresDatabase implements IDatabase {
         console.log('PostgreSQL connection closed');
     }
 
+    async transaction<T>(
+        callback: (repositories: IRepositoryProvider) => Promise<T>
+    ): Promise<T> {
+        const client: PoolClient = await this.pool.connect();
+        try {
+            await client.query('BEGIN');
+            const executor: IDatabaseExecutor = client;
+            const provider = new RepositoryProvider(executor);
+            const result = await callback(provider);
+            await client.query('COMMIT');
+            return result;
+        } catch (error) {
+            try {
+                await client.query('ROLLBACK');
+            } catch {
+                // Не перекрываем исходную ошибку
+            }
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
     repositories(): IRepositoryProvider {
-        const executor = new PoolExecutor(this.pool);
+        const executor: IDatabaseExecutor = this.pool;
 
         return new RepositoryProvider(executor);
     }
