@@ -1,6 +1,8 @@
 import { IRepositoryProvider } from '../../application/contracts_db/DatabaseContracts.js';
 import { IAuthSessionRepository } from '../../domain/repositories/IAuthSessionRepository.js';
+import { IExerciseMuscleGroupRepository } from '../../domain/repositories/IExerciseMuscleGroupRepository.js';
 import { IExerciseRepository } from '../../domain/repositories/IExerciseRepository.js';
+import { IMuscleGroupRepository } from '../../domain/repositories/IMuscleGroupRepository.js';
 import { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import { IUserWorkoutExerciseRepository } from '../../domain/repositories/IUserWorkoutExerciseRepository.js';
 import { IUserWorkoutPatternRepository } from '../../domain/repositories/IUserWorkoutPatternRepository.js';
@@ -10,7 +12,9 @@ import { IDatabaseExecutor } from '../database/IDatabaseExecutor.js';
 
 import { AuthSessionRepository } from './user/AuthSessionRepository.js';
 import { UserRepository } from './user/UserRepository.js';
+import { ExerciseMuscleGroupRepository } from './workout/ExerciseMuscleGroupRepository.js';
 import { ExerciseRepository } from './workout/ExerciseRepository.js';
+import { MuscleGroupRepository } from './workout/MuscleGroupRepository.js';
 import { UserWorkoutExerciseRepository } from './workout/UserWorkoutExerciseRepository.js';
 import { UserWorkoutPatternRepository } from './workout/UserWorkoutPatternRepository.js';
 import { UserWorkoutRepository } from './workout/UserWorkoutRepository.js';
@@ -22,6 +26,8 @@ export class RepositoryProvider implements IRepositoryProvider {
     private userWorkoutRepository?: IUserWorkoutRepository;
     private userWorkoutExerciseRepository?: IUserWorkoutExerciseRepository;
     private exerciseRepository?: IExerciseRepository;
+    private exerciseMuscleGroupRepository?: IExerciseMuscleGroupRepository;
+    private muscleGroupRepository?: IMuscleGroupRepository;
     private userWorkoutResultRepository?: IUserWorkoutResultRepository;
     private authSessionRepository?: IAuthSessionRepository;
 
@@ -37,8 +43,7 @@ export class RepositoryProvider implements IRepositoryProvider {
 
     getUserWorkoutPatternRepository(): IUserWorkoutPatternRepository {
         if (!this.userWorkoutPatternRepository) {
-            this.userWorkoutPatternRepository =
-                new UserWorkoutPatternRepository(this.executor);
+            this.userWorkoutPatternRepository = new UserWorkoutPatternRepository(this.executor);
         }
 
         return this.userWorkoutPatternRepository;
@@ -46,9 +51,7 @@ export class RepositoryProvider implements IRepositoryProvider {
 
     getUserWorkoutRepository(): IUserWorkoutRepository {
         if (!this.userWorkoutRepository) {
-            this.userWorkoutRepository = new UserWorkoutRepository(
-                this.executor
-            );
+            this.userWorkoutRepository = new UserWorkoutRepository(this.executor);
         }
 
         return this.userWorkoutRepository;
@@ -56,8 +59,7 @@ export class RepositoryProvider implements IRepositoryProvider {
 
     getUserWorkoutExerciseRepository(): IUserWorkoutExerciseRepository {
         if (!this.userWorkoutExerciseRepository) {
-            this.userWorkoutExerciseRepository =
-                new UserWorkoutExerciseRepository(this.executor);
+            this.userWorkoutExerciseRepository = new UserWorkoutExerciseRepository(this.executor);
         }
 
         return this.userWorkoutExerciseRepository;
@@ -73,19 +75,31 @@ export class RepositoryProvider implements IRepositoryProvider {
 
     getUserWorkoutResultRepository(): IUserWorkoutResultRepository {
         if (!this.userWorkoutResultRepository) {
-            this.userWorkoutResultRepository = new UserWorkoutResultRepository(
-                this.executor
-            );
+            this.userWorkoutResultRepository = new UserWorkoutResultRepository(this.executor);
         }
 
         return this.userWorkoutResultRepository;
     }
 
+    getExerciseMuscleGroupRepository(): IExerciseMuscleGroupRepository {
+        if (!this.exerciseMuscleGroupRepository) {
+            this.exerciseMuscleGroupRepository = new ExerciseMuscleGroupRepository(this.executor);
+        }
+
+        return this.exerciseMuscleGroupRepository;
+    }
+
+    getMuscleGroupRepository(): IMuscleGroupRepository {
+        if (!this.muscleGroupRepository) {
+            this.muscleGroupRepository = new MuscleGroupRepository(this.executor);
+        }
+
+        return this.muscleGroupRepository;
+    }
+
     getAuthSessionRepository(): IAuthSessionRepository {
         if (!this.authSessionRepository) {
-            this.authSessionRepository = new AuthSessionRepository(
-                this.executor
-            );
+            this.authSessionRepository = new AuthSessionRepository(this.executor);
         }
 
         return this.authSessionRepository;

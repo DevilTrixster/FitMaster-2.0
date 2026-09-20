@@ -7,7 +7,7 @@ export class User {
     public readonly email: string;
     public readonly firstName: string;
     public readonly lastName: string;
-    public readonly birthDate: Date;
+    public readonly birthDate: string;
     public readonly gender: Gender;
     public readonly height: number;
     public readonly weight: number;
@@ -26,7 +26,7 @@ export class User {
         email: string;
         firstName: string;
         lastName: string;
-        birthDate: Date;
+        birthDate: string;
         gender: Gender;
         height: number;
         weight: number;
@@ -51,7 +51,7 @@ export class User {
         this.avatarUrl = data.avatarUrl;
         this.preferredWorkoutTime = data.preferredWorkoutTime;
         this.preferredDays = data.preferredDays;
-        this.experienceLevel = data.experienceLevel ?? ExperienceLevel.Novice;
+        this.experienceLevel = data.experienceLevel ?? ExperienceLevel.Beginner;
         this.fitnessGoal = data.fitnessGoal ?? FitnessGoal.Maintenance;
         this.createdAt = data.createdAt ?? new Date();
         this.updatedAt = data.updatedAt ?? new Date();

@@ -2,12 +2,17 @@ import { QueryResultRow } from 'pg';
 
 import { UserWorkout } from '../../../domain/entities/workouts/UserWorkout.js';
 import { IUserWorkoutRepository } from '../../../domain/repositories/IUserWorkoutRepository.js';
+import { UserWorkoutStatus } from '../../../shared/enum.js';
 import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     userWorkoutFindById,
     userWorkoutCreate,
-    userWorkoutFindByIdAndUserId
+    userWorkoutFindByIdAndUserId,
+    userWorkoutFindByUserIdAndDateRange,
+    userWorkoutFindLatestByUserId,
+    userWorkoutUpdateStatus,
+    userWorkoutReschedule
 } from './query/UserWorkoutQuery.js';
 
 interface UserWorkoutRow extends QueryResultRow {
@@ -54,6 +59,48 @@ export class UserWorkoutRepository implements IUserWorkoutRepository {
         return this.mapToEntity(result.rows[0]);
     }
 
+    async findByIdAndUserId(
+        id: number,
+        userId: number
+    ): Promise<UserWorkout | null> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindByIdAndUserId,
+            [id, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
+        return this.mapToEntity(result.rows[0]);
+    }
+
+    async findByUserIdAndDateRange(
+        userId: number,
+        from: Date,
+        to: Date
+    ): Promise<UserWorkout[]> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindByUserIdAndDateRange,
+            [userId, from, to]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async findLatestByUserId(userId: number): Promise<UserWorkout | null> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindLatestByUserId,
+            [userId]
+        );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
+        return this.mapToEntity(result.rows[0]);
+    }
+
     async create(userWorkout: UserWorkout): Promise<UserWorkout> {
         const result = await this.executor.query<UserWorkoutRow>(
             userWorkoutCreate,
@@ -72,13 +119,33 @@ export class UserWorkoutRepository implements IUserWorkoutRepository {
         return this.mapToEntity(result.rows[0]);
     }
 
-    async findByIdAndUserId(
+    async updateStatus(
         id: number,
-        userId: number
+        userId: number,
+        status: UserWorkoutStatus,
+        startedAt: Date | null,
+        completedAt: Date | null
     ): Promise<UserWorkout | null> {
         const result = await this.executor.query<UserWorkoutRow>(
-            userWorkoutFindByIdAndUserId,
-            [id, userId]
+            userWorkoutUpdateStatus,
+            [id, userId, status, startedAt, completedAt]
+        );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
+        return this.mapToEntity(result.rows[0]);
+    }
+
+    async reschedule(
+        id: number,
+        userId: number,
+        scheduledAt: Date
+    ): Promise<UserWorkout | null> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutReschedule,
+            [id, userId, scheduledAt]
         );
 
         if (result.rows.length === 0) {

@@ -1,6 +1,6 @@
-import { IDatabase } from '../../contracts_db/DatabaseContracts.js';
 import { AuthSession } from '../../../domain/entities/user/AuthSession.js';
 import { InvalidCredentialsError } from '../../../shared/errors/index.js';
+import { IDatabase } from '../../contracts_db/DatabaseContracts.js';
 import { ILoginUserUseCase } from '../Contracts.js';
 import { LoginUserRequest, AuthenticationResult } from '../DTO.js';
 import { toUserResponse } from '../UserResponseMapper.js';
@@ -18,8 +18,7 @@ export class LoginUserUseCase implements ILoginUserUseCase {
         return this.database.transaction(async (repositories) => {
             const userRepository = repositories.getUserRepository();
 
-            const authSessionRepository =
-                repositories.getAuthSessionRepository();
+            const authSessionRepository = repositories.getAuthSessionRepository();
 
             const user = await userRepository.findByEmail(request.email);
 
@@ -38,8 +37,7 @@ export class LoginUserUseCase implements ILoginUserUseCase {
 
             const refreshToken = this.tokenService.generateRefreshToken();
 
-            const refreshTokenHash =
-                this.tokenService.hashRefreshToken(refreshToken);
+            const refreshTokenHash = this.tokenService.hashRefreshToken(refreshToken);
 
             const session = new AuthSession({
                 userId: user.id!,

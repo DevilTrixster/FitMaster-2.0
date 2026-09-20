@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MetricType, MetricValueType } from '../../../shared/enum';
+import { MetricType, MetricValueType } from '../../../shared/enum.js';
 
 const workoutValueSchema = z.discriminatedUnion('type', [
     z.object({
@@ -42,12 +42,22 @@ export const workoutPlanSchema = z
         restSeconds: z.number().int().nonnegative()
     })
     .superRefine((plan, ctx) => {
+        // 1. Проверка уникальности orderIndex
         const indexes = plan.exercises.map((exercise) => exercise.orderIndex);
-
         if (new Set(indexes).size !== indexes.length) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: 'orderIndex values must be unique',
+                path: ['exercises']
+            });
+        }
+
+        // 2. Проверка уникальности exerciseId
+        const exerciseIds = plan.exercises.map((exercise) => exercise.exerciseId);
+        if (new Set(exerciseIds).size !== exerciseIds.length) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'exerciseId values must be unique',
                 path: ['exercises']
             });
         }

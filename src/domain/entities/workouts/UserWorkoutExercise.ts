@@ -1,4 +1,4 @@
-import { UserWorkoutExerciseAdaptation } from '../../types/UserWorkoutExerciseAdaptation.js';
+import { UserWorkoutExerciseAdaptation } from '../../types/workouts/UserWorkoutExerciseAdaptation.js';
 
 export class UserWorkoutExercise {
     public readonly id?: number;

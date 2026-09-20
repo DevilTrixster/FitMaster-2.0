@@ -4,7 +4,13 @@ import { UserWorkoutPattern } from '../../../domain/entities/workouts/UserWorkou
 import { IUserWorkoutPatternRepository } from '../../../domain/repositories/IUserWorkoutPatternRepository.js';
 import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
-import { workoutPatternFindById } from './query/UserWorkoutPatternQuery.js';
+import {
+    workoutPatternFindById,
+    workoutPatternFindAll,
+    workoutPatternFindByType,
+    workoutPatternFindByParentPatternId,
+    workoutPatternCreate
+} from './query/UserWorkoutPatternQuery.js';
 
 interface UserWorkoutPatternRow extends QueryResultRow {
     id: string;
@@ -40,6 +46,53 @@ export class UserWorkoutPatternRepository implements IUserWorkoutPatternReposito
         if (result.rows.length === 0) {
             return null;
         }
+
+        return this.mapToEntity(result.rows[0]);
+    }
+
+    async findAll(): Promise<UserWorkoutPattern[]> {
+        const result = await this.executor.query<UserWorkoutPatternRow>(
+            workoutPatternFindAll
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async findByType(
+        type: UserWorkoutPattern['type']
+    ): Promise<UserWorkoutPattern[]> {
+        const result = await this.executor.query<UserWorkoutPatternRow>(
+            workoutPatternFindByType,
+            [type]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async findByParentPatternId(
+        parentPatternId: string
+    ): Promise<UserWorkoutPattern[]> {
+        const result = await this.executor.query<UserWorkoutPatternRow>(
+            workoutPatternFindByParentPatternId,
+            [parentPatternId]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async create(
+        pattern: UserWorkoutPattern
+    ): Promise<UserWorkoutPattern> {
+        const result = await this.executor.query<UserWorkoutPatternRow>(
+            workoutPatternCreate,
+            [
+                pattern.parentPatternId,
+                pattern.name,
+                pattern.type,
+                pattern.generationSource,
+                pattern.patternData
+            ]
+        );
 
         return this.mapToEntity(result.rows[0]);
     }

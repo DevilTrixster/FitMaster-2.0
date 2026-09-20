@@ -55,3 +55,79 @@ export const userWorkoutFindByIdAndUserId = `
     WHERE id = $1
       AND user_id = $2
 `;
+
+export const userWorkoutFindByUserIdAndDateRange = `
+    SELECT
+        id,
+        user_id,
+        pattern_id,
+        status,
+        workout_plan,
+        original_scheduled_at,
+        scheduled_at,
+        started_at,
+        completed_at,
+        created_at
+    FROM user_workout
+    WHERE user_id = $1
+      AND scheduled_at >= $2
+      AND scheduled_at < $3
+    ORDER BY scheduled_at, id
+`;
+
+export const userWorkoutFindLatestByUserId = `
+    SELECT
+        id,
+        user_id,
+        pattern_id,
+        status,
+        workout_plan,
+        original_scheduled_at,
+        scheduled_at,
+        started_at,
+        completed_at,
+        created_at
+    FROM user_workout
+    WHERE user_id = $1
+    ORDER BY scheduled_at DESC, id DESC
+    LIMIT 1
+`;
+
+export const userWorkoutUpdateStatus = `
+    UPDATE user_workout
+    SET
+        status = $3,
+        started_at = $4,
+        completed_at = $5
+    WHERE id = $1
+      AND user_id = $2
+    RETURNING
+        id,
+        user_id,
+        pattern_id,
+        status,
+        workout_plan,
+        original_scheduled_at,
+        scheduled_at,
+        started_at,
+        completed_at,
+        created_at
+`;
+
+export const userWorkoutReschedule = `
+    UPDATE user_workout
+    SET scheduled_at = $3
+    WHERE id = $1
+      AND user_id = $2
+    RETURNING
+        id,
+        user_id,
+        pattern_id,
+        status,
+        workout_plan,
+        original_scheduled_at,
+        scheduled_at,
+        started_at,
+        completed_at,
+        created_at
+`;

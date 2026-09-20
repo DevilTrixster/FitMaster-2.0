@@ -2,7 +2,7 @@ import {
     WorkoutPatternType,
     WorkoutPatternGeneration
 } from '../../../shared/enum.js';
-import { WorkoutPlan } from '../../types/WorkoutPlan.js';
+import { WorkoutPlan } from '../../types/workouts/WorkoutPlan.js';
 
 export class UserWorkoutPattern {
     public readonly id?: string;

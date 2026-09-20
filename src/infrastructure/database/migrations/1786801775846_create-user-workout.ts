@@ -63,13 +63,19 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         {
             constraints: {
                 check: `
-                completed_at IS NULL
-                OR (
-                    started_at IS NOT NULL
-                    AND completed_at >= started_at)`
+                 (status = 'PLANNED' AND started_at IS NULL AND completed_at IS NULL)
+                 OR
+                 (status = 'IN_PROGRESS' AND started_at IS NOT NULL AND completed_at IS NULL)
+                 OR
+                 (status = 'COMPLETED' AND started_at IS NOT NULL AND completed_at IS NOT NULL AND completed_at >= started_at)
+                 OR
+                 (status = 'CANCELLED' AND completed_at IS NULL)
+             `
             }
         }
     );
+
+    
 
     pgm.createIndex('user_workout', ['user_id', 'scheduled_at'], {
         name: 'idx_user_workouts_user_scheduled'

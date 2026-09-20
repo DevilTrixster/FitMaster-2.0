@@ -18,12 +18,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.createType('reaction', ['like', 'dislike', 'neutral']);
 
     // Статус тренировки -- в прогрессе, завершена и тд.
-    pgm.createType('user_workout_status', [
-        'PLANNED',
-        'IN_PROGRESS',
-        'COMPLETED',
-        'CANCELLED'
-    ]);
+    pgm.createType('user_workout_status', ['PLANNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED']);
 
     // Типы адаптации -- увеличение веса, уменьшение и тд.
     pgm.createType('adaptation_type', [
@@ -46,16 +41,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     ]);
 
     // Единицы измерения метрик -- кг, метры, секунды и тд.
-    pgm.createType('metric', [
-        'kg',
-        'km',
-        'metr',
-        'sm',
-        'min',
-        'sec',
-        'count',
-        'min_sec'
-    ]);
+    pgm.createType('metric', ['kg', 'km', 'metr', 'sm', 'min', 'sec', 'count', 'min_sec']);
 
     // Варианты упражнений -- со своим весом, кардио, тренажер и тд
     pgm.createType('equipment_type', [
@@ -160,10 +146,15 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         LANGUAGE sql
         IMMUTABLE
         AS $$
-        SELECT COALESCE(
-            bool_and(v BETWEEN 1 AND 7),
-            TRUE
-        )
+        SELECT 
+            -- 1. Массив не пустой и не больше 7 дней
+            COALESCE(array_length(arr, 1), 0) BETWEEN 1 AND 7
+            AND 
+            -- 2. Все значения строго в диапазоне 1..7
+            COALESCE(bool_and(v BETWEEN 1 AND 7), TRUE)
+            AND
+            -- 3. Нет дубликатов (кол-во уникальных равно длине массива)
+            COALESCE(array_length(arr, 1), 0) = (SELECT COUNT(DISTINCT v) FROM unnest(arr) AS t(v))
         FROM unnest(arr) AS t(v);
         $$;
     `);

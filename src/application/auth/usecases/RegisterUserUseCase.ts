@@ -4,7 +4,7 @@ import {
     EmailAlreadyExistsError,
     NicknameAlreadyExistsError
 } from '../../../shared/errors/index.js';
-import { IDatabase } from '../../contracts_db/DatabaseContracts';
+import { IDatabase } from '../../contracts_db/DatabaseContracts.js';
 import { IRegisterUserUseCase } from '../Contracts.js';
 import { RegisterUserRequest, AuthenticationResult } from '../DTO.js';
 import { toUserResponse } from '../UserResponseMapper.js';
@@ -22,28 +22,21 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         return this.database.transaction(async (repositories) => {
             const userRepository = repositories.getUserRepository();
 
-            const authSessionRepository =
-                repositories.getAuthSessionRepository();
+            const authSessionRepository = repositories.getAuthSessionRepository();
 
-            const existingEmail = await userRepository.findByEmail(
-                request.email
-            );
+            const existingEmail = await userRepository.findByEmail(request.email);
 
             if (existingEmail) {
                 throw new EmailAlreadyExistsError();
             }
 
-            const existingNickname = await userRepository.findByNickname(
-                request.nickname
-            );
+            const existingNickname = await userRepository.findByNickname(request.nickname);
 
             if (existingNickname) {
                 throw new NicknameAlreadyExistsError();
             }
 
-            const passwordHash = await this.passwordHasher.hash(
-                request.password
-            );
+            const passwordHash = await this.passwordHasher.hash(request.password);
 
             const user = new User({
                 nickname: request.nickname,
@@ -62,12 +55,11 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
                 fitnessGoal: request.fitnessGoal
             });
 
-            const createdUser = await userRepository.createUser(user);
+            const createdUser = await userRepository.create(user);
 
             const refreshToken = this.tokenService.generateRefreshToken();
 
-            const refreshTokenHash =
-                this.tokenService.hashRefreshToken(refreshToken);
+            const refreshTokenHash = this.tokenService.hashRefreshToken(refreshToken);
 
             const session = new AuthSession({
                 userId: createdUser.id!,
@@ -78,9 +70,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
 
             await authSessionRepository.create(session);
 
-            const accessToken = this.tokenService.generateAccessToken(
-                createdUser.id!
-            );
+            const accessToken = this.tokenService.generateAccessToken(createdUser.id!);
 
             return {
                 user: toUserResponse(createdUser),

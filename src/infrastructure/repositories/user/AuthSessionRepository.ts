@@ -36,23 +36,19 @@ export class AuthSessionRepository implements IAuthSessionRepository {
     }
 
     async create(session: AuthSession): Promise<AuthSession> {
-        const result = await this.executor.query<AuthSessionRow>(
-            createAuthSession,
-            [
-                session.userId,
-                session.refreshTokenHash,
-                session.expiresAt,
-                session.revokedAt
-            ]
-        );
+        const result = await this.executor.query<AuthSessionRow>(createAuthSession, [
+            session.userId,
+            session.refreshTokenHash,
+            session.expiresAt,
+            session.revokedAt
+        ]);
         return this.mapToEntity(result.rows[0]);
     }
 
     async findByTokenHash(tokenHash: string): Promise<AuthSession | null> {
-        const result = await this.executor.query<AuthSessionRow>(
-            findByTokenHashAuthSession,
-            [tokenHash]
-        );
+        const result = await this.executor.query<AuthSessionRow>(findByTokenHashAuthSession, [
+            tokenHash
+        ]);
 
         if (result.rows.length === 0) {
             return null;
@@ -69,9 +65,7 @@ export class AuthSessionRepository implements IAuthSessionRepository {
         await this.executor.query(revokeAllByUserIdAuthSession, [userId]);
     }
 
-    async findByTokenHashForUpdate(
-        tokenHash: string
-    ): Promise<AuthSession | null> {
+    async findByTokenHashForUpdate(tokenHash: string): Promise<AuthSession | null> {
         const result = await this.executor.query<AuthSessionRow>(
             findByTokenHashForUpdateAuthSession,
             [tokenHash]

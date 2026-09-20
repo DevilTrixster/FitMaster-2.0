@@ -2,6 +2,7 @@ import { QueryResultRow } from 'pg';
 
 import { UserWorkoutExercise } from '../../../domain/entities/workouts/UserWorkoutExercise.js';
 import { IUserWorkoutExerciseRepository } from '../../../domain/repositories/IUserWorkoutExerciseRepository.js';
+import { UserWorkoutExerciseAdaptation } from '../../../domain/types/workouts/UserWorkoutExerciseAdaptation.js';
 import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
@@ -36,9 +37,7 @@ export class UserWorkoutExerciseRepository implements IUserWorkoutExerciseReposi
         });
     }
 
-    async findByWorkoutId(
-        userWorkoutId: number
-    ): Promise<UserWorkoutExercise[]> {
+    async findByWorkoutId(userWorkoutId: number): Promise<UserWorkoutExercise[]> {
         const result = await this.executor.query<UserWorkoutExerciseRow>(
             userWorkoutExerciseFindByWorkoutId,
             [userWorkoutId]
@@ -62,9 +61,7 @@ export class UserWorkoutExerciseRepository implements IUserWorkoutExerciseReposi
         return this.mapToEntity(result.rows[0]);
     }
 
-    async create(
-        userWorkoutExercise: UserWorkoutExercise
-    ): Promise<UserWorkoutExercise> {
+    async create(userWorkoutExercise: UserWorkoutExercise): Promise<UserWorkoutExercise> {
         const result = await this.executor.query<UserWorkoutExerciseRow>(
             userWorkoutExerciseCreate,
             [
@@ -79,16 +76,18 @@ export class UserWorkoutExerciseRepository implements IUserWorkoutExerciseReposi
     }
 
     async update(
-        userWorkoutExercise: UserWorkoutExercise
-    ): Promise<UserWorkoutExercise> {
+        id: number,
+        exerciseId: number,
+        adaptationData: UserWorkoutExerciseAdaptation | null
+    ): Promise<UserWorkoutExercise | null> {
         const result = await this.executor.query<UserWorkoutExerciseRow>(
             userWorkoutExerciseUpdate,
-            [
-                userWorkoutExercise.id,
-                userWorkoutExercise.exerciseId,
-                userWorkoutExercise.adaptationData
-            ]
+            [id, exerciseId, adaptationData]
         );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
 
         return this.mapToEntity(result.rows[0]);
     }

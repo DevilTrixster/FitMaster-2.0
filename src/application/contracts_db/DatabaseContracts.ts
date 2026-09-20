@@ -1,5 +1,7 @@
 import { IAuthSessionRepository } from '../../domain/repositories/IAuthSessionRepository.js';
+import { IExerciseMuscleGroupRepository } from '../../domain/repositories/IExerciseMuscleGroupRepository.js';
 import { IExerciseRepository } from '../../domain/repositories/IExerciseRepository.js';
+import { IMuscleGroupRepository } from '../../domain/repositories/IMuscleGroupRepository.js';
 import { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import { IUserWorkoutExerciseRepository } from '../../domain/repositories/IUserWorkoutExerciseRepository.js';
 import { IUserWorkoutPatternRepository } from '../../domain/repositories/IUserWorkoutPatternRepository.js';
@@ -8,9 +10,7 @@ import { IUserWorkoutResultRepository } from '../../domain/repositories/IUserWor
 
 export interface IDatabase {
     repositories(): IRepositoryProvider;
-    transaction<T>(
-        callback: (repositories: IRepositoryProvider) => Promise<T>
-    ): Promise<T>;
+    transaction<T>(callback: (repositories: IRepositoryProvider) => Promise<T>): Promise<T>;
 }
 
 export interface IRepositoryProvider {
@@ -21,4 +21,6 @@ export interface IRepositoryProvider {
     getExerciseRepository(): IExerciseRepository;
     getUserWorkoutResultRepository(): IUserWorkoutResultRepository;
     getAuthSessionRepository(): IAuthSessionRepository;
+    getMuscleGroupRepository(): IMuscleGroupRepository;
+    getExerciseMuscleGroupRepository(): IExerciseMuscleGroupRepository;
 }

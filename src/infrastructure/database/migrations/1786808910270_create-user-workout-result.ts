@@ -43,6 +43,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('CURRENT_TIMESTAMP')
         }
     });
+
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {

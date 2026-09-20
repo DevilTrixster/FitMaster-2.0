@@ -1,6 +1,6 @@
-import { IDatabase } from '../../contracts_db/DatabaseContracts';
 import { AuthSession } from '../../../domain/entities/user/AuthSession.js';
 import { InvalidRefreshTokenError } from '../../../shared/errors/index.js';
+import { IDatabase } from '../../contracts_db/DatabaseContracts.js';
 import { IRefreshTokenUseCase } from '../Contracts.js';
 import { RefreshTokenRequest, RefreshTokenResult } from '../DTO.js';
 import { ITokenService } from '../services/ITokenService.js';
@@ -13,17 +13,11 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
 
     async execute(request: RefreshTokenRequest): Promise<RefreshTokenResult> {
         return this.database.transaction(async (repositories) => {
-            const authSessionRepository =
-                repositories.getAuthSessionRepository();
+            const authSessionRepository = repositories.getAuthSessionRepository();
 
-            const refreshTokenHash = this.tokenService.hashRefreshToken(
-                request.refreshToken
-            );
+            const refreshTokenHash = this.tokenService.hashRefreshToken(request.refreshToken);
 
-            const session =
-                await authSessionRepository.findByTokenHashForUpdate(
-                    refreshTokenHash
-                );
+            const session = await authSessionRepository.findByTokenHashForUpdate(refreshTokenHash);
 
             if (!session) {
                 throw new InvalidRefreshTokenError();
@@ -39,8 +33,7 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
 
             const newRefreshToken = this.tokenService.generateRefreshToken();
 
-            const newRefreshTokenHash =
-                this.tokenService.hashRefreshToken(newRefreshToken);
+            const newRefreshTokenHash = this.tokenService.hashRefreshToken(newRefreshToken);
 
             await authSessionRepository.revokeById(session.id!);
 
@@ -53,9 +46,7 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
 
             await authSessionRepository.create(newSession);
 
-            const accessToken = this.tokenService.generateAccessToken(
-                session.userId
-            );
+            const accessToken = this.tokenService.generateAccessToken(session.userId);
 
             return {
                 accessToken,

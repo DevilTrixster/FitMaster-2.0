@@ -1,4 +1,5 @@
 import { UserWorkoutExercise } from '../entities/workouts/UserWorkoutExercise.js';
+import { UserWorkoutExerciseAdaptation } from '../types/workouts/UserWorkoutExerciseAdaptation.js';
 
 export interface IUserWorkoutExerciseRepository {
     findByWorkoutId(userWorkoutId: number): Promise<UserWorkoutExercise[]>;
@@ -6,10 +7,10 @@ export interface IUserWorkoutExerciseRepository {
         userWorkoutId: number,
         plannedExerciseId: number
     ): Promise<UserWorkoutExercise | null>;
-    create(
-        userWorkoutExercise: UserWorkoutExercise
-    ): Promise<UserWorkoutExercise>;
+    create(userWorkoutExercise: UserWorkoutExercise): Promise<UserWorkoutExercise>;
     update(
-        userWorkoutExercise: UserWorkoutExercise
-    ): Promise<UserWorkoutExercise>;
+        id: number,
+        exerciseId: number,
+        adaptationData: UserWorkoutExerciseAdaptation | null
+    ): Promise<UserWorkoutExercise | null>;
 }

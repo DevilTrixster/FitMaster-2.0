@@ -1,5 +1,5 @@
 import { UserWorkoutStatus } from '../../../shared/enum.js';
-import { WorkoutPlan } from '../../types/WorkoutPlan.js';
+import { WorkoutPlan } from '../../types/workouts/WorkoutPlan.js';
 
 export class UserWorkout {
     public readonly id?: number;

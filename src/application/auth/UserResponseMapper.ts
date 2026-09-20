@@ -1,4 +1,4 @@
-import { User } from '../../domain/entities/user/User';
+import { User } from '../../domain/entities/user/User.js';
 
 import { UserResponse } from './DTO.js';
 

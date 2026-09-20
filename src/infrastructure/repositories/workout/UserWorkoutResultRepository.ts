@@ -2,12 +2,13 @@ import { QueryResultRow } from 'pg';
 
 import { UserWorkoutResult } from '../../../domain/entities/workouts/UserWorkoutResult.js';
 import { IUserWorkoutResultRepository } from '../../../domain/repositories/IUserWorkoutResultRepository.js';
-import { WorkoutResult } from '../../../domain/types/WorkoutResult.js';
+import { WorkoutResult } from '../../../domain/types/workouts/WorkoutResult.js';
 import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     userWorkoutResultCreate,
     userWorkoutResultFindByUserWorkoutId,
+    userWorkoutResultFindByUserWorkoutIds,
     userWorkoutResultUpdateActualData
 } from './query/UserWorkoutResultQuery.js';
 
@@ -32,9 +33,7 @@ export class UserWorkoutResultRepository implements IUserWorkoutResultRepository
         });
     }
 
-    async findByUserWorkoutId(
-        userWorkoutId: number
-    ): Promise<UserWorkoutResult | null> {
+    async findByUserWorkoutId(userWorkoutId: number): Promise<UserWorkoutResult | null> {
         const result = await this.executor.query<UserWorkoutResultRow>(
             userWorkoutResultFindByUserWorkoutId,
             [userWorkoutId]
@@ -45,6 +44,19 @@ export class UserWorkoutResultRepository implements IUserWorkoutResultRepository
         }
 
         return this.mapToEntity(result.rows[0]);
+    }
+
+    async findByUserWorkoutIds(userWorkoutIds: number[]): Promise<UserWorkoutResult[]> {
+        if (userWorkoutIds.length === 0) {
+            return [];
+        }
+
+        const result = await this.executor.query<UserWorkoutResultRow>(
+            userWorkoutResultFindByUserWorkoutIds,
+            [userWorkoutIds]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
     }
 
     async create(result: UserWorkoutResult): Promise<UserWorkoutResult> {

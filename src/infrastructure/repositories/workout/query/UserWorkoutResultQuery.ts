@@ -9,6 +9,18 @@ export const userWorkoutResultFindByUserWorkoutId = `
     WHERE user_workout_id = $1
 `;
 
+export const userWorkoutResultFindByUserWorkoutIds = `
+    SELECT
+        id,
+        user_workout_id,
+        planned_data,
+        actual_data,
+        created_at
+    FROM user_workout_result
+    WHERE user_workout_id = ANY($1::integer[])
+    ORDER BY user_workout_id
+`;
+
 export const userWorkoutResultCreate = `
     INSERT INTO user_workout_result (
         user_workout_id,

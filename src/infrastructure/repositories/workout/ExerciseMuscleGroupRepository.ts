@@ -6,6 +6,7 @@ import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     exerciseMuscleGroupFindByExerciseId,
+    exerciseMuscleGroupFindPrimaryByExerciseId,
     exerciseMuscleGroupFindByMuscleGroupId
 } from './query/ExerciseMuscleGroupQuery.js';
 
@@ -40,6 +41,21 @@ export class ExerciseMuscleGroupRepository implements IExerciseMuscleGroupReposi
             [exerciseId]
         );
         return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async findPrimaryByExerciseId(
+        exerciseId: number
+    ): Promise<ExerciseMuscleGroup | null> {
+        const result = await this.executor.query<ExerciseMuscleGroupRow>(
+            exerciseMuscleGroupFindPrimaryByExerciseId,
+            [exerciseId]
+        );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
+        return this.mapToEntity(result.rows[0]);
     }
 
     async findByMuscleGroupId(

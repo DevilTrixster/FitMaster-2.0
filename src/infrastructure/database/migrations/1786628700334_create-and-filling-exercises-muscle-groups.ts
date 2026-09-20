@@ -57,6 +57,12 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         }
     );
 
+    pgm.createIndex('exercises_muscle_groups', 'exercise_id', {
+        name: 'uq_exercise_primary_muscle_group',
+        unique: true,
+        where: 'is_primary = TRUE'
+    });
+
     // Заполнение таблицы exercises_muscle_groups для каждого упражнения
     pgm.sql(`
         INSERT INTO exercises_muscle_groups (exercise_id, muscle_group_id, load_ratio, is_primary)

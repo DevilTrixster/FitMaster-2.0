@@ -3,56 +3,58 @@ import type { ColumnDefinitions, MigrationBuilder } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    pgm.createTable(
-        'user_workout_exercises',
-        {
-            id: {
-                type: 'serial',
-                primaryKey: true
-            },
-
-            user_workout_id: {
-                type: 'integer',
-                notNull: true,
-                references: 'user_workout',
-                onDelete: 'CASCADE'
-            },
-
-            planned_exercise_id: {
-                type: 'integer',
-                notNull: true,
-                references: 'exercises',
-                onDelete: 'RESTRICT'
-            },
-
-            exercise_id: {
-                type: 'integer',
-                notNull: true,
-                references: 'exercises',
-                onDelete: 'RESTRICT'
-            },
-
-            adaptation_data: {
-                type: 'jsonb',
-                check: "jsonb_typeof(adaptation_data) = 'object'"
-            },
-
-            created_at: {
-                type: 'timestamp with time zone',
-                notNull: true,
-                default: pgm.func('CURRENT_TIMESTAMP')
-            },
-
-            updated_at: {
-                type: 'timestamp with time zone',
-                notNull: true,
-                default: pgm.func('CURRENT_TIMESTAMP')
-            }
+    pgm.createTable('user_workout_exercises', {
+        id: {
+            type: 'serial',
+            primaryKey: true
         },
-        {
-            constraints: { unique: ['user_workout_id', 'planned_exercise_id'] }
+
+        user_workout_id: {
+            type: 'integer',
+            notNull: true,
+            references: 'user_workout',
+            onDelete: 'CASCADE'
+        },
+
+        planned_exercise_id: {
+            type: 'integer',
+            notNull: true,
+            references: 'exercises',
+            onDelete: 'RESTRICT'
+        },
+
+        exercise_id: {
+            type: 'integer',
+            notNull: true,
+            references: 'exercises',
+            onDelete: 'RESTRICT'
+        },
+
+        adaptation_data: {
+            type: 'jsonb',
+            check: "jsonb_typeof(adaptation_data) = 'object'"
+        },
+
+        created_at: {
+            type: 'timestamp with time zone',
+            notNull: true,
+            default: pgm.func('CURRENT_TIMESTAMP')
+        },
+
+        updated_at: {
+            type: 'timestamp with time zone',
+            notNull: true,
+            default: pgm.func('CURRENT_TIMESTAMP')
         }
-    );
+    });
+
+    pgm.addConstraint('user_workout_exercises', 'uq_user_workout_planned_exercise', {
+        unique: ['user_workout_id', 'planned_exercise_id']
+    });
+
+    pgm.addConstraint('user_workout_exercises', 'uq_user_workout_actual_exercise', {
+        unique: ['user_workout_id', 'exercise_id']
+    });
 
     // Триггер
     pgm.sql(`
@@ -64,5 +66,13 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
+    pgm.dropConstraint('user_workout_exercises', 'uq_user_workout_planned_exercise', {
+        ifExists: true
+    });
+
+    pgm.dropConstraint('user_workout_exercises', 'uq_user_workout_actual_exercise', {
+        ifExists: true
+    });
+
     pgm.dropTable('user_workout_exercises');
 }

@@ -2,5 +2,6 @@ import { ExerciseMuscleGroup } from '../entities/exercises/ExerciseMuscleGroup.j
 
 export interface IExerciseMuscleGroupRepository {
     findByExerciseId(exerciseId: number): Promise<ExerciseMuscleGroup[]>;
+    findPrimaryByExerciseId(exerciseId: number): Promise<ExerciseMuscleGroup | null>;
     findByMuscleGroupId(muscleGroupId: number): Promise<ExerciseMuscleGroup[]>;
 }

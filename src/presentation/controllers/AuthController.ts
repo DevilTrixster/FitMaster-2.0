@@ -14,6 +14,7 @@ import {
     RefreshTokenRequest,
     GetCurrentUserRequest
 } from '../../application/auth/DTO.js';
+import { SuccessStatuses } from '../../shared/statuses/index.js';
 import { AuthenticatedRequest } from '../IAuthenticatedRequest.js';
 
 export class AuthController {
@@ -30,7 +31,7 @@ export class AuthController {
 
         const result = await this.registerUserUseCase.execute(request);
 
-        res.status(201).json(result);
+        res.status(SuccessStatuses.CREATED.statusCode).json(result);
     }
 
     async login(req: Request, res: Response): Promise<void> {
@@ -41,7 +42,7 @@ export class AuthController {
 
         const result = await this.loginUserUseCase.execute(request);
 
-        res.status(200).json(result);
+        res.status(SuccessStatuses.OK.statusCode).json(result);
     }
 
     async logout(req: Request, res: Response): Promise<void> {
@@ -51,7 +52,7 @@ export class AuthController {
 
         await this.logoutUserUseCase.execute(request);
 
-        res.status(204).send();
+        res.status(SuccessStatuses.NO_CONTENT.statusCode).send();
     }
 
     async refresh(req: Request, res: Response): Promise<void> {
@@ -61,7 +62,7 @@ export class AuthController {
 
         const result = await this.refreshTokenUseCase.execute(request);
 
-        res.status(200).json(result);
+        res.status(SuccessStatuses.OK.statusCode).json(result);
     }
 
     async me(req: AuthenticatedRequest, res: Response): Promise<void> {
@@ -71,6 +72,6 @@ export class AuthController {
 
         const user = await this.getCurrentUserUseCase.execute(request);
 
-        res.status(200).json(user);
+        res.status(SuccessStatuses.OK.statusCode).json(user);
     }
 }

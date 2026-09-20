@@ -2,7 +2,7 @@ import { QueryResultRow } from 'pg';
 
 import { User } from '../../../domain/entities/user/User.js';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
-import { UserUpdateFields } from '../../../domain/types/UserUpdateFields.js';
+import { UserUpdateFields } from '../../../domain/types/user/UserUpdateFields.js';
 import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
@@ -33,7 +33,7 @@ interface UserRow extends QueryResultRow {
     email: string;
     first_name: string;
     last_name: string;
-    birth_date: Date;
+    birth_date: string;
     gender: User['gender'];
     height: number;
     weight: string;
@@ -82,9 +82,7 @@ export class UserRepository implements IUserRepository {
     }
 
     async findByNickname(nickname: string): Promise<User | null> {
-        const result = await this.executor.query<UserRow>(userFindByNickname, [
-            nickname
-        ]);
+        const result = await this.executor.query<UserRow>(userFindByNickname, [nickname]);
 
         if (result.rows.length === 0) {
             return null;
@@ -94,9 +92,7 @@ export class UserRepository implements IUserRepository {
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        const result = await this.executor.query<UserRow>(userFindByEmail, [
-            email
-        ]);
+        const result = await this.executor.query<UserRow>(userFindByEmail, [email]);
 
         if (result.rows.length === 0) {
             return null;
@@ -105,7 +101,7 @@ export class UserRepository implements IUserRepository {
         return this.mapToEntity(result.rows[0]);
     }
 
-    async createUser(user: User): Promise<User> {
+    async create(user: User): Promise<User> {
         const result = await this.executor.query<UserRow>(userCreate, [
             user.nickname,
             user.passwordHash,
@@ -126,10 +122,7 @@ export class UserRepository implements IUserRepository {
         return this.mapToEntity(result.rows[0]);
     }
 
-    async updateUserFields(
-        userId: number,
-        fields: UserUpdateFields
-    ): Promise<User | null> {
+    async updateUserFields(userId: number, fields: UserUpdateFields): Promise<User | null> {
         const entries = Object.entries(fields);
 
         if (entries.length === 0) {
@@ -144,8 +137,7 @@ export class UserRepository implements IUserRepository {
                 continue;
             }
 
-            const column =
-                userUpdateColumns[field as keyof typeof userUpdateColumns];
+            const column = userUpdateColumns[field as keyof typeof userUpdateColumns];
 
             if (!column) {
                 continue;
@@ -154,6 +146,10 @@ export class UserRepository implements IUserRepository {
             values.push(value);
 
             setClauses.push(`${column} = $${values.length}`);
+        }
+
+        if (setClauses.length === 0) {
+            return this.findById(userId);
         }
 
         const query = `
@@ -167,12 +163,12 @@ export class UserRepository implements IUserRepository {
                 email,
                 first_name,
                 last_name,
-                birth_date,
+                birth_date::text AS birth_date,
                 gender,
                 height,
                 weight,
                 avatar_url,
-                preferred_workout_time,
+                to_char(preferred_workout_time, 'HH24:MI') AS preferred_workout_time,
                 preferred_days,
                 experience_level,
                 fitness_goal,

@@ -6,7 +6,9 @@ import { IDatabaseExecutor } from '../../database/IDatabaseExecutor.js';
 
 import {
     exerciseFindById,
+    exerciseFindByIds,
     exerciseFindByName,
+    exerciseSearchActiveByName,
     exerciseFindAllActive
 } from './query/ExerciseQuery.js';
 
@@ -52,6 +54,19 @@ export class ExerciseRepository implements IExerciseRepository {
         return this.mapToEntity(result.rows[0]);
     }
 
+    async findByIds(ids: number[]): Promise<Exercise[]> {
+        if (ids.length === 0) {
+            return [];
+        }
+
+        const result = await this.executor.query<ExerciseRow>(
+            exerciseFindByIds,
+            [ids]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
     async findByName(name: string): Promise<Exercise | null> {
         const result = await this.executor.query<ExerciseRow>(
             exerciseFindByName,
@@ -63,6 +78,15 @@ export class ExerciseRepository implements IExerciseRepository {
         }
 
         return this.mapToEntity(result.rows[0]);
+    }
+
+    async searchActiveByName(search: string): Promise<Exercise[]> {
+        const result = await this.executor.query<ExerciseRow>(
+            exerciseSearchActiveByName,
+            [search.trim()]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
     }
 
     async findAllActive(): Promise<Exercise[]> {

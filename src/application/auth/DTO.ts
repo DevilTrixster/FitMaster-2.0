@@ -6,7 +6,7 @@ export interface UserResponse {
     email: string;
     firstName: string;
     lastName: string;
-    birthDate: Date;
+    birthDate: string;
     gender: Gender;
     height: number;
     weight: number;
@@ -26,7 +26,7 @@ export interface RegisterUserRequest {
 
     firstName: string;
     lastName: string;
-    birthDate: Date;
+    birthDate: string;
     gender: Gender;
 
     height: number;
