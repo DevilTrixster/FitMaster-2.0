@@ -1,5 +1,6 @@
 import { Navbar } from '/components/navbar/Navbar.js';
 import { setTokens } from '/auth/auth.js';
+import { apiJson } from '/common/api.js';
 
 const navbarRoot =
     document.getElementById('navbar');
@@ -118,40 +119,26 @@ registrationForm.addEventListener(
 
         try {
 
-            const response =
-                await fetch(
+            const result =
+                await apiJson(
                     '/api/auth/register',
                     {
                         method: 'POST',
-
-                        headers: {
-                            'Content-Type':
-                                'application/json'
-                        },
-
-                        body:
-                            JSON.stringify(
-                                request
-                            )
-                    }
+                        body: request
+                    },
+                    false
                 );
 
+            setTokens(result);
 
-            const result =
-                await response.json();
-
-
-            if (!response.ok) {
-                throw new Error(
-                    result.message ??
-                    'Не удалось создать аккаунт.'
-                );
+            try {
+                await apiJson('/api/workouts/defaults', {
+                    method: 'POST',
+                    body: {}
+                });
+            } catch {
+                // The dashboard will retry default workout initialization.
             }
-            setTokens({
-                accessToken: result.accessToken,
-                refreshToken: result.refreshToken
-            });
-
 
             window.location.href =
                 '/user/dashboard/dashboard.html';

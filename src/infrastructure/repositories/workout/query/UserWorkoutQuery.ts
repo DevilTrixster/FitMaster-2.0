@@ -75,6 +75,26 @@ export const userWorkoutFindByUserIdAndDateRange = `
     ORDER BY scheduled_at, id
 `;
 
+export const userWorkoutFindCompletedByUserIdAndDateRange = `
+    SELECT
+        id,
+        user_id,
+        pattern_id,
+        status,
+        workout_plan,
+        original_scheduled_at,
+        scheduled_at,
+        started_at,
+        completed_at,
+        created_at
+    FROM user_workout
+    WHERE user_id = $1
+      AND status = 'COMPLETED'
+      AND completed_at >= $2
+      AND completed_at < $3
+    ORDER BY completed_at DESC, id DESC
+`;
+
 export const userWorkoutFindLatestByUserId = `
     SELECT
         id,

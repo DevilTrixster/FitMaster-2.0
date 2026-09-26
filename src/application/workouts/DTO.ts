@@ -16,6 +16,7 @@ export interface CreateUserWorkoutRequest {
 export type GetUserWorkoutRequest =
     | { type: 'byId'; workoutId: number }
     | { type: 'byDateRange'; from: Date; to: Date }
+    | { type: 'completedByDateRange'; from: Date; to: Date }
     | { type: 'latest' };
 
 export interface UpdateUserWorkoutStatusRequest {

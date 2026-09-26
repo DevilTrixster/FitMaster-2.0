@@ -1,12 +1,10 @@
 import { Router } from 'express';
 
-import { ITokenService } from '../../application/auth/services/ITokenService.js';
 import { WorkoutPatternController } from '../controllers/WorkoutPatternController.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
 
 export function createWorkoutPatternRoutes(
-    controller: WorkoutPatternController,
-    tokenService: ITokenService
+    controller: WorkoutPatternController
 ): Router {
     const router = Router();
 

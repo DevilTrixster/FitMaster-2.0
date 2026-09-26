@@ -15,6 +15,9 @@ export class GetUserWorkoutUseCase implements IGetUserWorkoutUseCase {
             case 'byDateRange':
                 return repository.findByUserIdAndDateRange(userId, request.from, request.to);
 
+            case 'completedByDateRange':
+                return repository.findCompletedByUserIdAndDateRange(userId, request.from, request.to);
+
             case 'latest':
                 return repository.findLatestByUserId(userId);
         }

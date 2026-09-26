@@ -5,6 +5,7 @@ import { z } from 'zod';
 import {
     ICreateUserWorkoutResultUseCase,
     ICreateUserWorkoutUseCase,
+    IEnsureDefaultUserWorkoutsUseCase,
     IGetUserWorkoutExerciseUseCase,
     IGetUserWorkoutResultUseCase,
     IGetUserWorkoutUseCase,
@@ -45,6 +46,7 @@ const workoutExerciseParamsSchema = z.object({
 export class WorkoutController {
     constructor(
         private readonly createUserWorkoutUseCase: ICreateUserWorkoutUseCase,
+        private readonly ensureDefaultUserWorkoutsUseCase: IEnsureDefaultUserWorkoutsUseCase,
         private readonly getUserWorkoutUseCase: IGetUserWorkoutUseCase,
         private readonly updateUserWorkoutStatusUseCase: IUpdateUserWorkoutStatusUseCase,
         private readonly rescheduleUserWorkoutUseCase: IRescheduleUserWorkoutUseCase,
@@ -60,6 +62,21 @@ export class WorkoutController {
         const workout = await this.createUserWorkoutUseCase.execute(req.auth.userId, request);
 
         res.status(SuccessStatuses.CREATED.statusCode).json(workout);
+    }
+
+    async initializeDefaults(
+        req: AuthenticatedRequest,
+        res: Response
+    ): Promise<void> {
+        const workouts = await this.ensureDefaultUserWorkoutsUseCase.execute(
+            req.auth.userId
+        );
+
+        res.status(
+            workouts.length
+                ? SuccessStatuses.CREATED.statusCode
+                : SuccessStatuses.OK.statusCode
+        ).json(workouts);
     }
 
     async getById(req: AuthenticatedRequest, res: Response): Promise<void> {
@@ -101,6 +118,24 @@ export class WorkoutController {
         };
 
         const workouts = await this.getUserWorkoutUseCase.execute(req.auth.userId, request);
+        res.status(SuccessStatuses.OK.statusCode).json(workouts ?? []);
+    }
+
+    async getHistoryByDateRange(req: AuthenticatedRequest, res: Response): Promise<void> {
+        const parsed = getUserWorkoutsByDateRangeRequestSchema.parse({
+            from: req.query.from,
+            to: req.query.to
+        });
+
+        const workouts = await this.getUserWorkoutUseCase.execute(
+            req.auth.userId,
+            {
+                type: 'completedByDateRange',
+                from: parsed.from,
+                to: parsed.to
+            }
+        );
+
         res.status(SuccessStatuses.OK.statusCode).json(workouts ?? []);
     }
 

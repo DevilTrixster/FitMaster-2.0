@@ -10,6 +10,7 @@ import {
     userWorkoutCreate,
     userWorkoutFindByIdAndUserId,
     userWorkoutFindByUserIdAndDateRange,
+    userWorkoutFindCompletedByUserIdAndDateRange,
     userWorkoutFindLatestByUserId,
     userWorkoutUpdateStatus,
     userWorkoutReschedule
@@ -82,6 +83,19 @@ export class UserWorkoutRepository implements IUserWorkoutRepository {
     ): Promise<UserWorkout[]> {
         const result = await this.executor.query<UserWorkoutRow>(
             userWorkoutFindByUserIdAndDateRange,
+            [userId, from, to]
+        );
+
+        return result.rows.map((row) => this.mapToEntity(row));
+    }
+
+    async findCompletedByUserIdAndDateRange(
+        userId: number,
+        from: Date,
+        to: Date
+    ): Promise<UserWorkout[]> {
+        const result = await this.executor.query<UserWorkoutRow>(
+            userWorkoutFindCompletedByUserIdAndDateRange,
             [userId, from, to]
         );
 

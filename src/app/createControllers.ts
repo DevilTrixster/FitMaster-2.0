@@ -32,6 +32,7 @@ export function createControllers(useCases: UseCases) {
 
         workoutController: new WorkoutController(
             useCases.createUserWorkout,
+            useCases.ensureDefaultUserWorkouts,
             useCases.getUserWorkout,
             useCases.updateUserWorkoutStatus,
             useCases.rescheduleUserWorkout,

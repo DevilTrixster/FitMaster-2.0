@@ -28,7 +28,7 @@ export function registerRoutes(app: Express, controllers: Controllers, services:
     app.use('/api/exercises', createExerciseRoutes(controllers.exerciseController));
     app.use(
         '/api/workout-patterns',
-        createWorkoutPatternRoutes(controllers.workoutPatternController, services.tokenService)
+        createWorkoutPatternRoutes(controllers.workoutPatternController)
     );
     app.use(
         '/api/workouts',

@@ -18,6 +18,10 @@ export interface ICreateUserWorkoutUseCase {
     execute(userId: number, request: CreateUserWorkoutRequest): Promise<UserWorkout>;
 }
 
+export interface IEnsureDefaultUserWorkoutsUseCase {
+    execute(userId: number): Promise<UserWorkout[]>;
+}
+
 export interface IGetUserWorkoutUseCase {
     execute(
         userId: number,

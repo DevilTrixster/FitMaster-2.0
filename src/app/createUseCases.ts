@@ -14,6 +14,7 @@ import { GetUserProfileUseCase } from '../application/profile/usecases/GetUserPr
 import { UpdateUserProfileUseCase } from '../application/profile/usecases/UpdateUserProfileUseCase.js';
 import { CreateUserWorkoutResultUseCase } from '../application/workouts/usecases/CreateUserWorkoutResultUseCase.js';
 import { CreateUserWorkoutUseCase } from '../application/workouts/usecases/CreateUserWorkoutUseCase.js';
+import { EnsureDefaultUserWorkoutsUseCase } from '../application/workouts/usecases/EnsureDefaultUserWorkoutsUseCase.js';
 import { CreateWorkoutPatternUseCase } from '../application/workouts/usecases/CreateWorkoutPatternUseCase.js';
 import { GetUserWorkoutExerciseUseCase } from '../application/workouts/usecases/GetUserWorkoutExerciseUseCase.js';
 import { GetUserWorkoutResultUseCase } from '../application/workouts/usecases/GetUserWorkoutResultUseCase.js';
@@ -49,6 +50,7 @@ export function createUseCases(
 
         // Workouts
         createUserWorkout: new CreateUserWorkoutUseCase(database),
+        ensureDefaultUserWorkouts: new EnsureDefaultUserWorkoutsUseCase(database),
         getUserWorkout: new GetUserWorkoutUseCase(database),
         updateUserWorkoutStatus: new UpdateUserWorkoutStatusUseCase(database),
         rescheduleUserWorkout: new RescheduleUserWorkoutUseCase(database),

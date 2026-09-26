@@ -5,6 +5,7 @@ export interface IUserWorkoutRepository {
     findById(id: number): Promise<UserWorkout | null>;
     findByIdAndUserId(id: number, userId: number): Promise<UserWorkout | null>;
     findByUserIdAndDateRange(userId: number, from: Date, to: Date): Promise<UserWorkout[]>;
+    findCompletedByUserIdAndDateRange(userId: number, from: Date, to: Date): Promise<UserWorkout[]>;
     findLatestByUserId(userId: number): Promise<UserWorkout | null>;
     create(userWorkout: UserWorkout): Promise<UserWorkout>;
     updateStatus(

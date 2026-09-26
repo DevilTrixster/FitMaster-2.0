@@ -96,7 +96,7 @@
 */
 .statistics-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.7rem;
 }
 
@@ -583,4 +583,56 @@
         width: 75px;
         height: 75px;
     }
+}
+.dashboard-workout-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.dashboard-workout-card h3 {
+    margin: 0.15rem 0 0.35rem;
+    font-size: 1rem;
+}
+
+.dashboard-workout-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.dashboard-workout-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .dashboard-workout-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dashboard-workout-card-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.dashboard-workout-card .status-scheduled {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffd45c;
+    border: 1px solid rgba(255, 193, 7, 0.18);
+}
+
+.dashboard-workout-card .status-missed {
+    background: rgba(233, 69, 96, 0.1);
+    color: #ff7b94;
+    border: 1px solid rgba(233, 69, 96, 0.18);
 }

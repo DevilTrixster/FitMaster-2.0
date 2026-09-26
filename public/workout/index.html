@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMaster — Тренировка</title>
+    <link rel="icon" href="/assets/logo/favicon.png">
+    <link rel="stylesheet" href="/common/common.css">
+    <link rel="stylesheet" href="/components/navbar/navbar.css">
+    <link rel="stylesheet" href="/workout/workout.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="container workout-page">
+        <header class="workout-header">
+            <div class="workout-header-main">
+                <a
+                    class="workout-back"
+                    href="/user/dashboard/dashboard.html"
+                    aria-label="Вернуться на дашборд"
+                >
+                    <span aria-hidden="true">←</span>
+                    <span>Назад</span>
+                </a>
+
+                <span class="workout-eyebrow" id="workoutModeLabel">Тренировка</span>
+                <h1 id="workoutTitle">Загрузка…</h1>
+                <p id="workoutMeta">—</p>
+            </div>
+
+            <div class="workout-header-side">
+                <span id="workoutStatus" class="workout-status">—</span>
+                <div id="workoutTimer" class="workout-timer hidden" aria-live="polite">
+                    <span class="workout-timer-label">Время тренировки</span>
+                    <strong id="workoutTimerValue">00:00</strong>
+                </div>
+            </div>
+        </header>
+
+        <div id="workoutMessage" class="workout-message hidden" role="status"></div>
+
+        <section id="sessionSurvey" class="workout-survey hidden" aria-labelledby="sessionSurveyTitle">
+            <div class="workout-survey-heading">
+                <div>
+                    <span class="workout-eyebrow">Состояние перед тренировкой</span>
+                    <h2 id="sessionSurveyTitle">Как ты себя чувствуешь?</h2>
+                    <p>Эти данные сохранятся вместе с результатом тренировки и пригодятся для дальнейшей адаптации.</p>
+                </div>
+            </div>
+
+            <div id="sessionSurveyForm" class="workout-survey-form">
+                <div class="survey-field">
+                    <label for="wellnessInput">Самочувствие</label>
+                    <select id="wellnessInput" class="workout-native-select">
+                        <option value="">Выбери оценку</option>
+                        <option value="1">1 — очень плохое</option>
+                        <option value="2">2 — плохое</option>
+                        <option value="3">3 — нормальное</option>
+                        <option value="4">4 — хорошее</option>
+                        <option value="5">5 — отличное</option>
+                    </select>
+                </div>
+
+                <div class="survey-field">
+                    <label for="fatigueInput">Усталость</label>
+                    <select id="fatigueInput" class="workout-native-select">
+                        <option value="">Выбери оценку</option>
+                        <option value="1">1 — почти нет</option>
+                        <option value="2">2 — небольшая</option>
+                        <option value="3">3 — средняя</option>
+                        <option value="4">4 — сильная</option>
+                        <option value="5">5 — очень сильная</option>
+                    </select>
+                </div>
+
+                <button id="saveSurveyBtn" class="btn btn-primary" type="button">
+                    Сохранить состояние
+                </button>
+            </div>
+
+            <div id="sessionSurveySummary" class="workout-survey-summary hidden">
+                <div>
+                    <strong id="surveySummaryText">Состояние сохранено.</strong>
+                    <span>При необходимости оценку можно изменить.</span>
+                </div>
+                <button id="editSurveyBtn" class="btn btn-outline" type="button">Изменить</button>
+            </div>
+        </section>
+
+        <section class="workout-panel">
+            <div class="workout-panel-heading">
+                <div>
+                    <span class="workout-eyebrow">Упражнения</span>
+                    <h2>План тренировки</h2>
+                </div>
+                <span id="restSecondsLabel">Отдых: —</span>
+            </div>
+            <div id="exerciseList" class="workout-exercise-list"></div>
+        </section>
+
+        <section id="finishSection" class="workout-finish hidden">
+            <div>
+                <span class="workout-eyebrow">Финиш</span>
+                <h2>Тренировка закончена?</h2>
+                <p>После нажатия результаты сохранятся, а тренировка будет отмечена как завершённая.</p>
+            </div>
+            <button id="finishWorkoutBtn" class="btn btn-primary" type="button">
+                Завершить тренировку
+            </button>
+        </section>
+    </main>
+
+    <script type="module" src="/workout/workout.js"></script>
+</body>
+</html>

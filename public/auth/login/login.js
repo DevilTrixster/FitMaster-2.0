@@ -1,71 +1,42 @@
 import { Navbar } from '/components/navbar/Navbar.js';
 import { setTokens } from '/auth/auth.js';
+import { apiJson } from '/common/api.js';
 
 const navbarRoot = document.getElementById('navbar');
 
 if (navbarRoot) {
-    const navbar =
-        new Navbar(navbarRoot, {
-            authenticated: false
-        });
-
+    const navbar = new Navbar(navbarRoot, { authenticated: false });
     navbar.render();
 }
 
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
 
+if (!loginForm || !loginMessage) {
+    throw new Error('Login page elements not found.');
+}
+
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const formData =
-        new FormData(loginForm);
+    loginMessage.hidden = true;
 
-    const email =
-        formData.get('email');
-
-    const password =
-        formData.get('password');
+    const formData = new FormData(loginForm);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
     try {
-        const response =
-            await fetch('/api/auth/login', {
-                method: 'POST',
+        const result = await apiJson('/api/auth/login', {
+            method: 'POST',
+            body: { email, password }
+        }, false);
 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            });
-
-        const result =
-            await response.json();
-
-        if (!response.ok) {
-            throw new Error(
-                result.message ??
-                'Не удалось выполнить вход.'
-            );
-        }
-        setTokens({
-            accessToken: result.accessToken,
-            refreshToken: result.refreshToken
-        });
-
-        window.location.href =
-            '/user/dashboard/dashboard.html';
-
+        setTokens(result);
+        window.location.replace('/user/dashboard/dashboard.html');
     } catch (error) {
-
-        loginMessage.textContent =
-            error instanceof Error
-                ? error.message
-                : 'Произошла ошибка при входе.';
-
+        loginMessage.textContent = error instanceof Error
+            ? error.message
+            : 'Произошла ошибка при входе.';
         loginMessage.hidden = false;
     }
 });

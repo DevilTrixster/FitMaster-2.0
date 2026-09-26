@@ -15,8 +15,11 @@ export function createWorkoutRoutes(
 
     router.get('/latest', asyncHandler(controller.getLatest.bind(controller)));
     router.get('/results', asyncHandler(controller.getResults.bind(controller)));
+    router.get('/history', asyncHandler(controller.getHistoryByDateRange.bind(controller)));
     router.get('/', asyncHandler(controller.getByDateRange.bind(controller)));
     router.post('/', asyncHandler(controller.create.bind(controller)));
+
+    router.post('/defaults', asyncHandler(controller.initializeDefaults.bind(controller)));
 
     router.get(
         '/:workoutId/exercises/:plannedExerciseId',

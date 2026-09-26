@@ -25,17 +25,30 @@ const workoutValueSchema = z.discriminatedUnion('type', [
     })
 ]);
 
+const actualSetSchema = z
+    .union([
+        workoutValueSchema,
+        z.array(workoutValueSchema).min(1),
+        z.null()
+    ])
+    .transform((value) => {
+        if (value === null) return null;
+        return Array.isArray(value) ? value : [value];
+    });
+
 const actualExerciseSchema = z.object({
     exerciseId: z.number().int().positive(),
     exerciseName: z.string().min(1).max(100),
     orderIndex: z.number().int().nonnegative(),
     sets: z.number().int().positive(),
-    actualValues: z.array(workoutValueSchema.nullable())
+    actualValues: z.array(actualSetSchema)
 });
 
 export const workoutResultSchema = z
     .object({
         restSeconds: z.number().int().nonnegative(),
+        wellness: z.number().int().min(1).max(5).optional(),
+        fatigue: z.number().int().min(1).max(5).optional(),
         exercises: z.array(actualExerciseSchema).min(1)
     })
     .superRefine((result, ctx) => {

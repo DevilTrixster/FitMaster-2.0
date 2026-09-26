@@ -8,7 +8,6 @@ import {
 } from '../../application/workouts/validation/GetWorkoutPatternsRequestSchema.js';
 import { WorkoutPatternNotFoundError } from '../../shared/errors/index.js';
 import { SuccessStatuses } from '../../shared/statuses/index.js';
-import { AuthenticatedRequest } from '../IAuthenticatedRequest.js';
 
 export class WorkoutPatternController {
     constructor(private readonly getWorkoutPatternsUseCase: IGetWorkoutPatternsUseCase) {}
