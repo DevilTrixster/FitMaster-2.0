@@ -1,5 +1,6 @@
 import { PasswordHasher } from '../infrastructure/security/PasswordHasher.js';
 import { JwtTokenService } from '../infrastructure/security/TokenService.js';
+import { AiServiceClient } from '../infrastructure/ai/AiServiceClient.js';
 
 function requireEnvironmentVariable(name: string): string {
     const value = process.env[name];
@@ -22,5 +23,7 @@ export function createServices() {
         audience: 'fitmaster-client'
     });
 
-    return { passwordHasher, tokenService };
+    const adaptationClient = new AiServiceClient();
+
+    return { passwordHasher, tokenService, adaptationClient };
 }

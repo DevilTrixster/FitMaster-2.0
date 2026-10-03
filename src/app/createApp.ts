@@ -13,7 +13,12 @@ import { registerRoutes } from './registerRoutes.js';
 export function createApp() {
     const database = createDatabase();
     const services = createServices();
-    const useCases = createUseCases(database, services.passwordHasher, services.tokenService);
+    const useCases = createUseCases(
+        database,
+        services.passwordHasher,
+        services.tokenService,
+        services.adaptationClient
+    );
     const controllers = createControllers(useCases);
 
     const app = express();

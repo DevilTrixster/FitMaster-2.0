@@ -5,12 +5,16 @@ import {
     WorkoutResultAlreadyExistsError
 } from '../../../shared/errors/index.js';
 import { IDatabase } from '../../contracts_db/DatabaseContracts.js';
+import { IGenerateAdaptiveWorkoutUseCase } from '../../adaptation/Contracts.js';
 import { ICreateUserWorkoutResultUseCase } from '../Contracts.js';
 import { workoutResultSchema } from '../validation/WorkoutResultSchema.js';
 import { validateAndNormalizeWorkoutResult } from '../validation/validateWorkoutResultAgainstWorkout.js';
 
 export class CreateUserWorkoutResultUseCase implements ICreateUserWorkoutResultUseCase {
-    constructor(private readonly database: IDatabase) {}
+    constructor(
+        private readonly database: IDatabase,
+        private readonly generateAdaptiveWorkoutUseCase: IGenerateAdaptiveWorkoutUseCase
+    ) {}
 
     async execute(
         userId: number,
@@ -23,7 +27,7 @@ export class CreateUserWorkoutResultUseCase implements ICreateUserWorkoutResultU
             throw new InvalidWorkoutResultError(parsed.error);
         }
 
-        return this.database.transaction(async (repositories) => {
+        const result = await this.database.transaction(async (repositories) => {
             const workoutRepository = repositories.getUserWorkoutRepository();
 
             const workoutExerciseRepository = repositories.getUserWorkoutExerciseRepository();
@@ -71,5 +75,16 @@ export class CreateUserWorkoutResultUseCase implements ICreateUserWorkoutResultU
 
             return resultRepository.create(result);
         });
+
+        try {
+            await this.generateAdaptiveWorkoutUseCase.execute(userId, workoutId);
+        } catch (error) {
+            console.error(
+                `[Adaptation] Failed to generate workout for user ${userId}, workout ${workoutId}:`,
+                error
+            );
+        }
+
+        return result;
     }
 }

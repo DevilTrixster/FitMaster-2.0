@@ -1,3 +1,5 @@
+import { IAdaptationClient } from '../application/adaptation/Contracts.js';
+import { GenerateAdaptiveWorkoutUseCase } from '../application/adaptation/usecases/GenerateAdaptiveWorkoutUseCase.js';
 import { IPasswordHasher } from '../application/auth/services/IPasswordHasher.js';
 import { ITokenService } from '../application/auth/services/ITokenService.js';
 import { GetCurrentUserUseCase } from '../application/auth/usecases/GetCurrentUserUseCase.js';
@@ -14,8 +16,8 @@ import { GetUserProfileUseCase } from '../application/profile/usecases/GetUserPr
 import { UpdateUserProfileUseCase } from '../application/profile/usecases/UpdateUserProfileUseCase.js';
 import { CreateUserWorkoutResultUseCase } from '../application/workouts/usecases/CreateUserWorkoutResultUseCase.js';
 import { CreateUserWorkoutUseCase } from '../application/workouts/usecases/CreateUserWorkoutUseCase.js';
-import { EnsureDefaultUserWorkoutsUseCase } from '../application/workouts/usecases/EnsureDefaultUserWorkoutsUseCase.js';
 import { CreateWorkoutPatternUseCase } from '../application/workouts/usecases/CreateWorkoutPatternUseCase.js';
+import { EnsureDefaultUserWorkoutsUseCase } from '../application/workouts/usecases/EnsureDefaultUserWorkoutsUseCase.js';
 import { GetUserWorkoutExerciseUseCase } from '../application/workouts/usecases/GetUserWorkoutExerciseUseCase.js';
 import { GetUserWorkoutResultUseCase } from '../application/workouts/usecases/GetUserWorkoutResultUseCase.js';
 import { GetUserWorkoutUseCase } from '../application/workouts/usecases/GetUserWorkoutUseCase.js';
@@ -28,8 +30,16 @@ import { UpdateUserWorkoutStatusUseCase } from '../application/workouts/usecases
 export function createUseCases(
     database: IDatabase,
     passwordHasher: IPasswordHasher,
-    tokenService: ITokenService
+    tokenService: ITokenService,
+    adaptationClient: IAdaptationClient
 ) {
+    const createWorkoutPattern = new CreateWorkoutPatternUseCase(database);
+    const generateAdaptiveWorkout = new GenerateAdaptiveWorkoutUseCase(
+        database,
+        adaptationClient,
+        createWorkoutPattern
+    );
+
     return {
         // Auth
         registerUser: new RegisterUserUseCase(database, passwordHasher, tokenService),
@@ -59,10 +69,13 @@ export function createUseCases(
         updateUserWorkoutExercise: new UpdateUserWorkoutExerciseUseCase(database),
 
         getUserWorkoutResult: new GetUserWorkoutResultUseCase(database),
-        createUserWorkoutResult: new CreateUserWorkoutResultUseCase(database),
+        createUserWorkoutResult: new CreateUserWorkoutResultUseCase(
+            database,
+            generateAdaptiveWorkout
+        ),
         updateUserWorkoutResult: new UpdateUserWorkoutResultUseCase(database),
 
         getWorkoutPatterns: new GetWorkoutPatternsUseCase(database),
-        createWorkoutPattern: new CreateWorkoutPatternUseCase(database)
+        createWorkoutPattern
     };
 }

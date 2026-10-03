@@ -49,8 +49,20 @@ async function parseResponse(response) {
 }
 
 function getErrorMessage(payload, fallback) {
-    if (payload && typeof payload === 'object' && typeof payload.message === 'string') {
-        return payload.message;
+    if (payload && typeof payload === 'object') {
+        if (Array.isArray(payload.errors) && payload.errors.length) {
+            const details = payload.errors
+                .map((error) => error?.message)
+                .filter(Boolean);
+
+            if (details.length) {
+                return `${typeof payload.message === 'string' ? payload.message : fallback}: ${details.join('; ')}`;
+            }
+        }
+
+        if (typeof payload.message === 'string') {
+            return payload.message;
+        }
     }
 
     if (typeof payload === 'string' && payload.trim()) {
@@ -133,6 +145,17 @@ export async function apiRequest(path, options = {}, canRefresh = true) {
     }
 
     if (!response.ok) {
+        // Dev diagnostics: the backend already returns structured validation
+        // details for 4xx errors. Keep them visible while developing so a 422
+        // is never reduced to only the HTTP status in the browser console.
+        if (response.status === 422) {
+            console.error('[FitMaster API] 422', {
+                path,
+                method: options.method ?? 'GET',
+                payload
+            });
+        }
+
         throw new ApiError(
             getErrorMessage(payload, `Ошибка запроса (${response.status}).`),
             response.status,

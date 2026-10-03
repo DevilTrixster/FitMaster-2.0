@@ -22,7 +22,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
                 type: 'uuid',
                 notNull: true,
                 references: 'workout_pattern(id)',
-                onDelete: 'RESTRICT'
+                onDelete: 'CASCADE'
             },
 
             status: {

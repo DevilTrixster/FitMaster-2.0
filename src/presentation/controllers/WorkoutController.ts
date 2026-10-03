@@ -33,8 +33,7 @@ import { updateUserWorkoutStatusRequestSchema } from '../../application/workouts
 import { workoutResultSchema } from '../../application/workouts/validation/WorkoutResultSchema.js';
 import {
     UserWorkoutExerciseNotFoundError,
-    UserWorkoutNotFoundError,
-    UserWorkoutResultNotFoundError
+    UserWorkoutNotFoundError
 } from '../../shared/errors/index.js';
 import { AuthenticatedRequest } from '../IAuthenticatedRequest.js';
 
@@ -232,11 +231,7 @@ export class WorkoutController {
             workoutId
         });
 
-        if (!result) {
-            throw new UserWorkoutResultNotFoundError(workoutId);
-        }
-
-        res.status(SuccessStatuses.OK.statusCode).json(result);
+        res.status(SuccessStatuses.OK.statusCode).json(result ?? null);
     }
 
     async getResults(req: AuthenticatedRequest, res: Response): Promise<void> {

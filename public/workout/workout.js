@@ -1,5 +1,5 @@
 import { Navbar } from '/components/navbar/Navbar.js';
-import { ApiError, apiJson, requireAuth } from '/common/api.js';
+import { apiJson, requireAuth } from '/common/api.js';
 import { getWorkoutCategory } from '/common/workoutCategory.js';
 
 if (!requireAuth()) {
@@ -748,13 +748,26 @@ async function saveResult() {
     const actualData = buildActualData();
     const method = state.result ? 'PATCH' : 'POST';
 
-    const result = await apiJson(`/api/workouts/${workoutId}/result`, {
-        method,
-        body: actualData
-    });
+    try {
+        const result = await apiJson(`/api/workouts/${workoutId}/result`, {
+            method,
+            body: actualData
+        });
 
-    state.result = result;
-    return result;
+        state.result = result;
+        return result;
+    } catch (error) {
+        if (error?.status === 422) {
+            console.error('[FitMaster Workout] Result rejected', {
+                workoutId,
+                method,
+                actualData,
+                serverPayload: error.payload
+            });
+        }
+
+        throw error;
+    }
 }
 
 function validateWorkoutInputs() {
@@ -824,15 +837,7 @@ async function load() {
         }
 
         if (isActive()) {
-            try {
-                state.result = await apiJson(`/api/workouts/${workoutId}/result`);
-            } catch (error) {
-                if (error instanceof ApiError && error.status === 404) {
-                    state.result = null;
-                } else {
-                    throw error;
-                }
-            }
+            state.result = await apiJson(`/api/workouts/${workoutId}/result`);
         } else {
             state.result = null;
         }
