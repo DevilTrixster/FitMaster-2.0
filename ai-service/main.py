@@ -53,6 +53,7 @@ def create_app() -> FastAPI:
             database_status=database_status,
             ai_status=ai_status,
             startup_error=startup_error,
+            llm=llm,
         )
     )
     app.include_router(

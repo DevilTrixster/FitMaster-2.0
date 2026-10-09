@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 
 from Schema.output import GeneratedWorkoutOutput
 
@@ -93,6 +94,41 @@ class LLMClient:
             raise RuntimeError("AI returned an empty response")
 
         return GeneratedWorkoutOutput.model_validate(_parse_json(raw))
+
+    def ping(self, prompt: str = "Скажи 'FitMaster AI готов к работе' одной фразой.") -> dict:
+        """Делает лёгкий тестовый запрос к нейросети для проверки работоспособности."""
+        start = time.perf_counter()
+        try:
+            completion = self.client.chat.completions.create(
+                model=self.model,
+                temperature=0.3,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "Ты — AI-ассистент FitMaster. Отвечай кратко, по-русски.",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=150,
+                timeout=15.0,
+            )
+            latency_ms = round((time.perf_counter() - start) * 1000)
+            raw = completion.choices[0].message.content or ""
+            return {
+                "status": "ok",
+                "reply": raw.strip(),
+                "model": self.model,
+                "latency_ms": latency_ms,
+                "tokens_used": getattr(completion.usage, "total_tokens", None),
+            }
+        except Exception as exc:
+            latency_ms = round((time.perf_counter() - start) * 1000)
+            return {
+                "status": "error",
+                "reply": None,
+                "error": str(exc),
+                "latency_ms": latency_ms,
+            }
 
 
 def _parse_json(raw: str) -> dict:
