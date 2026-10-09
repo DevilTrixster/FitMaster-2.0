@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
-from pathlib import Path
 from fastapi import FastAPI
 from Main.llm import LLMClient
 from Routes.adaptation import create_adaptation_router
@@ -19,7 +19,7 @@ load_dotenv(ROOT_ENV)
 def create_app() -> FastAPI:
     app = FastAPI(
         title="FitMaster AI Service",
-        version="1.1.0",
+        version="1.0.0",
     )
 
     database: AIDatabase | None = None
