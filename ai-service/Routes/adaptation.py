@@ -13,7 +13,9 @@ def create_adaptation_router(
     router = APIRouter(prefix="/api/v1/adaptation", tags=["Adaptation"])
 
     @router.post("/generate", response_model=AdaptationGenerateResponse)
-    def generate_adaptation(request: AdaptationGenerateRequest) -> AdaptationGenerateResponse:
+    def generate_adaptation(
+        request: AdaptationGenerateRequest,
+    ) -> AdaptationGenerateResponse:
         if service is None:
             raise HTTPException(503, startup_error or "AI service is not ready")
 

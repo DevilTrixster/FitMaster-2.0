@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { constants } from 'node:fs';
-import { access, mkdir } from 'node:fs/promises';
+import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 // ==========================================
@@ -164,13 +165,30 @@ async function prepareNode() {
 }
 
 async function preparePython() {
-    let python = venvPython;
+    const python = venvPython;
+    const requirements = await readFile(requirementsFile);
+    const requirementsHash = createHash('sha256').update(requirements).digest('hex');
+    const requirementsStamp = resolve(venvDir, '.fitmaster-requirements.sha256');
 
-    if (!(await exists(venvPython))) {
-        console.log('[ai-service] .venv не найден. Создаём виртуальное окружение...');
+    let venvExists = await exists(venvPython);
+    let installedHash = null;
+    if (venvExists && (await exists(requirementsStamp))) {
+        installedHash = (await readFile(requirementsStamp, 'utf8')).trim();
+    }
+
+    // A venv created with an older, much larger requirements.txt may contain many
+    // packages that this service no longer needs. Rebuild only this project's venv
+    // when it has no stamp or the requirements have changed.
+    if (!venvExists || installedHash !== requirementsHash) {
+        if (await exists(venvDir)) {
+            console.log('[ai-service] Список зависимостей изменился или старое окружение не отмечено. Пересоздаём только ai-service/.venv...');
+            await rm(venvDir, { recursive: true, force: true });
+        } else {
+            console.log('[ai-service] .venv не найден. Создаём виртуальное окружение...');
+        }
+
         let created = false;
         let lastError = null;
-
         for (const command of pythonCommands) {
             try {
                 await run(command, ['-m', 'venv', venvDir], root, 'python -m venv');
@@ -180,30 +198,42 @@ async function preparePython() {
                 lastError = error;
             }
         }
-
-        if (!created) {
+        if (!created || !(await exists(venvPython))) {
             throw new Error(
-                `Не удалось найти Python для создания ai-service/.venv. Последняя ошибка: ${lastError?.message ?? 'неизвестно'}`
+                `Не удалось создать ai-service/.venv. Последняя ошибка: ${lastError?.message ?? 'неизвестно'}`
             );
         }
-        python = venvPython;
+
+        await mkdir(pycacheDir, { recursive: true });
+        console.log('[ai-service] Устанавливаем зависимости, перечисленные в ai-service/requirements.txt...');
+        await run(
+            python,
+            ['-m', 'pip', 'install', '--disable-pip-version-check', '--no-warn-script-location', '-r', requirementsFile],
+            aiDir,
+            'pip install ai-service requirements'
+        );
+        await writeFile(requirementsStamp, `${requirementsHash}\n`, 'utf8');
+        return python;
     }
 
     await mkdir(pycacheDir, { recursive: true });
-
-    console.log('[ai-service] Проверяем Python-зависимости...');
+    console.log('[ai-service] Проверяем необходимые Python-зависимости...');
     try {
         await run(
             python,
-            ['-c', 'import uvicorn, fastapi, pydantic, sqlalchemy, psycopg, openai'],
+            ['-c', 'import dotenv, fastapi, openai, pydantic, uvicorn'],
             aiDir,
             'python dependency check'
         );
     } catch {
-        console.log(
-            '[ai-service] Зависимости отсутствуют или неполные. Устанавливаем requirements.txt...'
+        console.log('[ai-service] Не все необходимые пакеты установлены. Восстанавливаем зависимости из requirements.txt...');
+        await run(
+            python,
+            ['-m', 'pip', 'install', '--disable-pip-version-check', '--no-warn-script-location', '-r', requirementsFile],
+            aiDir,
+            'pip install ai-service requirements'
         );
-        await run(python, ['-m', 'pip', 'install', '-r', requirementsFile], aiDir, 'pip install');
+        await writeFile(requirementsStamp, `${requirementsHash}\n`, 'utf8');
     }
 
     return python;

@@ -371,19 +371,29 @@ function clearLocalDraft() {
     }
 }
 
+function isValidRating(value) {
+    return Number.isInteger(value) && value >= 1 && value <= 5;
+}
+
+function readStoredRating(value) {
+    if (value === null || value === undefined || value === '') return null;
+    const parsed = Number(value);
+    return isValidRating(parsed) ? parsed : null;
+}
+
 function hydrateDraft() {
     const stored = loadLocalDraft();
     state.draft = stored?.actualData ?? state.result?.actualData ?? null;
 
     if (stored?.survey) {
         state.survey = {
-            wellness: stored.survey.wellness ?? null,
-            fatigue: stored.survey.fatigue ?? null
+            wellness: readStoredRating(stored.survey.wellness),
+            fatigue: readStoredRating(stored.survey.fatigue)
         };
     } else if (state.result?.actualData) {
         state.survey = {
-            wellness: state.result.actualData.wellness ?? null,
-            fatigue: state.result.actualData.fatigue ?? null
+            wellness: readStoredRating(state.result.actualData.wellness),
+            fatigue: readStoredRating(state.result.actualData.fatigue)
         };
     }
 
@@ -398,7 +408,7 @@ function currentDraftExercise(orderIndex) {
 }
 
 function updateSurveySummary() {
-    const complete = Number.isInteger(state.survey.wellness) && Number.isInteger(state.survey.fatigue);
+    const complete = isValidRating(state.survey.wellness) && isValidRating(state.survey.fatigue);
 
     if (!complete) {
         sessionSurveyForm.classList.remove('hidden');
@@ -413,11 +423,17 @@ function updateSurveySummary() {
 }
 
 function saveSurvey() {
+    // Number('') equals 0, so check the original values before converting.
+    if (!wellnessInput.value || !fatigueInput.value) {
+        showMessage('Выбери оценку самочувствия и усталости от 1 до 5.');
+        return false;
+    }
+
     const wellness = Number(wellnessInput.value);
     const fatigue = Number(fatigueInput.value);
 
-    if (!Number.isInteger(wellness) || !Number.isInteger(fatigue)) {
-        showMessage('Сначала оцени самочувствие и усталость.');
+    if (!isValidRating(wellness) || !isValidRating(fatigue)) {
+        showMessage('Оценки самочувствия и усталости должны быть от 1 до 5.');
         return false;
     }
 
@@ -733,11 +749,11 @@ function buildActualData() {
         exercises
     };
 
-    if (Number.isInteger(state.survey.wellness)) {
+    if (isValidRating(state.survey.wellness)) {
         actualData.wellness = state.survey.wellness;
     }
 
-    if (Number.isInteger(state.survey.fatigue)) {
+    if (isValidRating(state.survey.fatigue)) {
         actualData.fatigue = state.survey.fatigue;
     }
 
@@ -771,12 +787,20 @@ async function saveResult() {
 }
 
 function validateWorkoutInputs() {
-    const emptyInput = [...exerciseList.querySelectorAll('input[data-set-index]')]
-        .find((input) => !input.value);
+    const invalidInput = [...exerciseList.querySelectorAll('input[data-set-index]')]
+        .find((input) => {
+            if (!input.value.trim()) return true;
+            if (input.dataset.inputType === 'duration') {
+                return !/^\d{2}:[0-5]\d$/.test(input.value.trim());
+            }
+            const value = Number(input.value);
+            return !Number.isFinite(value) || value < 0;
+        });
 
-    if (!emptyInput) return true;
+    if (!invalidInput) return true;
 
-    showMessage('Заполни все поля каждого подхода перед завершением тренировки.');
+    const emptyInput = invalidInput;
+    showMessage('Заполни все поля корректными неотрицательными значениями перед завершением тренировки.');
     emptyInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     emptyInput.focus();
     return false;
@@ -785,7 +809,7 @@ function validateWorkoutInputs() {
 async function finishWorkout() {
     if (!isActive()) return;
 
-    const surveySaved = Number.isInteger(state.survey.wellness) && Number.isInteger(state.survey.fatigue);
+    const surveySaved = isValidRating(state.survey.wellness) && isValidRating(state.survey.fatigue);
 
     if (!surveySaved || !sessionSurveyForm.classList.contains('hidden')) {
         sessionSurvey.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -807,6 +831,9 @@ async function finishWorkout() {
         clearMessage();
         await saveResult();
 
+        // The dashboard uses this marker to show and poll the background
+        // adaptation job without keeping this completion screen waiting on AI.
+        sessionStorage.setItem('fitmaster.pendingAdaptationWorkoutId', String(workoutId));
         state.workout = await apiJson(`/api/workouts/${workoutId}/status`, {
             method: 'PATCH',
             body: { status: 'COMPLETED' }
@@ -819,6 +846,7 @@ async function finishWorkout() {
             window.location.assign('/user/dashboard/dashboard.html');
         }, 700);
     } catch (error) {
+        sessionStorage.removeItem('fitmaster.pendingAdaptationWorkoutId');
         finishWorkoutBtn.disabled = false;
         showMessage(error instanceof Error ? error.message : 'Не удалось завершить тренировку.');
     }

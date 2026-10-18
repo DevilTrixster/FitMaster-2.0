@@ -17,6 +17,8 @@ new Navbar(navbarRoot, { authenticated: true }).render();
 
 const totalWorkouts = document.getElementById('totalWorkouts');
 const currentStreak = document.getElementById('currentStreak');
+const adaptationHint = document.getElementById('adaptationHint');
+const pendingAdaptationStorageKey = 'fitmaster.pendingAdaptationWorkoutId';
 
 const recoveryScore = document.getElementById('recoveryScore');
 const fatigueValue = document.getElementById('fatigueValue');
@@ -117,6 +119,7 @@ async function startWorkout(workoutId, button) {
 function renderUpcoming(workouts, patterns) {
     const upcoming = workouts
         .filter((workout) => workout.status === 'PLANNED' || workout.status === 'IN_PROGRESS')
+        .sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime())
         .slice(0, 6);
 
     if (!upcoming.length) {
@@ -225,32 +228,109 @@ function setUnsupportedRecovery() {
     }
 }
 
-async function initialize() {
+function setAdaptationHint(message, status = 'pending') {
+    if (!adaptationHint) return;
+    adaptationHint.textContent = message;
+    adaptationHint.dataset.status = status;
+    adaptationHint.classList.remove('hidden');
+}
+
+function hideAdaptationHint() {
+    if (!adaptationHint) return;
+    adaptationHint.textContent = '';
+    adaptationHint.classList.add('hidden');
+    delete adaptationHint.dataset.status;
+}
+
+function delay(ms) {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+async function loadDashboardData() {
     const now = new Date();
     const from = startOfDay(now);
+    // The next adaptive workout can be scheduled on a free preferred day beyond
+    // the next month, so load the complete scheduling horizon.
     const to = new Date(now);
-    to.setDate(to.getDate() + 30);
+    to.setDate(to.getDate() + 366);
 
-    try {
-        let [workouts, patterns] = await Promise.all([
-            apiJson(`/api/workouts?from=${encodeURIComponent(toApiDateTime(from))}&to=${encodeURIComponent(toApiDateTime(to))}`),
+    const historyFrom = new Date(from);
+    historyFrom.setDate(historyFrom.getDate() - 365);
+    const historyTo = new Date(from);
+    historyTo.setDate(historyTo.getDate() + 1);
+
+    const workoutsUrl = `/api/workouts?from=${encodeURIComponent(toApiDateTime(from))}&to=${encodeURIComponent(toApiDateTime(to))}`;
+    let [workouts, patterns, history] = await Promise.all([
+        apiJson(workoutsUrl),
+        apiJson('/api/workout-patterns'),
+        apiJson(`/api/workouts/history?from=${encodeURIComponent(toApiDateTime(historyFrom))}&to=${encodeURIComponent(toApiDateTime(historyTo))}`)
+    ]);
+
+    if (!(workouts ?? []).length) {
+        await apiJson('/api/workouts/defaults', {
+            method: 'POST',
+            body: {}
+        });
+
+        [workouts, patterns] = await Promise.all([
+            apiJson(workoutsUrl),
             apiJson('/api/workout-patterns')
         ]);
+    }
 
-        if (!(workouts ?? []).length) {
-            await apiJson('/api/workouts/defaults', {
-                method: 'POST',
-                body: {}
-            });
+    updateStatistics(history ?? []);
+    renderUpcoming(workouts ?? [], patterns ?? []);
+    setUnsupportedRecovery();
+}
 
-            workouts = await apiJson(
-                `/api/workouts?from=${encodeURIComponent(toApiDateTime(from))}&to=${encodeURIComponent(toApiDateTime(to))}`
+async function pollAdaptation(sourceWorkoutId) {
+    const deadline = Date.now() + 240_000;
+    setAdaptationHint('Тренировка завершена. Готовим следующую тренировку по твоим результатам…');
+
+    while (Date.now() < deadline) {
+        try {
+            const job = await apiJson(
+                `/api/workouts/adaptation/status?sourceWorkoutId=${encodeURIComponent(sourceWorkoutId)}`
             );
+
+            if (job.status === 'COMPLETED') {
+                await loadDashboardData();
+                sessionStorage.removeItem(pendingAdaptationStorageKey);
+                setAdaptationHint('Новая тренировка готова и добавлена в расписание.', 'completed');
+                return;
+            }
+
+            if (job.status === 'FAILED' || job.status === 'NOT_FOUND') {
+                sessionStorage.removeItem(pendingAdaptationStorageKey);
+                setAdaptationHint(
+                    'Тренировка сохранена, но автоматически подготовить следующую не удалось. Попробуй обновить страницу позже.',
+                    'failed'
+                );
+                return;
+            }
+
+            setAdaptationHint(
+                job.status === 'RUNNING'
+                    ? 'Анализируем результаты и подбираем упражнения для следующей тренировки…'
+                    : 'Тренировка завершена. Подготавливаем адаптацию…'
+            );
+        } catch {
+            // A brief network issue should not turn a saved training into a failure.
+            setAdaptationHint('Тренировка сохранена. Проверяем готовность следующей тренировки…');
         }
 
-        updateStatistics(workouts ?? []);
-        renderUpcoming(workouts ?? [], patterns ?? []);
-        setUnsupportedRecovery();
+        await delay(2500);
+    }
+
+    // Keep the marker so that reloading the dashboard resumes polling.
+    setAdaptationHint(
+        'Результат сохранён. Подготовка следующей тренировки занимает больше обычного; список продолжит обновляться после повторного открытия страницы.'
+    );
+}
+
+async function initialize() {
+    try {
+        await loadDashboardData();
     } catch (error) {
         upcomingWorkoutsRoot.innerHTML = `
             <div class="empty-state">
@@ -262,6 +342,13 @@ async function initialize() {
             </div>
         `;
         setUnsupportedRecovery();
+    }
+
+    const pendingWorkoutId = Number(sessionStorage.getItem(pendingAdaptationStorageKey));
+    if (Number.isInteger(pendingWorkoutId) && pendingWorkoutId > 0) {
+        void pollAdaptation(pendingWorkoutId);
+    } else {
+        hideAdaptationHint();
     }
 }
 

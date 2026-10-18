@@ -636,3 +636,23 @@
     color: #ff7b94;
     border: 1px solid rgba(233, 69, 96, 0.18);
 }
+
+
+.dashboard-notification {
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.dashboard-notification[data-status="completed"] {
+    border-color: rgba(70, 190, 125, 0.35);
+    color: var(--text-primary);
+}
+
+.dashboard-notification[data-status="failed"] {
+    border-color: rgba(233, 69, 96, 0.35);
+}

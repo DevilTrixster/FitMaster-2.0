@@ -1,4 +1,5 @@
 import { SuccessStatuses } from '../../shared/statuses/index.js';
+import { AdaptiveWorkoutJobTracker } from '../../application/adaptation/AdaptiveWorkoutJobTracker.js';
 import { Response } from 'express';
 import { z } from 'zod';
 
@@ -53,7 +54,8 @@ export class WorkoutController {
         private readonly updateUserWorkoutExerciseUseCase: IUpdateUserWorkoutExerciseUseCase,
         private readonly getUserWorkoutResultUseCase: IGetUserWorkoutResultUseCase,
         private readonly createUserWorkoutResultUseCase: ICreateUserWorkoutResultUseCase,
-        private readonly updateUserWorkoutResultUseCase: IUpdateUserWorkoutResultUseCase
+        private readonly updateUserWorkoutResultUseCase: IUpdateUserWorkoutResultUseCase,
+        private readonly adaptationJobTracker: AdaptiveWorkoutJobTracker
     ) {}
 
     async create(req: AuthenticatedRequest, res: Response): Promise<void> {
@@ -136,6 +138,15 @@ export class WorkoutController {
         );
 
         res.status(SuccessStatuses.OK.statusCode).json(workouts ?? []);
+    }
+
+    async getAdaptationStatus(req: AuthenticatedRequest, res: Response): Promise<void> {
+        const workoutId = z.coerce.number().int().positive().parse(req.query.sourceWorkoutId);
+        const status = this.adaptationJobTracker.getStatus(req.auth.userId, workoutId);
+
+        res.status(SuccessStatuses.OK.statusCode).json(
+            status ?? { workoutId, status: 'NOT_FOUND' }
+        );
     }
 
     async updateStatus(req: AuthenticatedRequest, res: Response): Promise<void> {

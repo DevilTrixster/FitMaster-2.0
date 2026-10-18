@@ -19,7 +19,12 @@ export class AiServiceClient implements IAdaptationClient {
 
     constructor() {
         this.baseUrl = getConfig('AI_SERVICE_URL', 'http://127.0.0.1:8000').replace(/\/$/, '');
-        this.timeoutMs = Number(process.env.AI_SERVICE_TIMEOUT_MS ?? 60000);
+        const configuredTimeout = Number(process.env.AI_SERVICE_TIMEOUT_MS ?? 150000);
+        // Old .env files often contain 60000 ms, which is too short for a free
+        // model that may reason slowly. Keep a 2-minute minimum for adaptation.
+        this.timeoutMs = Number.isFinite(configuredTimeout)
+            ? Math.max(120000, configuredTimeout)
+            : 150000;
     }
 
     async generate(

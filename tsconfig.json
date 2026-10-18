@@ -4,16 +4,16 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
 
+    "strict": true, // строгая проверка типов
+    "pretty": true, // цвет ошибок
+    "removeComments": true, // генерация комментариев(не ьудут генерироваться)
+    "esModuleInterop": true, // доп js для упрощения поддежки импортов
+    "skipLibCheck": true, // скип проверки библиотек
+    "forceConsistentCasingInFileNames": true, // принудительное сохранение имён файлов
+    "sourceMap": true, // файлы исходных карт для генерации js
+
     "rootDir": "./src",
     "outDir": "./dist",
-
-    "strict": true,
-    "esModuleInterop": true,
-
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "sourceMap": true,
     "types": ["node"]
   },
 

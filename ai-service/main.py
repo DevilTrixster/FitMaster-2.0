@@ -7,10 +7,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from Main.llm import LLMClient
 from Routes.adaptation import create_adaptation_router
-from Routes.knowledge import create_knowledge_router
 from Routes.system import create_system_router
 from Service.adaptation import AdaptationService
-from Storage.database import AIDatabase
 
 ROOT_ENV = Path(__file__).resolve().parents[1] / ".env"
 load_dotenv(ROOT_ENV)
@@ -19,48 +17,31 @@ load_dotenv(ROOT_ENV)
 def create_app() -> FastAPI:
     app = FastAPI(
         title="FitMaster AI Service",
-        version="1.0.0",
+        version="1.1.0",
+        description=(
+            "Stateless adaptation service. PostgreSQL and workout-pattern persistence "
+            "are owned by the main TypeScript application. AI calls use OpenRouter's "
+            "dynamic free-model router."
+        ),
     )
 
-    database: AIDatabase | None = None
     llm: LLMClient | None = None
-    adaptation_service: AdaptationService | None = None
-
-    startup_errors: list[str] = []
-    database_status = "error"
+    startup_error: str | None = None
     ai_status = "not configured"
-
-    try:
-        database = AIDatabase()
-        database.initialize()
-        database_status = "configured"
-    except Exception as exc:
-        startup_errors.append(f"Database initialization failed: {exc}")
 
     try:
         llm = LLMClient()
         ai_status = "configured"
     except Exception as exc:
-        startup_errors.append(f"AI initialization failed: {exc}")
+        startup_error = f"AI initialization failed: {exc}"
 
-    if database is not None and llm is not None:
-        adaptation_service = AdaptationService(database, llm)
-
-    startup_error = "; ".join(startup_errors) if startup_errors else None
+    adaptation_service = AdaptationService(llm) if llm is not None else None
 
     app.include_router(
         create_system_router(
-            database_status=database_status,
             ai_status=ai_status,
             startup_error=startup_error,
             llm=llm,
-        )
-    )
-    app.include_router(
-        create_knowledge_router(
-            service=adaptation_service,
-            database=database,
-            startup_error=startup_error,
         )
     )
     app.include_router(
@@ -69,7 +50,6 @@ def create_app() -> FastAPI:
             startup_error=startup_error,
         )
     )
-
     return app
 
 

@@ -1,5 +1,6 @@
 import { IAdaptationClient } from '../application/adaptation/Contracts.js';
 import { GenerateAdaptiveWorkoutUseCase } from '../application/adaptation/usecases/GenerateAdaptiveWorkoutUseCase.js';
+import { AdaptiveWorkoutJobTracker } from '../application/adaptation/AdaptiveWorkoutJobTracker.js';
 import { IPasswordHasher } from '../application/auth/services/IPasswordHasher.js';
 import { ITokenService } from '../application/auth/services/ITokenService.js';
 import { GetCurrentUserUseCase } from '../application/auth/usecases/GetCurrentUserUseCase.js';
@@ -34,11 +35,14 @@ export function createUseCases(
     adaptationClient: IAdaptationClient
 ) {
     const createWorkoutPattern = new CreateWorkoutPatternUseCase(database);
+    const createUserWorkout = new CreateUserWorkoutUseCase(database);
     const generateAdaptiveWorkout = new GenerateAdaptiveWorkoutUseCase(
         database,
         adaptationClient,
-        createWorkoutPattern
+        createWorkoutPattern,
+        createUserWorkout
     );
+    const adaptationJobTracker = new AdaptiveWorkoutJobTracker(generateAdaptiveWorkout);
 
     return {
         // Auth
@@ -59,20 +63,21 @@ export function createUseCases(
         getMuscleGroups: new GetMuscleGroupsUseCase(database),
 
         // Workouts
-        createUserWorkout: new CreateUserWorkoutUseCase(database),
+        createUserWorkout,
         ensureDefaultUserWorkouts: new EnsureDefaultUserWorkoutsUseCase(database),
         getUserWorkout: new GetUserWorkoutUseCase(database),
-        updateUserWorkoutStatus: new UpdateUserWorkoutStatusUseCase(database),
+        adaptationJobTracker,
+        updateUserWorkoutStatus: new UpdateUserWorkoutStatusUseCase(
+            database,
+            adaptationJobTracker
+        ),
         rescheduleUserWorkout: new RescheduleUserWorkoutUseCase(database),
 
         getUserWorkoutExercise: new GetUserWorkoutExerciseUseCase(database),
         updateUserWorkoutExercise: new UpdateUserWorkoutExerciseUseCase(database),
 
         getUserWorkoutResult: new GetUserWorkoutResultUseCase(database),
-        createUserWorkoutResult: new CreateUserWorkoutResultUseCase(
-            database,
-            generateAdaptiveWorkout
-        ),
+        createUserWorkoutResult: new CreateUserWorkoutResultUseCase(database),
         updateUserWorkoutResult: new UpdateUserWorkoutResultUseCase(database),
 
         getWorkoutPatterns: new GetWorkoutPatternsUseCase(database),

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import Annotated, Literal
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -36,7 +37,7 @@ class ExerciseInput(CamelModel):
 class RepsValue(CamelModel):
     type: Literal["reps"]
     metric: Literal["count"]
-    value: int = Field(ge=0)
+    value: int = Field(gt=0)
 
 
 class WeightValue(CamelModel):
@@ -63,6 +64,20 @@ WorkoutValue = Annotated[
 ]
 
 
+class ActualRepsValue(CamelModel):
+    """Actual performance may legitimately be zero even though a target may not."""
+
+    type: Literal["reps"]
+    metric: Literal["count"]
+    value: int = Field(ge=0)
+
+
+ActualWorkoutValue = Annotated[
+    ActualRepsValue | WeightValue | DurationValue | DistanceValue,
+    Field(discriminator="type"),
+]
+
+
 class WorkoutExercisePlanInput(CamelModel):
     exercise_id: int = Field(gt=0)
     exercise_name: str = Field(min_length=1, max_length=100)
@@ -81,7 +96,7 @@ class WorkoutExerciseResultInput(CamelModel):
     exercise_name: str = Field(min_length=1, max_length=100)
     order_index: int = Field(ge=0)
     sets: int = Field(gt=0, le=20)
-    actual_values: list[list[WorkoutValue] | None]
+    actual_values: list[list[ActualWorkoutValue] | None]
 
 
 class WorkoutResultInput(CamelModel):
@@ -119,8 +134,8 @@ class ReplacementInput(CamelModel):
 class WorkoutEventInput(CamelModel):
     user_id: int = Field(gt=0)
     source_workout_id: int = Field(gt=0)
-    pattern_id: str
-    status: str
+    pattern_id: UUID
+    status: Literal["COMPLETED"]
     original_scheduled_at: datetime
     scheduled_at: datetime
     started_at: datetime | None = None
@@ -136,6 +151,3 @@ class AdaptationGenerateRequest(CamelModel):
     workout: WorkoutEventInput
     history: list[WorkoutEventInput] = Field(default_factory=list)
 
-
-class ProfileSyncRequest(CamelModel):
-    profile: UserProfileInput

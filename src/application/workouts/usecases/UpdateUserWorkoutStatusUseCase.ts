@@ -1,3 +1,4 @@
+import { AdaptiveWorkoutJobTracker } from '../../adaptation/AdaptiveWorkoutJobTracker.js';
 import { UserWorkoutStatus } from '../../../shared/enum.js';
 import {
     InvalidWorkoutStatusTransitionError,
@@ -8,10 +9,13 @@ import { IUpdateUserWorkoutStatusUseCase } from '../Contracts.js';
 import { UpdateUserWorkoutStatusRequest } from '../DTO.js';
 
 export class UpdateUserWorkoutStatusUseCase implements IUpdateUserWorkoutStatusUseCase {
-    constructor(private readonly database: IDatabase) {}
+    constructor(
+        private readonly database: IDatabase,
+        private readonly adaptiveWorkoutJobTracker: AdaptiveWorkoutJobTracker
+    ) {}
 
     async execute(userId: number, request: UpdateUserWorkoutStatusRequest) {
-        return this.database.transaction(async (repositories) => {
+        const updatedWorkout = await this.database.transaction(async (repositories) => {
             const repository = repositories.getUserWorkoutRepository();
             const workout = await repository.findByIdAndUserId(request.workoutId, userId);
 
@@ -87,5 +91,13 @@ export class UpdateUserWorkoutStatusUseCase implements IUpdateUserWorkoutStatusU
 
             return updatedWorkout;
         });
+
+        if (request.status === UserWorkoutStatus.Completed) {
+            // Return the completed workout immediately. Adaptation is tracked and
+            // executed independently so a slow model cannot delay the dashboard.
+            this.adaptiveWorkoutJobTracker.start(userId, request.workoutId);
+        }
+
+        return updatedWorkout;
     }
 }

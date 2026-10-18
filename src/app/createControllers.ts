@@ -40,7 +40,8 @@ export function createControllers(useCases: UseCases) {
             useCases.updateUserWorkoutExercise,
             useCases.getUserWorkoutResult,
             useCases.createUserWorkoutResult,
-            useCases.updateUserWorkoutResult
+            useCases.updateUserWorkoutResult,
+            useCases.adaptationJobTracker
         ),
 
         workoutPatternController: new WorkoutPatternController(

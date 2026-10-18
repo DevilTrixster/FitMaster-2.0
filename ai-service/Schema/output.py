@@ -23,8 +23,3 @@ class AdaptationGenerateResponse(CamelModel):
     indicators: dict
     generation_id: int | None = None
 
-
-class KnowledgeResponse(CamelModel):
-    user_id: int
-    profile: dict
-    indicators: dict

@@ -14,6 +14,7 @@ export function createWorkoutRoutes(
     router.use(authenticate(tokenService));
 
     router.get('/latest', asyncHandler(controller.getLatest.bind(controller)));
+    router.get('/adaptation/status', asyncHandler(controller.getAdaptationStatus.bind(controller)));
     router.get('/results', asyncHandler(controller.getResults.bind(controller)));
     router.get('/history', asyncHandler(controller.getHistoryByDateRange.bind(controller)));
     router.get('/', asyncHandler(controller.getByDateRange.bind(controller)));
